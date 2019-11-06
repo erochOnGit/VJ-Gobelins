@@ -2,14 +2,15 @@ import trackList from "./trackList.js";
 
 export default class Audio {
   constructor() {
-    this.audio = document.querySelector("#audio");
-    this.source = this.audio.querySelector("source");
+    this.audioNode = document.querySelector("#audio");
+    this.source = this.audioNode.querySelector("source");
     this.tracks = Object.values(trackList);
     this.started = false;
-    this.audio.onended = () => {
+    this.audioNode.onended = () => {
       console.log("Song has ended")
       this.nextTrack();
     };
+    this.tracksetEvent = new Event("trackset");
   }
   start() {
     if (!this.started) {
@@ -26,8 +27,10 @@ export default class Audio {
     }
     this.currentTrackIndex = id;
     this.source.src = this.getCurrentTrack().url;
-    this.audio.load();
-    this.audio.play();
+    this.audioNode.load();
+    this.audioNode.play();
+    this.audioNode.dispatchEvent(this.tracksetEvent);
+
     console.log("track setted " + this.currentTrackIndex);
   }
   getCurrentTrack() {
