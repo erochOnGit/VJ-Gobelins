@@ -1,4 +1,4 @@
-import trackList from "./trackList.js";
+import trackList from "../trackList.js";
 
 export default class Audio {
   constructor() {
@@ -15,11 +15,11 @@ export default class Audio {
     if (!this.started) {
       this.setTrack(0);
       this.started = true;
-      console.log("audio started ");
+      console.log("audio started");
     }
   }
   setTrack(id) {
-    if (id < 0) {
+    if (id < 0) { 
       id = this.tracks.length - 1;
     } else if (id > this.tracks.length - 1) {
       id = 0;
