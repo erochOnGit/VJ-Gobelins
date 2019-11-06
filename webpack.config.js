@@ -74,6 +74,11 @@ module.exports = {
         test: /\.(png|svg|jpg|gif)$/,
         use: ["file-loader"]
       },
+      //load musics
+      {
+        test: /\.mp3$/,
+        use: ["file-loader"]
+      },
       //load fonts
       {
         test: /\.(woff|woff2|eot|ttf|otf|obj|gltf|glb)$/,
