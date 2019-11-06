@@ -13,10 +13,10 @@ import {
 } from "src/assets/dev/chromaticAberration";
 
 class Canvas3D {
-  constructor({ container, setStep }) {
+  constructor({ container, setStep, analyser }) {
     this.setStep = setStep;
     this.container = container || document.body;
-
+    this.analyser = analyser;
     this.camera = new THREE.PerspectiveCamera(
       70,
       window.innerWidth / window.innerHeight,
@@ -64,6 +64,9 @@ class Canvas3D {
   }
   render(t) {
     this.interaction.update();
+    this.analyser.refreshData();
+    this.analyser.debug();
+
     this.renderer.render(this.scene, this.camera);
     this.composer.render();
   }

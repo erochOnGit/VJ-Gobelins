@@ -1,5 +1,6 @@
-import Audio from "./utils/Audio";
-import Canvas3D from "./utils/Canvas3D"
+import Audio from "./utils/Audio/Audio";
+import Canvas3D from "./utils/Canvas3D";
+import AudioAnalyser from "./utils/Audio/AudioAnalyser";
 
 class App {
   constructor() {
@@ -10,7 +11,9 @@ class App {
      * Audio Handling
      *
      */
+
     this.audio = new Audio();
+    let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 1024 });
     window.addEventListener("click", () => {
       this.audio.start();
     });
@@ -28,12 +31,13 @@ class App {
      *
      */
     this.can3d = new Canvas3D({
+      analyser: analyser,
       container: document.querySelector("#threeContainer"),
       setStep: this.setStep
     });
   }
   setStep(step) {
-      this.step = step
+    this.step = step;
   }
 }
 

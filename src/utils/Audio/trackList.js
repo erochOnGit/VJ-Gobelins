@@ -1,6 +1,6 @@
-import zeddA from "./assets/musics/zeddaddicted.mp3";
-import salutcoolpareil from "./assets/musics/salutcoolpareil.mp3";
-import unlikeplutonoscrub from "./assets/musics/unlikeplutonoscrub.mp3";
+import zeddA from "src/assets/musics/zeddaddicted.mp3";
+import salutcoolpareil from "src/assets/musics/salutcoolpareil.mp3";
+import unlikeplutonoscrub from "src/assets/musics/unlikeplutonoscrub.mp3";
 
 let trackList = {
   track: {
