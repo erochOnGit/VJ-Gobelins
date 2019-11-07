@@ -1,14 +1,16 @@
 import Module from "../Module";
 
 class Cell extends Module {
-  constructor() {
+  constructor({geometry, material}) {
     super();
-    var geometry = new THREE.PlaneBufferGeometry(5, 20, 32);
-    var material = new THREE.MeshBasicMaterial({
+
+    this.geometry = geometry || new THREE.PlaneBufferGeometry(40, 40, 32);
+    this.material = material || new THREE.MeshBasicMaterial({
       color: 0xffff00,
       side: THREE.DoubleSide
     });
-    this.mesh = new THREE.Mesh(geometry, material);
+
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.position.set(0, 0, 11);
   }
   update() {}
