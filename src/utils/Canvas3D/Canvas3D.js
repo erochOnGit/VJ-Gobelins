@@ -37,6 +37,8 @@ class Canvas3D {
 
     // this.controls = new OrbitControls(this.camera);
 
+    this.test = this.analyser.createBeatDetector({min: 30,max: 100});
+
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x000000);
     this.raycaster = new THREE.Raycaster();
@@ -63,9 +65,12 @@ class Canvas3D {
     this.renderer.setAnimationLoop(this.render.bind(this));
   }
   render(t) {
+    let delta = this.clock.getDelta();
+
     this.interaction.update();
     this.analyser.refreshData();
     this.analyser.debug();
+    this.test.getValue(delta);
 
     this.renderer.render(this.scene, this.camera);
     this.composer.render();
