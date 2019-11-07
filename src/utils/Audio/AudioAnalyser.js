@@ -32,9 +32,9 @@ export default class AudioAnalyser{
         document.querySelector("body").append(debugCanvas);
         this.debugger = {
             canvas: debugCanvas,
-            ctx: debugCanvas.getContext("2d")
+            ctx: debugCanvas.getContext("2d"),
+            swapColor: false,
         }
-  
     }
 
     refreshData(){
@@ -45,7 +45,7 @@ export default class AudioAnalyser{
         this.debugger.canvas.width = window.innerWidth;
         this.debugger.canvas.height = window.innerHeight;
         this.debugger.ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
-        this.debugger.ctx.fillStyle = "#FF0000";
+        this.debugger.ctx.fillStyle = this.debugger.swapColor ? "#FF0000" : "#FFF";
 
         let width = window.innerWidth/this.dataArray.length;
         for(let i = 0; i<this.dataArray.length; i++){
@@ -54,12 +54,14 @@ export default class AudioAnalyser{
         }
     }
     
-    extractData(min,max){
-        return this.dataArray.slice(min, max);
+    extractData(range){
+        let _min = Math.floor(range.min/100 * this.dataArray.length);
+        let _max = Math.ceil(range.max/100 * this.dataArray.length);
+        return this.dataArray.slice(_min, _max);
     }
       
-    getMoy(min,max){
-        let array = this.extractData(min,max);
+    getAverage(range){
+        let array = this.extractData(range);
         let moy = 0;
         for(let i = 0; i<array.length;i++){
             moy += array[i];
@@ -67,14 +69,14 @@ export default class AudioAnalyser{
         return (moy/array.length)/255;
     }
     
-    getMax(min,max){
-        let array = this.extractData(min,max);
-        return Math.max( ...array)/127;
+    getMax(range){
+        let array = this.extractData(range);
+        return Math.max( ...array)/255;
     }
 
-    getQuartile(q) {
-        let array = this.extractData(min,max);
-        array = Array_Sort_Numbers(array);
+    getQuartile(range,q) {
+        let array = this.extractData(range);
+        array = array.sort((a, b) =>{ return a - b; });
         var pos = ((array.length) - 1) * q;
         var base = Math.floor(pos);
         var rest = pos - base;
@@ -83,6 +85,59 @@ export default class AudioAnalyser{
         } else {
             return array[base];
         }
+    }
+
+    createBeatDetector(range){
+        return new BeatDetector({analyser: this,range: range});
+    }
+}
+
+class BeatDetector{
+    constructor({ analyser, range }){
+        this.analyser = analyser;
+        this.range = range;
+        this.averages = [];
+        this.average = 0;
+        this.timer = 0;
+        this.hasbeated = false;
+    }
+
+    getValue(delta){
+        this.timer += delta;
+        let currentAverage = this.analyser.getAverage(this.range);
+        if(this.timer > 0.05){
+            this.timer = 0;
+            this.averages.push(currentAverage);
+            if(this.averages.length > 30){
+                this.averages.shift();
+            }
+            this.calculateAverage();
+        }
+
+        if(currentAverage > this.average){
+            if(!this.hasbeated){
+                console.log("beat");
+                this.analyser.debugger.swapColor = !this.analyser.debugger.swapColor;
+                this.hasbeated = true;
+                return true;
+            }
+        }else{
+            this.hasbeated = false;
+        }
+        return false;
+       
+    }
+
+    calculateAverage(){
+        this.average = 0;
+        for(let i = 0; i<this.averages.length;i++){
+            this.average += this.averages[i];
+        }
+        this.average = this.average/this.averages.length;
+    }
+
+    debug(){
+
     }
 }
     

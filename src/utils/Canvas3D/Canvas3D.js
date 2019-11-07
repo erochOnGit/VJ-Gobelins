@@ -20,6 +20,8 @@ class Canvas3D {
     this.analyser = analyser;
     var container;
 
+    this.test = this.analyser.createBeatDetector({min: 30,max: 100});
+
     this.scene = new THREE.Scene();
     this.sight = new Sight({ scenePush: this.addObjectToScene.bind(this) });
     this.scene.background = new THREE.Color(0x000000);
@@ -51,10 +53,15 @@ class Canvas3D {
     this.renderer.setAnimationLoop(this.render.bind(this));
   }
   render(t) {
+    let delta = this.clock.getDelta();
+
     this.interaction.update();
-    //  this.analyser.refreshData();
-    //  this.analyser.debug();
+
     this.sight.update();
+    this.analyser.refreshData();
+    this.analyser.debug();
+    this.test.getValue(delta);
+
     this.composer.render();
   }
   onWindowResize() {
