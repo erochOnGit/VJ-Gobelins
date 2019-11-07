@@ -52,5 +52,8 @@ class Sight {
     this.cameraOrthoHelper.update();
     this.cameraOrthoHelper.visible = true;
   }
+  getScreenSize() {
+    return { width: this.SCREEN_WIDTH, height: this.SCREEN_HEIGHT };
+  }
 }
 export default Sight;

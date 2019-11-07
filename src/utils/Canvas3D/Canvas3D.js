@@ -42,7 +42,8 @@ class Canvas3D {
     this.createComposer();
 
     this.interaction = new GlobaleInteraction({
-      scenePush: this.addObjectToScene.bind(this)
+      scenePush: this.addObjectToScene.bind(this),
+      getSize: this.sight.getScreenSize()
     });
 
     this.controls = new OrbitControls(this.sight.camera);
