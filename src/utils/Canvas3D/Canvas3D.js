@@ -1,5 +1,6 @@
 import Interaction from "./Interaction";
 import GlobaleInteraction from "src/GlobaleInteraction";
+import Sight from "src/utils/Sight";
 var OrbitControls = require("three-orbit-controls")(THREE);
 //SHADERS
 import "src/../node_modules/three/examples/js/shaders/CopyShader.js";
@@ -17,27 +18,10 @@ class Canvas3D {
     this.setStep = setStep;
     this.container = container || document.body;
     this.analyser = analyser;
-    this.camera = new THREE.PerspectiveCamera(
-      70,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    // this.camera = new THREE.OrthographicCamera(
-    //   window.innerWidth / -2,
-    //   window.innerWidth / 2,
-    //   window.innerHeight / 2,
-    //   window.innerHeight / -2,
-    //   1,
-    //   1000
-    // );
-    //let initCamPos = new THREE.Vector3(20, 10, 5); //stepSettings[this.interactionsIndex].camera.position;
-    this.camera.position.set(20, 10, 5);
-    this.camera.lookAt(0, 0, 0);
-
-    // this.controls = new OrbitControls(this.camera);
+    var container;
 
     this.scene = new THREE.Scene();
+    this.sight = new Sight({ scenePush: this.addObjectToScene.bind(this) });
     this.scene.background = new THREE.Color(0x000000);
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
@@ -47,7 +31,7 @@ class Canvas3D {
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
     this.container.appendChild(this.renderer.domElement);
 
     this.clock = new THREE.Clock();
@@ -58,29 +42,31 @@ class Canvas3D {
     this.interaction = new GlobaleInteraction({
       scenePush: this.addObjectToScene.bind(this)
     });
+
+    this.controls = new OrbitControls(this.sight.camera);
+    //this.controls = new OrbitControls(this.sight.activeCamera);
+
     window.addEventListener("resize", this.onWindowResize.bind(this), false);
     this.onWindowResize();
     this.renderer.setAnimationLoop(this.render.bind(this));
   }
   render(t) {
     this.interaction.update();
-    this.analyser.refreshData();
-    this.analyser.debug();
-
-    this.renderer.render(this.scene, this.camera);
+    //  this.analyser.refreshData();
+    //  this.analyser.debug();
+    this.sight.update();
     this.composer.render();
   }
   onWindowResize() {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
+    this.sight.onResize();
   }
   createComposer() {
     //composer
     this.composer = new THREE.EffectComposer(this.renderer);
 
     //passes
-    this.renderPass = new THREE.RenderPass(this.scene, this.camera);
+    this.renderPass = new THREE.RenderPass(this.scene, this.sight.cameraOrtho);
 
     this.chromaticAberration = {
       uniforms: {
