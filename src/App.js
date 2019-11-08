@@ -13,7 +13,7 @@ class App {
      */
 
     this.audio = new Audio();
-    let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 1024 });
+    let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 512 });
     window.addEventListener("click", () => {
       this.audio.start();
     });
@@ -24,7 +24,7 @@ class App {
         this.audio.nextTrack();
       }
     });
-
+    
     /**
      *
      * 3D Handling
@@ -35,6 +35,7 @@ class App {
       container: document.querySelector("#threeContainer"),
       setStep: this.setStep
     });
+
   }
   setStep(step) {
     this.step = step;
