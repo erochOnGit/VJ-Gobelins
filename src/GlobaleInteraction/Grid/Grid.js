@@ -23,7 +23,7 @@ class Grid {
     window.addEventListener("keydown", e => {
       if (e.keyCode == 65) {
 
-        this.dispatch({count: 1})
+        this.dispatch({count: 2})
       }
     });
   }
@@ -41,7 +41,7 @@ class Grid {
       console.log("im' here")
       this.molecules.forEach((molecule, index) => {
         //console.log(this.mesh.children)
-        let molSplitting = molecule.split(10, axe);
+        let molSplitting = molecule.split(0, axe);
         this.molecules.splice(index, 1, molSplitting[0],molSplitting[1]);
         this.mesh.children.splice(index, 1, molSplitting[0].mesh,molSplitting[1].mesh)
       });
