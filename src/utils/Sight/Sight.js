@@ -3,7 +3,7 @@ class Sight {
     this.SCREEN_WIDTH = window.innerWidth;
     this.SCREEN_HEIGHT = window.innerHeight;
     this.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
-    this.frustumSize = 200;
+    this.frustumSize = 15;
 
     this.camera = new THREE.PerspectiveCamera(
       70,
@@ -15,21 +15,21 @@ class Sight {
     this.camera.lookAt(0, 0, 0);
 
     this.cameraOrtho = new THREE.OrthographicCamera(
-      (0.5 * this.frustumSize * this.aspect) / -2,
-      (0.5 * this.frustumSize * this.aspect) / 2,
+      (this.frustumSize * this.aspect) / -2,
+      (this.frustumSize * this.aspect) / 2,
       this.frustumSize / 2,
       this.frustumSize / -2,
       0.001,
       100
     );
-    this.cameraOrtho.position.set(0, 0, 10);
+    this.cameraOrtho.position.set(0, 0, 12);
     this.cameraOrtho.lookAt(0, 0, 0);
     console.log(this.cameraOrtho);
 
     this.cameraOrthoHelper = new THREE.CameraHelper(this.cameraOrtho);
     scenePush(this.cameraOrthoHelper);
     this.activeCamera = this.cameraOrtho;
-    this.cameraOrtho.rotation.y = Math.PI;
+    //this.cameraOrtho.rotation.y = Math.PI;
   }
   onResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -38,11 +38,11 @@ class Sight {
     this.SCREEN_HEIGHT = window.innerHeight;
     this.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
 
-    this.camera.aspect = 0.5 * this.aspect;
+    this.camera.aspect = this.aspect;
     this.camera.updateProjectionMatrix();
 
-    this.cameraOrtho.left = (-0.5 * this.frustumSize * this.aspect) / 2;
-    this.cameraOrtho.right = (0.5 * this.frustumSize * this.aspect) / 2;
+    this.cameraOrtho.left = (-this.frustumSize * this.aspect) / 2;
+    this.cameraOrtho.right = (this.frustumSize * this.aspect) / 2;
     this.cameraOrtho.top = this.frustumSize / 2;
     this.cameraOrtho.bottom = -this.frustumSize / 2;
     this.cameraOrtho.updateProjectionMatrix();
