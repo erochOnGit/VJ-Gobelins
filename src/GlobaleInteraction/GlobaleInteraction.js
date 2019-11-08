@@ -4,14 +4,18 @@ import CellImage from "./Module/Cell/CellImage";
 import image from "src/assets/image/ARP_A_Escalier_01.jpg";
 
 class GlobaleInteraction extends Interaction {
-  constructor({ analyser, scenePush }) {
+  constructor({ analyser, scenePush, getSize }) {
     super();
     this.analyser = analyser;
-    this.grid = new Grid();
-    scenePush(this.grid.mesh);
+  //  this.grid = new Grid({ getSize });
+
+   // scenePush(this.grid.mesh);
+
     this.cell = new CellImage({image: image});
-    this.grid.add(this.cell);
+   // this.grid.add(this.cell);
+    scenePush(this.cell.mesh);
   }
+
   update() {
     let data = this.analyser.getData();
     this.cell.update(data);

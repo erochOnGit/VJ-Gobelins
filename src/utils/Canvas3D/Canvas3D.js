@@ -46,7 +46,8 @@ class Canvas3D {
 
     this.interaction = new GlobaleInteraction({
       analyser: this.analyser,
-      scenePush: this.addObjectToScene.bind(this)
+      scenePush: this.addObjectToScene.bind(this),
+      getSize: this.sight.getScreenSize.bind(this.sight)
     });
 
     this.controls = new OrbitControls(this.sight.camera);
@@ -62,6 +63,7 @@ class Canvas3D {
 
     this.analyser.refreshData(this.time);
     this.analyser.debug();
+    //this.interaction.update();
 
     this.interaction.update();
     this.sight.update();
@@ -69,8 +71,8 @@ class Canvas3D {
     this.composer.render();
   }
   onWindowResize() {
-    this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
     this.sight.onResize();
+    this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
   }
   createComposer() {
     //composer
