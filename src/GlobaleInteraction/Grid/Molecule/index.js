@@ -1,3 +1,3 @@
-import Molecule from "Molecule"
+import Molecule from "./Molecule";
 
-export default Molecule
+export default Molecule;

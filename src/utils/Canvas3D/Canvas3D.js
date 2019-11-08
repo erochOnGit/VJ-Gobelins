@@ -20,7 +20,7 @@ class Canvas3D {
     this.analyser = analyser;
     var container;
 
-    this.test = this.analyser.createBeatDetector({min: 30,max: 100});
+    this.test = this.analyser.createBeatDetector({ min: 30, max: 100 });
 
     this.scene = new THREE.Scene();
     this.sight = new Sight({ scenePush: this.addObjectToScene.bind(this) });
@@ -43,7 +43,7 @@ class Canvas3D {
 
     this.interaction = new GlobaleInteraction({
       scenePush: this.addObjectToScene.bind(this),
-      getSize: this.sight.getScreenSize()
+      getSize: this.sight.getScreenSize.bind(this.sight)
     });
 
     this.controls = new OrbitControls(this.sight.camera);
@@ -56,7 +56,7 @@ class Canvas3D {
   render(t) {
     let delta = this.clock.getDelta();
 
-    this.interaction.update();
+    //this.interaction.update();
 
     this.sight.update();
     this.analyser.refreshData();
@@ -66,15 +66,15 @@ class Canvas3D {
     this.composer.render();
   }
   onWindowResize() {
-    this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
     this.sight.onResize();
+    this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
   }
   createComposer() {
     //composer
     this.composer = new THREE.EffectComposer(this.renderer);
 
     //passes
-    this.renderPass = new THREE.RenderPass(this.scene, this.sight.cameraOrtho);
+    this.renderPass = new THREE.RenderPass(this.scene, this.sight.camera);
 
     this.chromaticAberration = {
       uniforms: {
