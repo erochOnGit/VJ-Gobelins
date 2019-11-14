@@ -14,20 +14,20 @@ class Molecule {
       // side: THREE.DoubleSide
     });
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(this.posX, this.posY, Math.abs(Math.random()) * 2);
+    this.mesh.position.set(this.posX, this.posY, 0);
   }
 
   getFirstChildSize(cuttingPoint) {
     return {
       width: cuttingPoint - this.getEdgesPos().left,
-      height: cuttingPoint - this.getEdgesPos().top
+      height: cuttingPoint - this.getEdgesPos().bottom
     };
   }
 
   getFirstChildCenter(cuttingPoint, axe) {
     return {
       horizontal: (cuttingPoint - Math.abs(this.getEdgesPos().left)) / 2,
-      vertical: (cuttingPoint - Math.abs(this.getEdgesPos().top)) / 2
+      vertical: (cuttingPoint - Math.abs(this.getEdgesPos().bottom)) / 2
     };
   }
 
@@ -39,76 +39,57 @@ class Molecule {
       bottom: this.posY - this.height / 2
     };
   }
-
-  split(cuttingPoint, axes) {
-    if (cuttingPoint < this.width) {
-      if (axes == "horizontal") {
-        console.log("horizontal", cuttingPoint);
-        if (this.width <= 1) {
-          return false;
-        }
-        return [
-          new Molecule({
-            posX:
-              this.getFirstChildCenter(cuttingPoint).horizontal +
-              this.margin / 2,
-            posY: this.posY,
-            width: this.getFirstChildSize(cuttingPoint).width - this.margin * 2,
-            height: this.height
-          }),
-          new Molecule({
-            posX:
-              cuttingPoint +
-              (this.width - this.getFirstChildSize(cuttingPoint).width) / 2 -
-              this.margin / 2,
-            posY: this.posY,
-            width:
-              this.width -
-              this.getFirstChildSize(cuttingPoint).width -
-              this.margin * 2,
-            height: this.height
-          })
-        ];
-      } else {
-        console.log("vertical");
-        if (this.height <= 1) {
-          return false;
-        }
-        console.log(
-          "vertical2",
-          "posX: ",
-          this.posX,
-          " posY:,",
-          this.getFirstChildCenter(cuttingPoint).vertical + this.margin / 2,
-          "width:",
-          this.width,
-          "height:",
-          this.getFirstChildSize(cuttingPoint).height - this.margin * 2
-        );
-        return [
-          new Molecule({
-            posX: this.posX,
-            posY:
-              this.getFirstChildCenter(cuttingPoint).vertical + this.margin / 2,
-            width: this.width,
-            height:
-              this.getFirstChildSize(cuttingPoint).height - this.margin * 2
-          }),
-          new Molecule({
-            posX: this.posX,
-            posY:
-              cuttingPoint +
-              (this.width - this.getFirstChildSize(cuttingPoint).height) / 2 -
-              this.margin / 2,
-            width: this.width,
-            height:
-              this.width -
-              this.getFirstChildSize(cuttingPoint).height -
-              this.margin * 2
-          })
-        ];
-      }
+  splitHorizontal(cuttingPoint) {
+    if (cuttingPoint == undefined) {
+      throw "Parameter is not a number!";
     }
+    return [
+      new Molecule({
+        posX:
+          this.getFirstChildCenter(cuttingPoint).horizontal + this.margin / 2,
+        posY: this.posY,
+        width: this.getFirstChildSize(cuttingPoint).width - this.margin * 2,
+        height: this.height
+      }),
+      new Molecule({
+        posX:
+          cuttingPoint +
+          (this.width - this.getFirstChildSize(cuttingPoint).width) / 2 -
+          this.margin / 2,
+        posY: this.posY,
+        width:
+          this.width -
+          this.getFirstChildSize(cuttingPoint).width -
+          this.margin * 2,
+        height: this.height
+      })
+    ];
+  }
+  splitVertical(cuttingPoint) {
+    if (cuttingPoint == undefined) {
+      throw "Parameter is not a number!";
+    }
+    return [
+      new Molecule({
+        posX: this.posX,
+        posY: this.getFirstChildCenter(cuttingPoint).vertical + this.margin / 2,
+        width: this.width,
+        height: this.getFirstChildSize(cuttingPoint).height - this.margin * 2
+      }),
+      new Molecule({
+        posX: this.posX,
+        posY:
+          cuttingPoint +
+          (this.height - this.getFirstChildSize(cuttingPoint).height) / 2 -
+          this.margin / 2,
+        width: this.width,
+        height:
+          this.height -
+          this.getFirstChildSize(cuttingPoint).height -
+          this.margin * 2
+      })
+    ];
+  }
   }
 }
 
