@@ -26,7 +26,6 @@ class Molecule {
     this.cell.mesh.position.set(this.posX, this.posY, 0);
 
     this.renderer = renderer;
-    console.log(this.renderer);
   }
 
   getFirstChildSize(cuttingPoint) {
@@ -55,7 +54,6 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
-    console.log(this.renderer);
     return [
       new Molecule({
         posX:

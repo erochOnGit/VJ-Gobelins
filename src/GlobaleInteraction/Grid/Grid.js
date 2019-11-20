@@ -49,7 +49,6 @@ class Grid {
         molecule.getEdgesPos().bottom < cuttingPoint &&
         molecule.getEdgesPos().bottom + molecule.height > cuttingPoint
       ) {
-        console.log("vertical");
         intersect.push({ molecule: molecule, index: index });
       }
     });
@@ -64,7 +63,6 @@ class Grid {
         molecule.getEdgesPos().left < cuttingPoint &&
         molecule.getEdgesPos().left + molecule.width > cuttingPoint
       ) {
-        console.log("horisontal");
         intersect.push({ molecule: molecule, index: index });
       }
     });
@@ -76,24 +74,10 @@ class Grid {
     //instanciate two molecules from the first one
     for (let i = 0; i < count; i++) {
       let cuttingPoint = Math.round(Math.random() * 10) - 5;
-      console.log(cuttingPoint);
-      //   this.molecules.forEach((molecule, index) => {
-      //     //console.log(this.mesh.children)
-      //     let molSplitting = molecule.split(0, axe);
-      //     this.molecules.splice(index, 1, molSplitting[0], molSplitting[1]);
-      //     this.mesh.children.splice(
-      //       index,
-      //       1,
-      //       molSplitting[0].mesh,
-      //       molSplitting[1].mesh
-      //     );
-      //   });
-      //}
       if (this.axe == "horizontal") {
         let intersectedMol = this.getHorizontalIntersectedMolecule(
           cuttingPoint
         );
-        console.log(intersectedMol);
         if (intersectedMol) {
           let molSplitting = intersectedMol.molecule.splitHorizontal(
             cuttingPoint
@@ -111,7 +95,6 @@ class Grid {
             molSplitting[1].cell.mesh
           );
         }
-        console.log(this.molecules);
         this.axe = "vertical";
       } else {
         let intersectedMol = this.getVerticalIntersectedMolecule(cuttingPoint);
