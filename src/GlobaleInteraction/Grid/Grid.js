@@ -1,7 +1,10 @@
 import Cell from "src/GlobaleInteraction/Module/Cell";
+import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
+import CellPass from "src/GlobaleInteraction/Module/Cell/CellPass";
+import image from "src/assets/image/ARP_A_Escalier_01.jpg";
 import Molecule from "./Molecule";
 class Grid {
-  constructor({ getSize }) {
+  constructor({ renderer, getSize }) {
     this.mesh = new THREE.Group();
     this.width = getSize().width > 2000 ? 2000 : getSize().width;
     this.height =
@@ -15,17 +18,24 @@ class Grid {
 
     this.molecules = [];
     //first molecule in the grid
-    this.molecules.push(new Molecule({ width: 20, height: 10 }));
+    this.molecules.push(
+      new Molecule({
+        width: 20,
+        height: 10,
+        cell: new CellPass({ renderer: renderer, image: image }),
+        renderer: renderer
+      })
+    );
     this.molecules.forEach(mol => {
-      this.mesh.add(mol.mesh);
+      this.mesh.add(mol.cell.mesh);
     });
     this.cellQueue = [];
     window.addEventListener("keydown", e => {
       if (e.keyCode == 65) {
-        this.dispatch({ count: 12 });
+        this.dispatch({ count: 1 });
       }
     });
-    this.axe = "vertical";
+    this.axe = "horizontal";
   }
   add(cell) {
     this.cellQueue.push(cell);
@@ -97,11 +107,11 @@ class Grid {
           this.mesh.children.splice(
             intersectedMol.index,
             1,
-            molSplitting[0].mesh,
-            molSplitting[1].mesh
+            molSplitting[0].cell.mesh,
+            molSplitting[1].cell.mesh
           );
         }
-        console.log(this.molecules); 
+        console.log(this.molecules);
         this.axe = "vertical";
       } else {
         let intersectedMol = this.getVerticalIntersectedMolecule(cuttingPoint);
@@ -118,15 +128,19 @@ class Grid {
           this.mesh.children.splice(
             intersectedMol.index,
             1,
-            molSplitting[0].mesh,
-            molSplitting[1].mesh
+            molSplitting[0].cell.mesh,
+            molSplitting[1].cell.mesh
           );
         }
         this.axe = "horizontal";
       }
     }
   }
-  update() {}
+  update(data) {
+    for (let i = 0; i < this.molecules.length; i++) {
+      this.molecules[i].update(data);
+    }
+  }
 }
 
 export default Grid;

@@ -1,5 +1,9 @@
+import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
+import CellPass from "src/GlobaleInteraction/Module/Cell/CellPass";
+import image from "src/assets/image/ARP_A_Escalier_01.jpg";
+
 class Molecule {
-  constructor({ posX, posY, width, height }) {
+  constructor({ posX, posY, width, height, renderer, cell }) {
     /**
      * width in cell
      */
@@ -13,8 +17,16 @@ class Molecule {
       color: 0xffff00
       // side: THREE.DoubleSide
     });
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
-    this.mesh.position.set(this.posX, this.posY, 0);
+    // this.mesh = new THREE.Mesh(this.geometry, this.material);
+    // cell = {
+    //   mesh: new THREE.Mesh(this.geometry, this.material),
+    //   update: () => {}
+    // };
+    this.cell = cell;
+    this.cell.mesh.position.set(this.posX, this.posY, 0);
+
+    this.renderer = renderer;
+    console.log(this.renderer);
   }
 
   getFirstChildSize(cuttingPoint) {
@@ -43,13 +55,16 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
+    console.log(this.renderer);
     return [
       new Molecule({
         posX:
           this.getFirstChildCenter(cuttingPoint).horizontal + this.margin / 2,
         posY: this.posY,
         width: this.getFirstChildSize(cuttingPoint).width - this.margin * 2,
-        height: this.height
+        height: this.height,
+        renderer: this.renderer,
+        cell: new CellPass({ renderer: this.renderer, image: image })
       }),
       new Molecule({
         posX:
@@ -61,7 +76,9 @@ class Molecule {
           this.width -
           this.getFirstChildSize(cuttingPoint).width -
           this.margin * 2,
-        height: this.height
+        height: this.height,
+        renderer: this.renderer,
+        cell: new CellPass({ renderer: this.renderer, image: image })
       })
     ];
   }
@@ -74,7 +91,9 @@ class Molecule {
         posX: this.posX,
         posY: this.getFirstChildCenter(cuttingPoint).vertical + this.margin / 2,
         width: this.width,
-        height: this.getFirstChildSize(cuttingPoint).height - this.margin * 2
+        height: this.getFirstChildSize(cuttingPoint).height - this.margin * 2,
+        renderer: this.renderer,
+        cell: new CellImage({ image: image })
       }),
       new Molecule({
         posX: this.posX,
@@ -86,10 +105,14 @@ class Molecule {
         height:
           this.height -
           this.getFirstChildSize(cuttingPoint).height -
-          this.margin * 2
+          this.margin * 2,
+        renderer: this.renderer,
+        cell: new CellImage({ image: image })
       })
     ];
   }
+  update(data) {
+    this.cell.update(data);
   }
 }
 
