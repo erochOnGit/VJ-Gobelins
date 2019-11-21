@@ -74,6 +74,11 @@ module.exports = {
         test: /\.(png|svg|jpg|gif)$/,
         use: ["file-loader"]
       },
+      //load video
+      {
+        test: /\.webm$/,
+        use: ["file-loader"]
+      },
       //load musics
       {
         test: /\.mp3$/,
