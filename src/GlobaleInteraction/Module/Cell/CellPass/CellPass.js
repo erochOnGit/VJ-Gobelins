@@ -30,7 +30,7 @@ class CellPass extends Cell {
     this.pass = new GPUSim(renderer, 1024, 1024, this.material);
 
     this.pass.render();
-
+    
     this.material2 = new THREE.RawShaderMaterial({
       uniforms: {
         inputTexture: { type: "t", value: null },

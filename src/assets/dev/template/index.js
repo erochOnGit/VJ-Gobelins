@@ -1,4 +1,5 @@
 import vertex from "./vertex.glsl"
 import fragment from "./fragment.glsl"
 
-export { fragment, vertex } 
+let shader = {vertex: vertex, fragment: fragment}
+export default shader;

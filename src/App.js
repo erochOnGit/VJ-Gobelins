@@ -13,7 +13,7 @@ class App {
      */
 
     this.audio = new Audio();
-    let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 512 });
+    let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 1024 });
     window.addEventListener("click", () => {
       this.audio.start();
     });

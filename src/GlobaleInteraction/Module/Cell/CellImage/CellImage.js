@@ -1,53 +1,56 @@
 import Cell from "../Cell";
-import { fragment, vertex }  from "src/assets/dev/template";
 
 class CellImage extends Cell {
-  constructor({image}) {
+  constructor({ image, shader, size }) {
     let textureLoader = new THREE.TextureLoader();
 
-    var texture = textureLoader.load(image,(texture)=>{
+    var texture = textureLoader.load(image, texture => {
       this.updateRatio();
       texture.minFilter = THREE.LinearFilter;
     });
-    
-    var material = new THREE.RawShaderMaterial( {
-      uniforms:{
+
+    var material = new THREE.RawShaderMaterial({
+      uniforms: {
         uSampler: { type: "t", value: texture },
         uTime: { type: "1f", value: 0 },
         uVolume: { type: "1f", value: 0 },
-        ratio: {type: "2f", value: [1,1] },
+        uIntensity: { type: "1f", value: 0 },
+        ratio: { type: "2f", value: [1, 1] }
       },
-      vertexShader: vertex,
-      fragmentShader: fragment,
+      vertexShader: shader.vertex,
+      fragmentShader: shader.fragment,
       depthTest: false,
       depthWrite: false,
       side: THREE.DoubleSide
     });
 
-    super({material: material});
+    super({ material, size });
     this.texture = texture;
   }
 
   update(data) {
     this.material.uniforms.uTime.value = data.time.time;
     this.material.uniforms.uVolume.value = data.volume;
+    this.material.uniforms.uIntensity.value = data.intensity;
   }
 
-  updateRatio(){
-    if(this.texture.image != undefined){
+  updateRatio() {
+    if (this.texture.image != undefined) {
+      let px = this.size.y / this.size.x;
+      let py = this.size.x / this.size.y;
 
-      let px = this.size.y/this.size.x;
-      let py = this.size.x/this.size.y;
+      let tx = this.texture.image.width / this.texture.image.height;
+      let ty = this.texture.image.height / this.texture.image.width;
 
-      let tx = this.texture.image.width/this.texture.image.height;
-      let ty = this.texture.image.height/this.texture.image.width;
-
-      if((this.texture.width > this.texture.height && this.size.x > this.size.y) || (this.texture.image.width < this.texture.image.height && this.size.x > this.size.y)){
+      if (
+        (tx > 1 && this.size.x > this.size.y) ||
+        (tx < 1 && this.size.x > this.size.y)
+      ) {
         this.material.uniforms.ratio.value = [1, px * tx];
-      }else{
+      } else {
         this.material.uniforms.ratio.value = [py * ty, 1];
       }
-    }  
+    }
   }
 }
 
