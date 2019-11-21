@@ -20,10 +20,10 @@ class Canvas3D {
     this.analyser = analyser;
     var container;
 
-    this.time ={
+    this.time = {
       time: 0,
       delta: 0
-    }
+    };
 
     this.scene = new THREE.Scene();
     this.sight = new Sight({ scenePush: this.addObjectToScene.bind(this) });
@@ -45,6 +45,7 @@ class Canvas3D {
     this.createComposer();
 
     this.interaction = new GlobaleInteraction({
+      renderer: this.renderer,
       analyser: this.analyser,
       scenePush: this.addObjectToScene.bind(this),
       getSize: this.sight.getScreenSize.bind(this.sight)
@@ -79,7 +80,7 @@ class Canvas3D {
     this.composer = new THREE.EffectComposer(this.renderer);
 
     //passes
-    this.renderPass = new THREE.RenderPass(this.scene, this.sight.cameraOrtho);
+    this.renderPass = new THREE.RenderPass(this.scene, this.sight.camera);
 
     this.chromaticAberration = {
       uniforms: {
@@ -119,7 +120,6 @@ class Canvas3D {
   addObjectToScene(mesh) {
     this.scene.add(mesh);
   }
-
 }
 
 export default Canvas3D;

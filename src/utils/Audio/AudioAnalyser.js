@@ -67,7 +67,7 @@ export default class AudioAnalyser {
     this.data.intensity += (this.data.rawvolume - this.data.intensity) * 0.01;
     this.data.difference += ((this.data.rawvolume - this.data.intensity) * 10.0 - this.data.difference) * 0.7;
 
-    console.log(this.data.difference);
+    // console.log(this.data.difference);
   }
 
   debug() {

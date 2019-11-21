@@ -8,22 +8,22 @@ import image from "src/assets/image/ARP_B_Immeuble_01.jpg";
 import url from "src/assets/video/ARV_A_Vieux_02.webm";
 
 class GlobaleInteraction extends Interaction {
-  constructor({ analyser, scenePush, getSize }) {
+  constructor({ analyser, scenePush, getSize, renderer }) {
     super();
     this.analyser = analyser;
-  //  this.grid = new Grid({ getSize });
+    this.grid = new Grid({ renderer, getSize });
 
-   // scenePush(this.grid.mesh);
+    scenePush(this.grid.mesh);
 
-    //this.cell = new CellImage({image: image});
-    this.cell = new CellVideo({url: url, shader: shader1});
-   // this.grid.add(this.cell);
-    scenePush(this.cell.mesh);
+  //   //this.cell = new CellImage({image: image});
+  //   this.cell = new CellVideo({url: url, shader: shader1});
+  //  // this.grid.add(this.cell);
+  //   scenePush(this.cell.mesh);
   }
 
   update() {
     let data = this.analyser.getData();
-    this.cell.update(data);
+    this.grid.update(data);
   }
 }
 
