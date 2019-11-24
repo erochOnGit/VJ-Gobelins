@@ -1,6 +1,7 @@
 import Cell from "src/GlobaleInteraction/Module/Cell";
 import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
 import CellPass from "src/GlobaleInteraction/Module/Cell/CellPass";
+import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
 import image from "src/assets/image/ARP_A_Escalier_01.jpg";
 import Molecule from "./Molecule";
 class Grid {
@@ -22,7 +23,7 @@ class Grid {
       new Molecule({
         width: 20,
         height: 10,
-        cell: new CellPass({ renderer: renderer, image: image }),
+        cell: new CellReactionDiffusion({ renderer: renderer, image: image }),
         renderer: renderer
       })
     );
@@ -119,6 +120,29 @@ class Grid {
       }
     }
   }
+  // mouseClickHandler(canvasThis) {
+  //   let onMouseClick = event => {
+  //     window.onmousemove = this.mouseClickHandler(canvasThis).bind(canvasThis);
+  //     canvasThis.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  //     canvasThis.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  //     canvasThis.raycaster.setFromCamera(canvasThis.mouse, canvasThis.camera);
+  //     canvasThis.intersects = canvasThis.raycaster.intersectObjects(
+  //       canvasThis.scene.children
+  //     );
+  //     let ink = this.objects.filter(obj => {
+  //       return obj instanceof InkSpreading;
+  //     });
+  //     for (var i = 0; i < canvasThis.intersects.length; i++) {
+  //       for (let j = 0; j < ink.length; j++) {
+  //         if (ink[j] && canvasThis.intersects[i].object.uuid == ink[j].id) {
+  //           ink[j].updatePointer(canvasThis.intersects[i].point);
+  //         }
+  //       }
+  //     }
+  //     canvasThis.intersects = [];
+  //   };
+  //   return onMouseClick;
+  // }
   update(data) {
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);
