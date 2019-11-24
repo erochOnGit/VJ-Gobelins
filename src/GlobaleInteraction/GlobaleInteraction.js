@@ -1,11 +1,5 @@
 import Interaction from "../utils/Canvas3D/Interaction";
 import Grid from "./Grid";
-import CellImage from "./Module/Cell/CellImage";
-import CellVideo from "./Module/Cell/CellVideo";
-import shader1  from "src/assets/dev/template";
-import shader2  from "src/assets/dev/boomboom";
-import image from "src/assets/image/ARP_B_Immeuble_01.jpg";
-import url from "src/assets/video/ARV_A_Vieux_02.webm";
 
 class GlobaleInteraction extends Interaction {
   constructor({ analyser, scenePush, getSize, renderer }) {

@@ -1,7 +1,3 @@
-import Cell from "src/GlobaleInteraction/Module/Cell";
-import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
-import CellPass from "src/GlobaleInteraction/Module/Cell/CellPass";
-import image from "src/assets/image/ARP_A_Escalier_01.jpg";
 import Molecule from "./Molecule";
 class Grid {
   constructor({ renderer, getSize }) {
