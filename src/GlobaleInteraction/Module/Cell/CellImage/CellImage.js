@@ -43,8 +43,7 @@ class CellImage extends Cell {
       let ty = this.texture.image.height / this.texture.image.width;
 
       if (
-        (tx > 1 && this.size.x > this.size.y) ||
-        (tx < 1 && this.size.x > this.size.y)
+        px <= 1
       ) {
         this.material.uniforms.ratio.value = [1, px * tx];
       } else {

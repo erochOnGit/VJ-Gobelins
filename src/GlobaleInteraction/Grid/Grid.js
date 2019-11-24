@@ -22,7 +22,6 @@ class Grid {
       new Molecule({
         width: 20,
         height: 10,
-        cell: new CellPass({ renderer: renderer, image: image }),
         renderer: renderer
       })
     );
@@ -40,8 +39,8 @@ class Grid {
   add(cell) {
     this.cellQueue.push(cell);
   }
-  remove() {}
-  onResize() {}
+  remove() { }
+  onResize() { }
   getVerticalIntersectedMolecule(cuttingPoint) {
     let intersect = [];
     this.molecules.forEach((molecule, index) => {

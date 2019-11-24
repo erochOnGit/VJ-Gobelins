@@ -1,7 +1,4 @@
-import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
-import CellPass from "src/GlobaleInteraction/Module/Cell/CellPass";
-import image from "src/assets/image/ARP_A_Escalier_01.jpg";
-import shader2 from "src/assets/dev/template";
+import CellFactory from "src/GlobaleInteraction/Module/CellFactory";
 
 class Molecule {
   constructor({ posX, posY, width, height, renderer, cell }) {
@@ -13,17 +10,8 @@ class Molecule {
     this.posX = posX || 0;
     this.posY = posY || 0;
     this.margin = 0.2;
-    this.geometry = new THREE.PlaneBufferGeometry(width, height, 1, 1);
-    this.material = new THREE.MeshBasicMaterial({
-      color: 0xffff00
-      // side: THREE.DoubleSide
-    });
-    // this.mesh = new THREE.Mesh(this.geometry, this.material);
-    // cell = {
-    //   mesh: new THREE.Mesh(this.geometry, this.material),
-    //   update: () => {}
-    // };
-    this.cell = cell;
+
+    this.cell = CellFactory({size: new THREE.Vector2(this.width - this.margin * 2, this.height - this.margin * 2)});
     this.cell.mesh.position.set(this.posX, this.posY, 0);
 
     this.renderer = renderer;
@@ -56,42 +44,25 @@ class Molecule {
       throw "Parameter is not a number!";
     }
 
-    let width = this.getFirstChildSize(cuttingPoint).width - this.margin * 2;
-    let height = this.height;
-    let width2 =
-      this.width - this.getFirstChildSize(cuttingPoint).width - this.margin * 2;
-    let height2 = this.height;
     return [
       new Molecule({
         posX:
-          this.getFirstChildCenter(cuttingPoint).horizontal + this.margin / 2,
+          this.getFirstChildCenter(cuttingPoint).horizontal,
         posY: this.posY,
-        width: this.getFirstChildSize(cuttingPoint).width - this.margin * 2,
+        width: this.getFirstChildSize(cuttingPoint).width,
         height: this.height,
-        renderer: this.renderer,
-        cell: new CellImage({
-          image: image,
-          shader: shader2,
-          size: new THREE.Vector2(width, height)
-        })
+        renderer: this.renderer
       }),
       new Molecule({
         posX:
           cuttingPoint +
-          (this.width - this.getFirstChildSize(cuttingPoint).width) / 2 -
-          this.margin / 2,
+          (this.width - this.getFirstChildSize(cuttingPoint).width) / 2,
         posY: this.posY,
         width:
           this.width -
-          this.getFirstChildSize(cuttingPoint).width -
-          this.margin * 2,
+          this.getFirstChildSize(cuttingPoint).width,
         height: this.height,
-        renderer: this.renderer,
-        cell: new CellImage({
-          image: image,
-          shader: shader2,
-          size: new THREE.Vector2(width2, height2)
-        })
+        renderer: this.renderer
       })
     ];
   }
@@ -100,46 +71,28 @@ class Molecule {
       throw "Parameter is not a number!";
     }
 
-    let width = this.width;
-    let height = this.getFirstChildSize(cuttingPoint).height - this.margin * 2;
-    let width2 = this.width;
-    let height2 =
-      this.height -
-      this.getFirstChildSize(cuttingPoint).height -
-      this.margin * 2;
     return [
       new Molecule({
         posX: this.posX,
-        posY: this.getFirstChildCenter(cuttingPoint).vertical + this.margin / 2,
+        posY: this.getFirstChildCenter(cuttingPoint).vertical,
         width: this.width,
-        height: this.getFirstChildSize(cuttingPoint).height - this.margin * 2,
-        renderer: this.renderer,
-        cell: new CellImage({
-          image: image,
-          shader: shader2,
-          size: new THREE.Vector2(width, height)
-        })
+        height: this.getFirstChildSize(cuttingPoint).height,
+        renderer: this.renderer
       }),
       new Molecule({
         posX: this.posX,
         posY:
           cuttingPoint +
-          (this.height - this.getFirstChildSize(cuttingPoint).height) / 2 -
-          this.margin / 2,
+          (this.height - this.getFirstChildSize(cuttingPoint).height) / 2,
         width: this.width,
         height:
           this.height -
-          this.getFirstChildSize(cuttingPoint).height -
-          this.margin * 2,
-        renderer: this.renderer,
-        cell: new CellImage({
-          image: image,
-          shader: shader2,
-          size: new THREE.Vector2(width2, height2)
-        })
+          this.getFirstChildSize(cuttingPoint).height,
+        renderer: this.renderer
       })
     ];
   }
+
   update(data) {
     this.cell.update(data);
   }
