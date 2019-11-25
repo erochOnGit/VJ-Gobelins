@@ -11,7 +11,12 @@ class Molecule {
     this.posY = posY || 0;
     this.margin = 0.2;
 
-    this.cell = CellFactory({size: new THREE.Vector2(this.width - this.margin * 2, this.height - this.margin * 2)});
+    this.cell = CellFactory({
+      size: new THREE.Vector2(
+        this.width - this.margin * 2,
+        this.height - this.margin * 2
+      )
+    });
     this.cell.mesh.position.set(this.posX, this.posY, 0);
 
     this.renderer = renderer;
@@ -26,8 +31,8 @@ class Molecule {
 
   getFirstChildCenter(cuttingPoint, axe) {
     return {
-      horizontal: (cuttingPoint - Math.abs(this.getEdgesPos().left)) / 2,
-      vertical: (cuttingPoint - Math.abs(this.getEdgesPos().bottom)) / 2
+      horizontal: (cuttingPoint + this.getEdgesPos().left) / 2,
+      vertical: (cuttingPoint + this.getEdgesPos().bottom) / 2
     };
   }
 
@@ -43,11 +48,20 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
+    console.log(
+      "horizontal",
+      Math.abs(this.getEdgesPos().left),
+      "\n left",
+      this.getEdgesPos().left,
 
+      "\n parentPos : ",
+      this.posX,
+      "\n cuttinPoint : ",
+      cuttingPoint
+    );
     return [
       new Molecule({
-        posX:
-          this.getFirstChildCenter(cuttingPoint).horizontal,
+        posX: this.getFirstChildCenter(cuttingPoint).horizontal,
         posY: this.posY,
         width: this.getFirstChildSize(cuttingPoint).width,
         height: this.height,
@@ -58,9 +72,7 @@ class Molecule {
           cuttingPoint +
           (this.width - this.getFirstChildSize(cuttingPoint).width) / 2,
         posY: this.posY,
-        width:
-          this.width -
-          this.getFirstChildSize(cuttingPoint).width,
+        width: this.width - this.getFirstChildSize(cuttingPoint).width,
         height: this.height,
         renderer: this.renderer
       })
@@ -70,6 +82,16 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
+    console.log(
+      "vertical",
+      Math.abs(this.getEdgesPos().bottom),
+      "\n bottom",
+      this.getEdgesPos().bottom,
+      "\n parentPos : ",
+      this.posY,
+      "\n cuttinPoint : ",
+      cuttingPoint
+    );
 
     return [
       new Molecule({
@@ -85,9 +107,7 @@ class Molecule {
           cuttingPoint +
           (this.height - this.getFirstChildSize(cuttingPoint).height) / 2,
         width: this.width,
-        height:
-          this.height -
-          this.getFirstChildSize(cuttingPoint).height,
+        height: this.height - this.getFirstChildSize(cuttingPoint).height,
         renderer: this.renderer
       })
     ];
