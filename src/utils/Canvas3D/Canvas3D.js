@@ -80,7 +80,7 @@ class Canvas3D {
     this.composer = new THREE.EffectComposer(this.renderer);
 
     //passes
-    this.renderPass = new THREE.RenderPass(this.scene, this.sight.camera);
+    this.renderPass = new THREE.RenderPass(this.scene, this.sight.cameraOrtho);
 
     this.chromaticAberration = {
       uniforms: {

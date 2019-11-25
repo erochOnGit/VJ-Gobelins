@@ -9,7 +9,7 @@ class Molecule {
     this.height = height || 1;
     this.posX = posX || 0;
     this.posY = posY || 0;
-    this.margin = 0.2;
+    this.margin = 0.1;
 
     this.cell = CellFactory({size: new THREE.Vector2(this.width - this.margin * 2, this.height - this.margin * 2)});
     this.cell.mesh.position.set(this.posX, this.posY, 0);
