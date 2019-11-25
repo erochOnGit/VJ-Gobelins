@@ -55,7 +55,7 @@ class Grid {
   add(cell) {
     this.cellQueue.push(cell);
   }
-  
+
   remove(molecule) { 
     if(molecule){
       molecule.destroy();

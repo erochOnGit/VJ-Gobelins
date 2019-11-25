@@ -2,6 +2,7 @@ import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
 import CellVideo from "src/GlobaleInteraction/Module/Cell/CellVideo";
 import CellEmpty from "src/GlobaleInteraction/Module/Cell/CellEmpty";
 import CellColor from "src/GlobaleInteraction/Module/Cell/CellColor";
+import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
 
 import shader1 from "src/assets/dev/template";
 import shader2 from "src/assets/dev/boomboom";
@@ -25,7 +26,9 @@ function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function CellFactory({ size }) {
+function CellFactory({ size ,renderer}) {
+  return new CellReactionDiffusion({ size,renderer });
+
   let percent = Math.random() * 100;
   let current = 0;
 
@@ -41,10 +44,12 @@ function CellFactory({ size }) {
     return new CellColor({ size, color: "#78FFA1" });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
+  } else if (CheckPercent(30)) {
+    
+    return new CellReactionDiffusion({ size,renderer });
   } else {
     return CellImageFactory({ size });
   }
-
 }
 
 function CellImageFactory({ size }) {
