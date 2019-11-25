@@ -14,6 +14,7 @@ class Grid {
 
     this.molecules = [];
     //first molecule in the grid
+    console.log("grid" , renderer)
     this.molecules.push(
       new Molecule({
         width: 20,
