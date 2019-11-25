@@ -37,7 +37,7 @@ function CellFactory({ size }) {
 
   if (CheckPercent(30)) {
     return CellVideoFactory({ size });
-  } else if (CheckPercent(5)) {
+  } else if (CheckPercent(10)) {
     return new CellColor({ size, color: "#78FFA1" });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });

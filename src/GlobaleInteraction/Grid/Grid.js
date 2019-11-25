@@ -13,7 +13,30 @@ class Grid {
     this.gravityRegion = 20;
 
     this.molecules = [];
-    //first molecule in the grid
+
+    this.cellQueue = [];
+    this.axe = "horizontal";
+
+    window.addEventListener("keyup", e => {
+      if (e.keyCode == 65) {
+       /* let randMolecule = this.molecules[Math.floor(Math.random() * this.molecules.length)];
+        this.remove(randMolecule);*/
+        let array = [...this.molecules];
+        for(let i =0; i<array.length;i++){
+          this.remove(array[i]);
+        }
+      }
+      if (e.keyCode == 69) {
+        this.generate(renderer);
+      }
+    });
+
+    this.generate(renderer);
+
+  }
+
+
+  generate(renderer){
     this.molecules.push(
       new Molecule({
         width: 20,
@@ -21,21 +44,28 @@ class Grid {
         renderer: renderer
       })
     );
+
     this.molecules.forEach(mol => {
       this.mesh.add(mol.cell.mesh);
     });
-    this.cellQueue = [];
-    window.addEventListener("keydown", e => {
-      if (e.keyCode == 65) {
-        this.dispatch({ count: 1 });
-      }
-    });
-    this.axe = "horizontal";
+
+    this.dispatch({ count: 15 });
   }
+
   add(cell) {
     this.cellQueue.push(cell);
   }
-  remove() { }
+  
+  remove(molecule) { 
+    if(molecule){
+      molecule.destroy();
+      var index = this.molecules.indexOf(molecule);
+      if (index > -1) {
+        this.molecules.splice(index, 1);
+      }
+    }
+  }
+
   onResize() { }
   getVerticalIntersectedMolecule(cuttingPoint) {
     let intersect = [];
@@ -68,21 +98,26 @@ class Grid {
     //slice
     //instanciate two molecules from the first one
     for (let i = 0; i < count; i++) {
-      let cuttingPoint = Math.round(Math.random() * 10) - 5;
+      let cuttingPointX = Math.round(Math.random() * 20) - 10;
+      let cuttingPointY = Math.round(Math.random() * 10) - 5;
       if (this.axe == "horizontal") {
         let intersectedMol = this.getHorizontalIntersectedMolecule(
-          cuttingPoint
+          cuttingPointX
         );
         if (intersectedMol) {
           let molSplitting = intersectedMol.molecule.splitHorizontal(
-            cuttingPoint
+            cuttingPointX
           );
+
+          molSplitting[0].cell.mesh.parent = this.mesh;
+          molSplitting[1].cell.mesh.parent = this.mesh;
+
           this.molecules.splice(
             intersectedMol.index,
             1,
             molSplitting[0],
             molSplitting[1]
-          );
+          )[0].destroy();
           this.mesh.children.splice(
             intersectedMol.index,
             1,
@@ -92,17 +127,23 @@ class Grid {
         }
         this.axe = "vertical";
       } else {
-        let intersectedMol = this.getVerticalIntersectedMolecule(cuttingPoint);
+        let intersectedMol = this.getVerticalIntersectedMolecule(cuttingPointY);
         if (intersectedMol) {
           let molSplitting = intersectedMol.molecule.splitVertical(
-            cuttingPoint
+            cuttingPointY
           );
+
+          molSplitting[0].cell.mesh.parent = this.mesh;
+          molSplitting[1].cell.mesh.parent = this.mesh;
+
           this.molecules.splice(
             intersectedMol.index,
             1,
             molSplitting[0],
             molSplitting[1]
-          );
+          )[0].destroy();
+
+
           this.mesh.children.splice(
             intersectedMol.index,
             1,

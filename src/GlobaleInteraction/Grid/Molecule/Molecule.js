@@ -18,7 +18,7 @@ class Molecule {
       )
     });
     this.cell.mesh.position.set(this.posX, this.posY, 0);
-
+    this.cell.reveal();
     this.renderer = renderer;
   }
 
@@ -82,7 +82,7 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
-    console.log(
+    /*console.log(
       "vertical",
       Math.abs(this.getEdgesPos().bottom),
       "\n bottom",
@@ -91,7 +91,7 @@ class Molecule {
       this.posY,
       "\n cuttinPoint : ",
       cuttingPoint
-    );
+    );*/
 
     return [
       new Molecule({
@@ -115,6 +115,10 @@ class Molecule {
 
   update(data) {
     this.cell.update(data);
+  }
+
+  destroy(){
+    this.cell.destroy();
   }
 }
 
