@@ -151,7 +151,6 @@ class Grid {
       }
     }
   }
-
   update(data) {
 
     if(data.bpm(8)){
