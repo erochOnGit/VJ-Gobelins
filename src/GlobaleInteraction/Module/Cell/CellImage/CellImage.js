@@ -57,6 +57,10 @@ class CellImage extends Cell {
       
     }
   }
+
+  tweenUpdate(){
+
+  }
 }
 
 export default CellImage;

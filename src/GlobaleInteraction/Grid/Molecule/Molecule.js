@@ -18,7 +18,7 @@ class Molecule {
         renderer
     });
     this.cell.mesh.position.set(this.posX, this.posY, 0);
-
+    this.cell.reveal();
     this.renderer = renderer;
   }
 
@@ -115,6 +115,10 @@ class Molecule {
 
   update(data) {
     this.cell.update(data);
+  }
+
+  destroy(){
+    this.cell.destroy();
   }
 }
 

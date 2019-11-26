@@ -47,8 +47,8 @@ class CellVideo extends Cell {
   }
 
   updateRatio(){
-    let px = this.size.y/this.size.x;
-    let py = this.size.x/this.size.y;
+    let px = this.size.y / this.size.x;
+    let py = this.size.x / this.size.y;
 
     let tx = this.video.videoWidth/ this.video.videoHeight;
     let ty = this.video.videoHeight/ this.video.videoWidth;
@@ -61,6 +61,11 @@ class CellVideo extends Cell {
     } else {
       this.material.uniforms.ratio.value = [x, 1];
     }
+  }
+
+  destroy(){
+    this.video.remove();
+    super.destroy();
   }
 
 }

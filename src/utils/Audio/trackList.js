@@ -1,37 +1,26 @@
-import zeddA from "src/assets/musics/zeddaddicted.mp3";
-import salutcoolpareil from "src/assets/musics/salutcoolpareil.mp3";
-import unlikeplutonoscrub from "src/assets/musics/unlikeplutonoscrub.mp3";
-import soleefeiren from "src/assets/musics/solee-feiern.mp3";
+import Feiern_Solee from "src/assets/musics/001_Feiern_Solee.mp3";
 
 let trackList = {
-  track0: {
+  0: {
     name: "solee",
     artist: "Feiren",
-    url: soleefeiren,
+    url: Feiern_Solee,
     tags: "tags",
-    genre: "genre"
+    genre: "genre",
+    bpm: "122",
+    color: "#78FFA1"
   },
-  track: {
-    name: "addicted to a memory",
-    artist: "artist",
-    url: zeddA,
+
+  1: {
+    name: "solee",
+    artist: "Feiren",
+    url: Feiern_Solee,
     tags: "tags",
-    genre: "genre"
+    genre: "genre",
+    bpm: "122",
+    color: "#78FFA1"
   },
-  track2: {
-    name: "techno toujours pareil",
-    artist: "salut c'est cool",
-    url: salutcoolpareil,
-    tags: "incroyable",
-    genre: "beau"
-  }, 
-  track3: {
-    name: "no scrubs",
-    artist: "Unlike Pluto",
-    url: unlikeplutonoscrub,
-    tags: "tags",
-    genre: "genre"
-  }
+ 
 };
 
 export default trackList

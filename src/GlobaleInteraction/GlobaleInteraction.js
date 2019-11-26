@@ -5,9 +5,12 @@ class GlobaleInteraction extends Interaction {
   constructor({ analyser, scenePush, getSize, renderer }) {
     super();
     this.analyser = analyser;
-    this.grid = new Grid({ renderer, getSize });
+    this.grid1 = new Grid({ renderer, getSize });
+    //this.grid2 = new Grid({ renderer, getSize });
 
-    scenePush(this.grid.mesh);
+    scenePush(this.grid1.mesh);
+
+  //  scenePush(this.grid2.mesh);
 
   //   //this.cell = new CellImage({image: image});
   //   this.cell = new CellVideo({url: url, shader: shader1});
@@ -17,7 +20,8 @@ class GlobaleInteraction extends Interaction {
 
   update() {
     let data = this.analyser.getData();
-    this.grid.update(data);
+    this.grid1.update(data);
+   /// this.grid2.update(data);
   }
 }
 

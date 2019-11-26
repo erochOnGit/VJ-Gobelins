@@ -13,8 +13,29 @@ class Grid {
     this.gravityRegion = 20;
 
     this.molecules = [];
-    //first molecule in the grid
-    console.log("grid" , renderer)
+
+    this.cellQueue = [];
+    this.axe = "horizontal";
+
+    window.addEventListener("keyup", e => {
+      if (e.keyCode == 65) {
+        this.reset(renderer);
+      }
+      if (e.keyCode == 90) {
+        this.dispatch({ count: 1 + Math.floor(Math.random() * 3) });
+      }
+    });
+
+    this.reset(renderer);
+
+  }
+
+
+  reset(renderer){
+    let array = [...this.molecules];
+    for(let i =0; i<array.length;i++){
+      this.remove(array[i]);
+    }
     this.molecules.push(
       new Molecule({
         width: 20,
@@ -22,22 +43,29 @@ class Grid {
         renderer: renderer
       })
     );
+
     this.molecules.forEach(mol => {
       this.mesh.add(mol.cell.mesh);
     });
-    this.cellQueue = [];
-    window.addEventListener("keydown", e => {
-      if (e.keyCode == 65) {
-        this.dispatch({ count: 1 });
-      }
-    });
-    this.axe = "horizontal";
+
   }
+
   add(cell) {
     this.cellQueue.push(cell);
   }
-  remove() { }
+
+  remove(molecule) { 
+    if(molecule){
+      molecule.destroy();
+      var index = this.molecules.indexOf(molecule);
+      if (index > -1) {
+        this.molecules.splice(index, 1);
+      }
+    }
+  }
+
   onResize() { }
+
   getVerticalIntersectedMolecule(cuttingPoint) {
     let intersect = [];
     this.molecules.forEach((molecule, index) => {
@@ -50,6 +78,7 @@ class Grid {
     });
     return intersect[Math.floor(Math.random() * intersect.length)];
   }
+
   getHorizontalIntersectedMolecule(cuttingPoint) {
     let intersect = [];
 
@@ -62,83 +91,76 @@ class Grid {
         intersect.push({ molecule: molecule, index: index });
       }
     });
-
     return intersect[Math.floor(Math.random() * intersect.length)];
   }
+
   dispatch({ count }) {
     //slice
     //instanciate two molecules from the first one
     for (let i = 0; i < count; i++) {
-      let cuttingPoint = Math.round(Math.random() * 10) - 5;
+      let cuttingPointX = Math.round(Math.random() * 20) - 10;
+      let cuttingPointY = Math.round(Math.random() * 10) - 5;
       if (this.axe == "horizontal") {
-        let intersectedMol = this.getHorizontalIntersectedMolecule(
-          cuttingPoint
-        );
+        let intersectedMol = null;
+        for(let i = 0; i<5 && !intersectedMol; i++){
+          cuttingPointX = Math.round(Math.random() * 20) - 10;
+          intersectedMol = this.getHorizontalIntersectedMolecule(
+            cuttingPointX
+          );
+        }
         if (intersectedMol) {
           let molSplitting = intersectedMol.molecule.splitHorizontal(
-            cuttingPoint
+            cuttingPointX
           );
+
           this.molecules.splice(
             intersectedMol.index,
             1,
             molSplitting[0],
             molSplitting[1]
-          );
-          this.mesh.children.splice(
-            intersectedMol.index,
-            1,
-            molSplitting[0].cell.mesh,
-            molSplitting[1].cell.mesh
-          );
+          )[0].destroy();
+
+          this.mesh.add(molSplitting[0].cell.mesh);
+          this.mesh.add(molSplitting[1].cell.mesh);
         }
         this.axe = "vertical";
       } else {
-        let intersectedMol = this.getVerticalIntersectedMolecule(cuttingPoint);
+        let intersectedMol = null;
+        for(let i = 0; i<5 && !intersectedMol; i++){
+          cuttingPointY = Math.round(Math.random() * 10) - 5;
+          intersectedMol = intersectedMol = this.getVerticalIntersectedMolecule(cuttingPointY);
+        }
         if (intersectedMol) {
           let molSplitting = intersectedMol.molecule.splitVertical(
-            cuttingPoint
+            cuttingPointY
           );
+          
+
           this.molecules.splice(
             intersectedMol.index,
             1,
             molSplitting[0],
             molSplitting[1]
-          );
-          this.mesh.children.splice(
-            intersectedMol.index,
-            1,
-            molSplitting[0].cell.mesh,
-            molSplitting[1].cell.mesh
-          );
+          )[0].destroy();
+
+          this.mesh.add(molSplitting[0].cell.mesh);
+          this.mesh.add(molSplitting[1].cell.mesh);
+
         }
         this.axe = "horizontal";
       }
     }
   }
-  // mouseClickHandler(canvasThis) {
-  //   let onMouseClick = event => {
-  //     window.onmousemove = this.mouseClickHandler(canvasThis).bind(canvasThis);
-  //     canvasThis.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  //     canvasThis.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  //     canvasThis.raycaster.setFromCamera(canvasThis.mouse, canvasThis.camera);
-  //     canvasThis.intersects = canvasThis.raycaster.intersectObjects(
-  //       canvasThis.scene.children
-  //     );
-  //     let ink = this.objects.filter(obj => {
-  //       return obj instanceof InkSpreading;
-  //     });
-  //     for (var i = 0; i < canvasThis.intersects.length; i++) {
-  //       for (let j = 0; j < ink.length; j++) {
-  //         if (ink[j] && canvasThis.intersects[i].object.uuid == ink[j].id) {
-  //           ink[j].updatePointer(canvasThis.intersects[i].point);
-  //         }
-  //       }
-  //     }
-  //     canvasThis.intersects = [];
-  //   };
-  //   return onMouseClick;
-  // }
   update(data) {
+
+    if(data.bpm(8)){
+        if(this.molecules.length < 15){
+          this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
+        }else{
+          this.reset();
+        } 
+    }
+
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);
     }
