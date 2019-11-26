@@ -27,7 +27,7 @@ function getRandomElement(array) {
 }
 
 function CellFactory({ size ,renderer}) {
-  return new CellReactionDiffusion({ size,renderer });
+  //return new CellReactionDiffusion({ size,renderer });
 
   let percent = Math.random() * 100;
   let current = 0;
