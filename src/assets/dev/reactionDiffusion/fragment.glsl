@@ -19,9 +19,9 @@ void main(){
     c=clamp(c,0.,1.);
     
     gl_FragColor=vec4(
-        chemicals.x+init.r,
-        chemicals.x+init.g,
-        chemicals.x+init.b,
+        chemicals.x-chemicals.y,
+        chemicals.x-chemicals.y,
+        chemicals.x-chemicals.y,
         1.
     );
 }

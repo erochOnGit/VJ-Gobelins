@@ -1,8 +1,3 @@
-import Cell from "src/GlobaleInteraction/Module/Cell";
-import CellImage from "src/GlobaleInteraction/Module/Cell/CellImage";
-import CellPass from "src/GlobaleInteraction/Module/Cell/CellPass";
-import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
-import image from "src/assets/image/ARP_A_Escalier_01.jpg";
 import Molecule from "./Molecule";
 class Grid {
   constructor({ renderer, getSize }) {
@@ -19,11 +14,11 @@ class Grid {
 
     this.molecules = [];
     //first molecule in the grid
+    console.log("grid" , renderer)
     this.molecules.push(
       new Molecule({
         width: 20,
         height: 10,
-        cell: new CellReactionDiffusion({ renderer: renderer, image: image }),
         renderer: renderer
       })
     );
@@ -41,8 +36,8 @@ class Grid {
   add(cell) {
     this.cellQueue.push(cell);
   }
-  remove() {}
-  onResize() {}
+  remove() { }
+  onResize() { }
   getVerticalIntersectedMolecule(cuttingPoint) {
     let intersect = [];
     this.molecules.forEach((molecule, index) => {

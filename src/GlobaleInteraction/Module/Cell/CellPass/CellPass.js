@@ -53,26 +53,6 @@ class CellPass extends Cell {
     this.material.uniforms.uVolume.value = data.volume;
   }
 
-  updateRatio() {
-    if (this.texture.image != undefined) {
-      let px = this.size.y / this.size.x;
-      let py = this.size.x / this.size.y;
-
-      let tx = this.texture.image.width / this.texture.image.height;
-      let ty = this.texture.image.height / this.texture.image.width;
-
-      if (
-        (this.texture.width > this.texture.height &&
-          this.size.x > this.size.y) ||
-        (this.texture.image.width < this.texture.image.height &&
-          this.size.x > this.size.y)
-      ) {
-        this.material.uniforms.ratio.value = [1, px * tx];
-      } else {
-        this.material.uniforms.ratio.value = [py * ty, 1];
-      }
-    }
-  }
 }
 
 export default CellPass;

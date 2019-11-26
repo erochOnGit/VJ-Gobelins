@@ -44,11 +44,18 @@ export default class AudioAnalyser {
             pointer-events: none;
         `;
     document.querySelector("body").append(debugCanvas);
+
     this.debugger = {
+      on: false,
       canvas: debugCanvas,
       ctx: debugCanvas.getContext("2d"),
-      swapColor: false
     };
+
+    window.addEventListener("keydown", e => {
+      if (e.keyCode == 80) {
+        this.debugger.on = !this.debugger.on;
+      }
+    });
   }
 
   refreshData(time) {
@@ -75,29 +82,31 @@ export default class AudioAnalyser {
     this.debugger.canvas.height = window.innerHeight;
     this.debugger.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    let widthData = window.innerWidth / this.dataArray.length;
-    let widthBeat = widthData * (this.bufferLength / this.beats.length);
-
-    for (let i = 0; i < this.beats.length; i++) {
-      let height = (this.beats[i].smoothedValue * window.innerHeight) / 3 + 10;  
-      this.debugger.ctx.fillStyle = this.beats[i].on() ? "red" : "grey";
-      this.debugger.ctx.fillRect(
-        widthBeat * i + 1,
-        window.innerHeight - height,
-        widthBeat - 2,
-        height
-      );
-    }
-
-    this.debugger.ctx.fillStyle = "white";
-    for (let i = 0; i < this.dataArray.length; i++) {
-      let height = ((this.dataArray[i] / 255) * window.innerHeight) / 3;
-      this.debugger.ctx.fillRect(
-        widthData * i + 2,
-        window.innerHeight - height,
-        widthData - 4,
-        height
-      );
+    if(this.debugger.on ){
+      let widthData = window.innerWidth / this.dataArray.length;
+      let widthBeat = widthData * (this.bufferLength / this.beats.length);
+  
+      for (let i = 0; i < this.beats.length; i++) {
+        let height = (this.beats[i].smoothedValue * window.innerHeight) / 5 + 2;  
+        this.debugger.ctx.fillStyle = this.beats[i].on() ? "red" : "grey";
+        this.debugger.ctx.fillRect(
+          widthBeat * i + 1,
+          window.innerHeight - height,
+          widthBeat - 2,
+          height
+        );
+      }
+  
+      this.debugger.ctx.fillStyle = "white";
+      for (let i = 0; i < this.dataArray.length; i++) {
+        let height = ((this.dataArray[i] / 255) * window.innerHeight) / 5;
+        this.debugger.ctx.fillRect(
+          widthData * i + 2,
+          window.innerHeight - height,
+          widthData - 1,
+          height
+        );
+      }
     }
   }
 

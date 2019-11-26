@@ -6,6 +6,10 @@ uniform sampler2D inputTexture;
 uniform sampler2D initTexture;
 uniform sampler2D alpha;
 uniform vec2 pointer;
+uniform float uDa;
+uniform float uDb;
+uniform float uFeed;
+uniform float uK;
 
 vec4 get(sampler2D tex,float x,float y){
     return texture2D(tex,(vUv+vec2(x,y))).rgba;
@@ -16,7 +20,7 @@ float Da=1.;
 float Db=.3;
 float feed=.055;
 float k=.062;
-float texOffset=100.;
+float texOffset=2048.;
 float LaplaceA(float x,float y){
     float sum=0.;
     sum=
@@ -53,18 +57,18 @@ void main(){
     float a=get(inputTexture,0.,0.).r;
     float b=get(inputTexture,0.,0.).g;
 
-    float nextA=a+(Da*LaplaceA(vUv.x,vUv.y))-
+    float nextA=a+(uDa*LaplaceA(vUv.x,vUv.y))-
     (a*b*b)+
-    (feed*(1.-a));
+    (uFeed  * (1.-a));
 
-    float nextB=b+(Db*LaplaceB(vUv.x,vUv.y))+
+    float nextB=b+(uDb*LaplaceB(vUv.x,vUv.y))+
     (a*b*b)-
-    ((k+feed)*(b));
+    ((uK+uFeed )*(b));
 
     nextA=clamp(nextA,0.,1.);
     nextB=clamp(nextB,0.,1.);
 
-    float tap=.03;
+    float tap=.1;
     if(pointer.x!=.5){
         if(distance(pointer.xy,vUv.xy)<tap){
             nextB=1.;

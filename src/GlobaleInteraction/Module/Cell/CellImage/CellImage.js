@@ -15,6 +15,7 @@ class CellImage extends Cell {
         uTime: { type: "1f", value: 0 },
         uVolume: { type: "1f", value: 0 },
         uIntensity: { type: "1f", value: 0 },
+        uDifference: { type: "1f", value: 0 },
         ratio: { type: "2f", value: [1, 1] }
       },
       vertexShader: shader.vertex,
@@ -32,6 +33,7 @@ class CellImage extends Cell {
     this.material.uniforms.uTime.value = data.time.time;
     this.material.uniforms.uVolume.value = data.volume;
     this.material.uniforms.uIntensity.value = data.intensity;
+    this.material.uniforms.uDifference.value = data.difference;
   }
 
   updateRatio() {
@@ -42,14 +44,17 @@ class CellImage extends Cell {
       let tx = this.texture.image.width / this.texture.image.height;
       let ty = this.texture.image.height / this.texture.image.width;
 
-      if (
-        (tx > 1 && this.size.x > this.size.y) ||
-        (tx < 1 && this.size.x > this.size.y)
-      ) {
-        this.material.uniforms.ratio.value = [1, px * tx];
+      let x = py * ty;
+      let y = px * tx;
+
+
+      if (y < 1) {
+        this.material.uniforms.ratio.value = [1, y];
       } else {
-        this.material.uniforms.ratio.value = [py * ty, 1];
+        this.material.uniforms.ratio.value = [x, 1];
       }
+
+      
     }
   }
 }

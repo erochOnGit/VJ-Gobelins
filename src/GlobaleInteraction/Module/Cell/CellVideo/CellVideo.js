@@ -3,7 +3,7 @@ import { fragment, vertex }  from "src/assets/dev/boomboom";
 
 
 class CellVideo extends Cell {
-  constructor({url, shader}) {
+  constructor({url, shader, size}) {
 
     var video = document.createElement("video");
     video.style.display = "none";
@@ -32,7 +32,7 @@ class CellVideo extends Cell {
       side: THREE.DoubleSide
     });
 
-    super({material: material});
+    super({material, size});
     this.texture = texture;
     this.video = video;
     this.video.onloadeddata = () => this.updateRatio();
@@ -47,20 +47,20 @@ class CellVideo extends Cell {
   }
 
   updateRatio(){
-    if(this.texture.image != undefined){
+    let px = this.size.y/this.size.x;
+    let py = this.size.x/this.size.y;
 
-      let px = this.size.y/this.size.x;
-      let py = this.size.x/this.size.y;
+    let tx = this.video.videoWidth/ this.video.videoHeight;
+    let ty = this.video.videoHeight/ this.video.videoWidth;
 
-      let tx = this.video.videoWidth/ this.video.videoHeight;
-      let ty = this.video.videoHeight/ this.video.videoWidth;
+    let x = py * ty;
+    let y = px * tx;
 
-      if((tx > 1 && this.size.x > this.size.y) || (tx < 1 && this.size.x > this.size.y)){
-        this.material.uniforms.ratio.value = [1, px * tx];
-      }else{
-        this.material.uniforms.ratio.value = [py * ty, 1];
-      }
-    }  
+    if (y < 1) {
+      this.material.uniforms.ratio.value = [1, y];
+    } else {
+      this.material.uniforms.ratio.value = [x, 1];
+    }
   }
 
 }
