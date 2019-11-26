@@ -13,6 +13,9 @@ export default class AudioAnalyser {
     this.bufferLength = this.analyser.frequencyBinCount;
     this.dataArray = new Uint8Array(this.bufferLength);
     this.beats = [];
+
+    this.bpmTimer =0;
+
     for(let i = 0; i<10; i++){
       this.beats[i] = new Beat();
     }
@@ -22,12 +25,17 @@ export default class AudioAnalyser {
       volume: 0,
       rawvolume: 0,
       intensity: 0,
-      difference: 0
+      difference: 0,
+
+      onBpm: false,
+      bpmNumber: 0,
+      bpm: function(i){
+        return this.onBpm && this.bpmNumber > 0 && this.bpmNumber % i === 0;
+      }
     };
 
     this.audio.audioNode.addEventListener("trackset", () => {
       this.context.resume();
-      console.log("resume");
     });
 
     /*
@@ -68,7 +76,16 @@ export default class AudioAnalyser {
       let currentAverage = this.getAverage({ min: _min, max: _max });
       this.beats[i].update(currentAverage, time);
     }
-
+    if(this.audio.isPlaying()){
+      this.bpmTimer += this.data.time.delta;
+      this.data.onBpm = this.bpmTimer > 60/122;
+      if(this.data.onBpm){
+        console.log("BPM");
+        this.bpmTimer = 0;
+        this.data.bpmNumber += 1;
+      }
+    }
+    
     this.data.rawvolume = this.getAverage({ min: 0, max: 100 });
     this.data.volume += (this.data.rawvolume - this.data.volume) * 0.8;
     this.data.intensity += (this.data.rawvolume - this.data.intensity) * 0.01;
@@ -82,7 +99,7 @@ export default class AudioAnalyser {
     this.debugger.canvas.height = window.innerHeight;
     this.debugger.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    if(this.debugger.on ){
+    if(this.debugger.on){
       let widthData = window.innerWidth / this.dataArray.length;
       let widthBeat = widthData * (this.bufferLength / this.beats.length);
   

@@ -42,4 +42,8 @@ export default class Audio {
   previousTrack() {
     this.setTrack(this.currentTrackIndex - 1);
   }
+
+  isPlaying() {
+    return !this.audioNode.paused && this.audioNode.currentTime > 0 && !this.audioNode.ended
+  }
 }

@@ -29,28 +29,28 @@ class Cell extends Module {
   destroy() {
     let tl = new TimelineMax();
     if (Math.random() >= 0.5) {
-      tl.to(this.mesh.scale, 1, { x: 0.0001, ease: Power4.easeInOut }, 0);
+      tl.to(this.mesh.scale, 30/122, { x: 0.0001, ease: Power4.easeOut }, 0);
       tl.to(
         this.mesh.position,
-        1,
+        30/122,
         {
           x:
             this.mesh.position.x +
             (this.size.x / 2) * Math.sign(Math.random() - 0.5),
-          ease: Power4.easeInOut
+          ease: Power4.easeOut
         },
         0
       );
     } else {
-      tl.to(this.mesh.scale, 1, { y: 0.0001, ease: Power4.easeInOut}, 0);
+      tl.to(this.mesh.scale, 30/122, { y: 0.0001, ease: Power4.easeOut}, 0);
       tl.to(
         this.mesh.position,
-        1,
+        30/122,
         {
           y:
             this.mesh.position.y +
             (this.size.y / 2) * Math.sign(Math.random() - 0.5),
-          ease: Power4.easeInOut
+          ease: Power4.easeOut
         },
         0
       );
@@ -62,31 +62,33 @@ class Cell extends Module {
 
   reveal(){
     let tl = new TimelineMax();
+    tl.delay(30/122);
+    tl.addLabel("START");
     if (Math.random() >= 0.5) {
-      tl.from(this.mesh.scale, 1, { x: 0.0001, ease: Power4.easeInOut }, 0);
+      tl.from(this.mesh.scale, 30/122, { x: 0.0001, ease: Power4.easeOut }, "START");
       tl.from(
         this.mesh.position,
-        1,
+        30/122,
         {
           x:
             this.mesh.position.x +
             (this.size.x / 2) * Math.sign(Math.random() - 0.5),
-          ease: Power4.easeInOut
+          ease: Power4.easeOut
         },
-        0
+        "START"
       );
     } else {
-      tl.from(this.mesh.scale, 1, { y: 0.0001, ease: Power4.easeInOut}, 0);
+      tl.from(this.mesh.scale, 30/122, { y: 0.0001, ease: Power4.easeOut}, "START");
       tl.from(
         this.mesh.position,
-        1,
+        30/122,
         {
           y:
             this.mesh.position.y +
             (this.size.y / 2) * Math.sign(Math.random() - 0.5),
-          ease: Power4.easeInOut
+          ease: Power4.easeOut
         },
-        0
+        "START"
       );
     }
   }

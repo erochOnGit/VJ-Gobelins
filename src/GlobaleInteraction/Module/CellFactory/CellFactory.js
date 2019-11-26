@@ -32,6 +32,8 @@ function CellFactory({ size ,renderer}) {
   let percent = Math.random() * 100;
   let current = 0;
 
+ // return CellVideoFactory({ size });
+
   function CheckPercent(chance) {
     let test = percent <= chance + current;
     current += chance;
@@ -44,8 +46,7 @@ function CellFactory({ size ,renderer}) {
     return new CellColor({ size, color: "#78FFA1" });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
-  } else if (CheckPercent(30)) {
-    
+  } else if (CheckPercent(0)) {
     return new CellReactionDiffusion({ size,renderer });
   } else {
     return CellImageFactory({ size });

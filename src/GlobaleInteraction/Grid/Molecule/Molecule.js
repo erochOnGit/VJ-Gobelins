@@ -82,7 +82,7 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
-    /*console.log(
+    console.log(
       "vertical",
       Math.abs(this.getEdgesPos().bottom),
       "\n bottom",
@@ -91,7 +91,7 @@ class Molecule {
       this.posY,
       "\n cuttinPoint : ",
       cuttingPoint
-    );*/
+    );
 
     return [
       new Molecule({
