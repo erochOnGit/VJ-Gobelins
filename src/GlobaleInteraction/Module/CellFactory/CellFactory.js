@@ -29,7 +29,6 @@ function CellFactory({ size ,renderer}) {
   let percent = Math.random() * 100;
   let current = 0;
 
-
   function CheckPercent(chance) {
     let test = percent <= chance + current;
     current += chance;
