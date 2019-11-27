@@ -48,17 +48,7 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
-    console.log(
-      "horizontal",
-      Math.abs(this.getEdgesPos().left),
-      "\n left",
-      this.getEdgesPos().left,
 
-      "\n parentPos : ",
-      this.posX,
-      "\n cuttinPoint : ",
-      cuttingPoint
-    );
     return [
       new Molecule({
         posX: this.getFirstChildCenter(cuttingPoint).horizontal,
@@ -82,16 +72,7 @@ class Molecule {
     if (cuttingPoint == undefined) {
       throw "Parameter is not a number!";
     }
-    console.log(
-      "vertical",
-      Math.abs(this.getEdgesPos().bottom),
-      "\n bottom",
-      this.getEdgesPos().bottom,
-      "\n parentPos : ",
-      this.posY,
-      "\n cuttinPoint : ",
-      cuttingPoint
-    );
+
 
     return [
       new Molecule({
