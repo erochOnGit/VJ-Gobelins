@@ -6,6 +6,7 @@ uniform sampler2D inputTexture;
 uniform sampler2D initTexture;
 uniform sampler2D alpha;
 uniform vec2 pointer;
+uniform vec2 uResolution;
 uniform float uDa;
 uniform float uDb;
 uniform float uFeed;
@@ -20,33 +21,34 @@ float Da=1.;
 float Db=.3;
 float feed=.055;
 float k=.062;
-float texOffset=2048.;
+float texOffsetX=uResolution.x;
+float texOffsetY=uResolution.y;
 float LaplaceA(float x,float y){
     float sum=0.;
     sum=
-    get(inputTexture,0./texOffset,0./texOffset).r*-1.+
-    get(inputTexture,-1./texOffset,0./texOffset).r*.2+
-    get(inputTexture,0./texOffset,-1./texOffset).r*.2+
-    get(inputTexture,0./texOffset,1./texOffset).r*.2+
-    get(inputTexture,1./texOffset,0./texOffset).r*.2+
-    get(inputTexture,1./texOffset,-1./texOffset).r*.05+
-    get(inputTexture,-1./texOffset,-1./texOffset).r*.05+
-    get(inputTexture,-1./texOffset,1./texOffset).r*.05+
-    get(inputTexture,1./texOffset,1./texOffset).r*.05;
+    get(inputTexture,0./texOffsetX,0./texOffsetY).r*-1.+
+    get(inputTexture,-1./texOffsetX,0./texOffsetY).r*.2+
+    get(inputTexture,0./texOffsetX,-1./texOffsetY).r*.2+
+    get(inputTexture,0./texOffsetX,1./texOffsetY).r*.2+
+    get(inputTexture,1./texOffsetX,0./texOffsetY).r*.2+
+    get(inputTexture,1./texOffsetX,-1./texOffsetY).r*.05+
+    get(inputTexture,-1./texOffsetX,-1./texOffsetY).r*.05+
+    get(inputTexture,-1./texOffsetX,1./texOffsetY).r*.05+
+    get(inputTexture,1./texOffsetX,1./texOffsetY).r*.05;
     return sum;
 }
 float LaplaceB(float x,float y){
     float sum=0.;
     sum=
-    get(inputTexture,0./texOffset,0./texOffset).g*-1.+
-    get(inputTexture,-1./texOffset,0./texOffset).g*.2+
-    get(inputTexture,0./texOffset,-1./texOffset).g*.2+
-    get(inputTexture,0./texOffset,1./texOffset).g*.2+
-    get(inputTexture,1./texOffset,0./texOffset).g*.2+
-    get(inputTexture,1./texOffset,-1./texOffset).g*.05+
-    get(inputTexture,-1./texOffset,-1./texOffset).g*.05+
-    get(inputTexture,-1./texOffset,1./texOffset).g*.05+
-    get(inputTexture,1./texOffset,1./texOffset).g*.05;
+    get(inputTexture,0./texOffsetX,0./texOffsetY).g*-1.+
+    get(inputTexture,-1./texOffsetX,0./texOffsetY).g*.2+
+    get(inputTexture,0./texOffsetX,-1./texOffsetY).g*.2+
+    get(inputTexture,0./texOffsetX,1./texOffsetY).g*.2+
+    get(inputTexture,1./texOffsetX,0./texOffsetY).g*.2+
+    get(inputTexture,1./texOffsetX,-1./texOffsetY).g*.05+
+    get(inputTexture,-1./texOffsetX,-1./texOffsetY).g*.05+
+    get(inputTexture,-1./texOffsetX,1./texOffsetY).g*.05+
+    get(inputTexture,1./texOffsetX,1./texOffsetY).g*.05;
     return sum;
 }
 

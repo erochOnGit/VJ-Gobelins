@@ -24,22 +24,6 @@ function getRandomElement(array) {
 
 function CellFactory({ size, renderer }) {
   
-  let reactDiffDataArray = [
-    { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
-    { Da: 1., Db: 0.27, feed: 0.005, k: 0.05  },
-    { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
-    { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 }
-  ];
-
-  return new CellReactionDiffusion({
-    size,
-    renderer,
-    reacDiffData:
-      reactDiffDataArray[
-        0//Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
-      ]
-  });
-
   let percent = Math.random() * 100;
   let current = 0;
 
@@ -56,7 +40,18 @@ function CellFactory({ size, renderer }) {
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
   } else if (CheckPercent(30)) {
-    return new CellReactionDiffusion({ size, renderer });
+    let reactDiffDataArray = [
+      { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
+      { Da: 1, Db: 0.27, feed: 0.005, k: 0.05 },
+      { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
+      { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 }
+    ];
+    return new CellReactionDiffusion({
+      size,
+      renderer,
+      reacDiffData:
+        reactDiffDataArray[0] //Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
+    });
   } else {
     return CellImageFactory({ size });
   }
