@@ -22,13 +22,26 @@ function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function CellFactory({ size ,renderer}) {
+function CellFactory({ size, renderer }) {
+  
+  let reactDiffDataArray = [
+    { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
+    { Da: 1., Db: 0.27, feed: 0.005, k: 0.05  },
+    { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
+    { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 }
+  ];
 
-  //return CellSplitscanFactory({size});
+  return new CellReactionDiffusion({
+    size,
+    renderer,
+    reacDiffData:
+      reactDiffDataArray[
+        0//Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
+      ]
+  });
 
   let percent = Math.random() * 100;
   let current = 0;
-
 
   function CheckPercent(chance) {
     let test = percent <= chance + current;
@@ -42,8 +55,8 @@ function CellFactory({ size ,renderer}) {
     return new CellColor({ size, color: "#78FFA1" });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
-  } else if (CheckPercent(0)) {
-    return new CellReactionDiffusion({ size,renderer });
+  } else if (CheckPercent(30)) {
+    return new CellReactionDiffusion({ size, renderer });
   } else {
     return CellImageFactory({ size });
   }

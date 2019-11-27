@@ -13,14 +13,15 @@ vec4 get(sampler2D tex,float x,float y){
 void main(){
     vec4 backbuffer=get(inputTexture,0.,0.);
     vec4 init=get(initTexture,0.,0.);
-    vec4 chemicals = get(uChemicals,0.,0.);
-
-    //float c = floor((a - b) * 255);
-
+    
+    vec4 chemicals=get(uChemicals,0.,0.);
+    float c=floor((chemicals.x-chemicals.y)*1.);
+    c=clamp(c,0.,1.);
+    
     gl_FragColor=vec4(
-        chemicals.r+init.r,
-        chemicals.g+init.g,
-        chemicals.b+init.b,
+        chemicals.x-chemicals.y,
+        chemicals.x-chemicals.y,
+        chemicals.x-chemicals.y,
         1.
     );
 }
