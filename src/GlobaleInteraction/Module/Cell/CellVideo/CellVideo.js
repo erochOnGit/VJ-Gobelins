@@ -23,6 +23,8 @@ class CellVideo extends Cell {
         uVolume: { type: "1f", value: 0 },
         uIntensity: { type: "1f", value: 0 },
         uDifference: { type: "1f", value: 0 },
+        uLifetime: { type: "1f", value: 0 },
+        uColor: { type: "c", value: new THREE.Color("white") },
         ratio: {type: "2f", value: [1,1] },
       },
       vertexShader: shader.vertex,
@@ -40,10 +42,14 @@ class CellVideo extends Cell {
   }
 
   update(data) {
+    super.update(data);
+
     this.material.uniforms.uTime.value = data.time.time;
     this.material.uniforms.uVolume.value = data.volume;
     this.material.uniforms.uIntensity.value = data.intensity;
+    this.material.uniforms.uLifetime.value = this.lifetime;
     this.material.uniforms.uDifference.value = data.difference;
+    this.material.uniforms.uColor.value = new THREE.Color(data.color);
   }
 
   updateRatio(){

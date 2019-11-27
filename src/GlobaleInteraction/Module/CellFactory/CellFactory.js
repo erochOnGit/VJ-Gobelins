@@ -9,21 +9,26 @@ import shader1 from "src/assets/dev/template";
 import shader2 from "src/assets/dev/boomboom";
 import shader3 from "src/assets/dev/distortion";
 import shader4 from "src/assets/dev/negatif";
-let shaders = [shader1, shader2, shader3, shader4];
+import shader5 from "src/assets/dev/sawtooth";
+import shader6 from "src/assets/dev/color";
+let shaders = [shader1, shader2, shader3, shader4, shader5, shader6, shader6];
 
 function importAll(r) {
   return r.keys().map(r);
 }
 
-let images = importAll(require.context('src/assets/image', false, /\.(png|jpe?g|svg)$/));
-let videos = importAll(require.context('src/assets/video', false, /\.(webm|mp4)$/));
+let images = importAll(
+  require.context("src/assets/image", false, /\.(png|jpe?g|svg)$/)
+);
+let videos = importAll(
+  require.context("src/assets/video", false, /\.(webm|mp4)$/)
+);
 
 function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
 function CellFactory({ size, renderer }) {
-  
   let percent = Math.random() * 100;
   let current = 0;
 
@@ -36,10 +41,10 @@ function CellFactory({ size, renderer }) {
   if (CheckPercent(30)) {
     return CellVideoFactory({ size });
   } else if (CheckPercent(10)) {
-    return new CellColor({ size, color: "#78FFA1" });
+    return new CellColor({ size });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
-  } else if (CheckPercent(30)) {
+  } else if (CheckPercent(20)) {
     let reactDiffDataArray = [
       { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
       { Da: 1, Db: 0.27, feed: 0.005, k: 0.05 },
@@ -49,8 +54,7 @@ function CellFactory({ size, renderer }) {
     return new CellReactionDiffusion({
       size,
       renderer,
-      reacDiffData:
-        reactDiffDataArray[0] //Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
+      reacDiffData: reactDiffDataArray[0] //Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
     });
   } else {
     return CellImageFactory({ size });

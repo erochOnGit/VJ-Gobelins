@@ -29,7 +29,7 @@ let trackList = {
     tags: "tags",
     genre: "dance_14h-18h",
     bpm: "114",
-    color: "#78FFA1"
+    color: "red"
   },
 
   2: {

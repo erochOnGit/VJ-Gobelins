@@ -26,7 +26,7 @@ export default class AudioAnalyser {
       rawvolume: 0,
       intensity: 0,
       difference: 0,
-
+      color: "white",
       onBpm: false,
       bpmNumber: 0,
       bpm: function(i){
@@ -68,6 +68,7 @@ export default class AudioAnalyser {
 
   refreshData(time) {
     this.data.time = time;
+
     this.analyser.getByteFrequencyData(this.dataArray);
 
     for (let i = 0; i < this.beats.length; i++) {
@@ -84,14 +85,13 @@ export default class AudioAnalyser {
         this.bpmTimer = 0;
         this.data.bpmNumber += 1;
       }
+      this.data.color = this.audio.getCurrentTrack().color;
     }
-    
+
     this.data.rawvolume = this.getAverage({ min: 0, max: 100 });
     this.data.volume += (this.data.rawvolume - this.data.volume) * 0.8;
     this.data.intensity += (this.data.rawvolume - this.data.intensity) * 0.01;
     this.data.difference += ((this.data.rawvolume - this.data.intensity) * 10.0 - this.data.difference) * 0.7;
-
-    // console.log(this.data.difference);
   }
 
   debug() {
