@@ -12,6 +12,7 @@ class CellReactionDiffusion extends Cell {
   constructor({ size, renderer, image, reacDiffData }) {
     var textureWidth = size.x*100;
     var textureHeight = size.y*100;
+
     let material = new THREE.RawShaderMaterial({
       uniforms: {
         inputTexture: { type: "t", value: null },
@@ -30,10 +31,11 @@ class CellReactionDiffusion extends Cell {
     super({ size, material });
 
     this.reacDiffData = reacDiffData || {};
+
     this.material2 = new THREE.RawShaderMaterial({
       uniforms: {
         inputTexture: { type: "t", value: null },
-        pointer: { value: new THREE.Vector2(0.51, 0.51) },
+        pointer: { value: new THREE.Vector2(0.3, 0.51) },
         uDa: { type: "f", value: this.reacDiffData.Da || 1 },
         uDb: { type: "f", value: this.reacDiffData.Db || 0.3 },
         uFeed: { type: "f", value: this.reacDiffData.feed || 0.055 },
@@ -42,6 +44,7 @@ class CellReactionDiffusion extends Cell {
         uVolume: { type: "1f", value: 0 },
         uIntensity: { type: "1f", value: 0 },
         uDifference: { type: "1f", value: 0 },
+        uBpmBoolean: { type: "bool", value: false },
         uResolution:{value: new THREE.Vector2(textureWidth,textureHeight)},
         ratio: { type: "2f", value: [1, 1] }
       },
@@ -51,6 +54,15 @@ class CellReactionDiffusion extends Cell {
       depthWrite: false,
       side: THREE.DoubleSide
     });
+
+    let x = this.size.y / this.size.x;
+    let y = this.size.x / this.size.y;
+
+    if (y < 1) {
+      this.material2.uniforms.ratio.value = [1, 1/y];
+    } else {
+      this.material2.uniforms.ratio.value = [1/x, 1];
+    }
 
     // var FizzyText = function() {
     //   this.message = 'lets goo';
@@ -72,11 +84,9 @@ class CellReactionDiffusion extends Cell {
      
     // }.bind(this);
 
-
     this.pass = new GPUSim(renderer, textureWidth, textureHeight, this.material2);
     for (let i = 0; i < 10; i++) {
       this.pass.render();
-      this.material2.uniforms.pointer.value = new THREE.Vector2(Math.abs(Math.random()), Math.abs(Math.random()));
     }
   }
   getRandomData(width, height, size) {
@@ -99,6 +109,7 @@ class CellReactionDiffusion extends Cell {
     this.material2.uniforms.uVolume.value = data.volume;
     this.material2.uniforms.uIntensity.value = data.intensity;
     this.material2.uniforms.uDifference.value = data.difference;
+    this.material2.uniforms.uBpmBoolean.value = data.bpm(2);
 
     this.material.uniforms.uChemicals.value = this.pass.fbos[
       this.pass.current
