@@ -16,7 +16,7 @@ function importAll(r) {
 }
 
 let images = importAll(require.context('src/assets/image', false, /\.(png|jpe?g|svg)$/));
-let videos = importAll(require.context('src/assets/video', false, /\.(webm)$/));
+let videos = importAll(require.context('src/assets/video', false, /\.(webm|mp4)$/));
 
 function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -24,7 +24,7 @@ function getRandomElement(array) {
 
 function CellFactory({ size ,renderer}) {
 
- // return CellSplitscanFactory({size});
+  //return CellSplitscanFactory({size});
 
   let percent = Math.random() * 100;
   let current = 0;

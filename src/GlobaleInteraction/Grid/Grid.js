@@ -154,7 +154,7 @@ class Grid {
 
   update(data) {
 
-    if(data.bpm(8)){
+   if(data.bpm(8)){
         if(this.molecules.length < 15){
           this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
         }else{
