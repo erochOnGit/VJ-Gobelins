@@ -9,6 +9,6 @@ export default class MouseDownPointer {
     document.body.appendChild(this.domElement);
   }
   delete() {
-    // document.body.removeChild(this.domElement);
+     document.body.removeChild(this.domElement);
   }
 }

@@ -1,20 +1,32 @@
 import Molecule from "./Molecule";
-import { cpus } from "os";
-import  gridMouseDown from "./gridMouseDown/gridMouseDown"
-import  gridMouseUp from "./gridMouseUp/gridMouseUp"
+import gridMouseDown from "./gridMouseDown/gridMouseDown";
+import gridMouseUp from "./gridMouseUp/gridMouseUp";
+import gridDrag from "./gridDrag"
 
 class Grid {
-  constructor({ renderer, getSize }) {
+  constructor({ renderer, getSize, camera, mouse, raycaster, scene }) {
     this.mesh = new THREE.Group();
+    this.scene = scene;
+    this.camera = camera;
+    this.mouse = mouse;
+    this.raycaster = raycaster;
     this.width = getSize().width > 2000 ? 2000 : getSize().width;
     this.height =
       getSize().height > 1000
         ? 1000
         : (getSize().width * getSize().width) / 2000;
 
-    this.marginH = (getSize().width - this.width) / 2;
-    this.marginV = (getSize().height - this.height) / 2;
-    this.gravityRegion = 20;
+    var geometry = new THREE.PlaneBufferGeometry(25, 15, 32);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0xffff00,
+      side: THREE.DoubleSide  
+    });
+    this.interactionPlane = new THREE.Mesh(geometry, material);
+    this.interactionPlane.updateMatrix();
+    this.interactionPlane.position.set(0, 0, -5);
+    this.interactionPlane.rotation.x = Math.PI;
+    this.interactionPlane.geometry.normalsNeedUpdate = true;
+    this.scene.add(this.interactionPlane);
 
     this.molecules = [];
 
@@ -28,19 +40,30 @@ class Grid {
         this.dispatch({ count: 1 + Math.floor(Math.random() * 3) });
       }
       if (e.keyCode == 82) {
-        this.sliceHorizontal({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "right" });
+        this.sliceHorizontal({
+          cuttingPoint: Math.round(Math.random() * 10) - 5,
+          direction: "right"
+        });
       }
       if (e.keyCode == 84) {
-        this.sliceVertical({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "top" });
+        this.sliceVertical({
+          cuttingPoint: Math.round(Math.random() * 10) - 5,
+          direction: "top"
+        });
       }
     });
 
-    this.originSlice = {x:null,y:null};
+    this.originSlice = { x: null, y: null };
     this.pointer = null;
-    console.dir(this.renderer.domElement)
-    this.renderer.domElement.addEventListener("mousedown", gridMouseDown.bind(this)())
-    this.renderer.domElement.addEventListener("mouseup", gridMouseUp.bind(this)())
-
+    this.dragEvent = gridDrag.bind(this)() ;
+    this.renderer.domElement.addEventListener(
+      "mousedown",
+      gridMouseDown.bind(this)()
+    );
+    this.renderer.domElement.addEventListener(
+      "mouseup",
+      gridMouseUp.bind(this)()
+    );
     this.reset();
   }
 
@@ -173,8 +196,11 @@ class Grid {
     }
     this.molecules.forEach(molecule => {
       if (direction == "top" && molecule.getEdgesPos().top > cuttingPoint) {
-          molecule.resizeVertical({ direction: -1, cuttingPoint });
-      } else if (direction == "bottom" && molecule.getEdgesPos().bottom < cuttingPoint) {
+        molecule.resizeVertical({ direction: -1, cuttingPoint });
+      } else if (
+        direction == "bottom" &&
+        molecule.getEdgesPos().bottom < cuttingPoint
+      ) {
         molecule.resizeVertical({ direction: 1, cuttingPoint });
       }
     });
@@ -189,12 +215,12 @@ class Grid {
       this.remove(array[i]);
     }
     this.molecules.forEach(molecule => {
-      if (
-        direction == "right" &&
-        molecule.getEdgesPos().right > cuttingPoint
-      ) {
+      if (direction == "right" && molecule.getEdgesPos().right > cuttingPoint) {
         molecule.resizeHorizontal({ direction: -1, cuttingPoint });
-      } else if (direction == "left" && molecule.getEdgesPos().left < cuttingPoint) {
+      } else if (
+        direction == "left" &&
+        molecule.getEdgesPos().left < cuttingPoint
+      ) {
         molecule.resizeHorizontal({ direction: 1, cuttingPoint });
       }
     });

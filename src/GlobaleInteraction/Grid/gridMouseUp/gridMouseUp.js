@@ -1,7 +1,8 @@
+import gridDrag from "../gridDrag"
 export default function() {
   return e => {
-    console.log("up", this.originSlice);
-    console.log(this.pointer);
+
+    this.renderer.domElement.removeEventListener("mousemove",this.dragEvent)
     this.pointer.delete();
   };
 }
