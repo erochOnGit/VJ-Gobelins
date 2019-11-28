@@ -4,7 +4,8 @@ import CellMotion from "src/GlobaleInteraction/Module/Cell/CellMotion";
 import CellEmpty from "src/GlobaleInteraction/Module/Cell/CellEmpty";
 import CellColor from "src/GlobaleInteraction/Module/Cell/CellColor";
 import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
-import CellSplitscan from "src/GlobaleInteraction/Module/Cell/CellSplitscan";
+import CellText from "src/GlobaleInteraction/Module/Cell/CellText";
+//import CellSplitscan from "src/GlobaleInteraction/Module/Cell/CellSplitscan";
 
 import shader1 from "src/assets/dev/template";
 import shader2 from "src/assets/dev/boomboom";
@@ -37,6 +38,9 @@ function getRandomElement(array) {
 function CellFactory({ size, renderer }) {
   let percent = Math.random() * 100;
   let current = 0;
+
+
+  //return new CellText({size});
 
   function CheckPercent(chance) {
     let test = percent <= chance + current;
@@ -97,12 +101,12 @@ function CellMotionFactory({ size }) {
 }
 
 
-function CellSplitscanFactory({ size }) {
+/*function CellSplitscanFactory({ size }) {
   let cell = new CellSplitscan({
     url: getRandomElement(videos),
     size: size
   });
   return cell;
-}
+}*/
 
 export default CellFactory;
