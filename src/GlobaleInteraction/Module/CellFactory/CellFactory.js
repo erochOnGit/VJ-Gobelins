@@ -66,7 +66,7 @@ function CellFactory({ size, renderer }) {
     return new CellReactionDiffusion({
       size,
       renderer,
-      reacDiffData: reactDiffDataArray[0] //Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
+      reacDiffData: reactDiffDataArray[Math.random() * reactDiffDataArray.length + reactDiffDataArray.length]
     });
   } else {
     return CellImageFactory({ size });

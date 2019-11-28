@@ -1,4 +1,8 @@
 import Molecule from "./Molecule";
+import { cpus } from "os";
+import  gridMouseDown from "./gridMouseDown/gridMouseDown"
+import  gridMouseUp from "./gridMouseUp/gridMouseUp"
+
 class Grid {
   constructor({ renderer, getSize }) {
     this.mesh = new THREE.Group();
@@ -14,7 +18,6 @@ class Grid {
 
     this.molecules = [];
 
-    this.cellQueue = [];
     this.axe = "horizontal";
     this.renderer = renderer;
     window.addEventListener("keyup", e => {
@@ -24,12 +27,24 @@ class Grid {
       if (e.keyCode == 90) {
         this.dispatch({ count: 1 + Math.floor(Math.random() * 3) });
       }
+      if (e.keyCode == 82) {
+        this.sliceHorizontal({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "right" });
+      }
+      if (e.keyCode == 84) {
+        this.sliceVertical({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "top" });
+      }
     });
+
+    this.originSlice = {x:null,y:null};
+    this.pointer = null;
+    console.dir(this.renderer.domElement)
+    this.renderer.domElement.addEventListener("mousedown", gridMouseDown.bind(this)())
+    this.renderer.domElement.addEventListener("mouseup", gridMouseUp.bind(this)())
 
     this.reset();
   }
 
-  reset(renderer) {
+  reset() {
     let array = [...this.molecules];
     for (let i = 0; i < array.length; i++) {
       this.remove(array[i]);
@@ -45,10 +60,7 @@ class Grid {
     this.molecules.forEach(mol => {
       this.mesh.add(mol.cell.mesh);
     });
-  }
-
-  add(cell) {
-    this.cellQueue.push(cell);
+    this.dispatch({ count: 20 });
   }
 
   remove(molecule) {
@@ -150,14 +162,51 @@ class Grid {
       }
     }
   }
-  update(data) {
-    if (data.bpm(8)) {
-      if (this.molecules.length < 15) {
-        this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
-      } else {
-        this.reset();
-      }
+  sliceVertical({ cuttingPoint, direction }) {
+    let array = this.molecules.filter(molecule => {
+      return direction == "top"
+        ? molecule.getEdgesPos().bottom >= cuttingPoint
+        : molecule.getEdgesPos().top <= cuttingPoint;
+    });
+    for (let i = 0; i < array.length; i++) {
+      this.remove(array[i]);
     }
+    this.molecules.forEach(molecule => {
+      if (direction == "top" && molecule.getEdgesPos().top > cuttingPoint) {
+          molecule.resizeVertical({ direction: -1, cuttingPoint });
+      } else if (direction == "bottom" && molecule.getEdgesPos().bottom < cuttingPoint) {
+        molecule.resizeVertical({ direction: 1, cuttingPoint });
+      }
+    });
+  }
+  sliceHorizontal({ cuttingPoint, direction }) {
+    let array = this.molecules.filter(molecule => {
+      return direction == "right"
+        ? molecule.getEdgesPos().left >= cuttingPoint
+        : molecule.getEdgesPos().right <= cuttingPoint;
+    });
+    for (let i = 0; i < array.length; i++) {
+      this.remove(array[i]);
+    }
+    this.molecules.forEach(molecule => {
+      if (
+        direction == "right" &&
+        molecule.getEdgesPos().right > cuttingPoint
+      ) {
+        molecule.resizeHorizontal({ direction: -1, cuttingPoint });
+      } else if (direction == "left" && molecule.getEdgesPos().left < cuttingPoint) {
+        molecule.resizeHorizontal({ direction: 1, cuttingPoint });
+      }
+    });
+  }
+  update(data) {
+    // if (data.bpm(8)) {
+    //   if (this.molecules.length < 15) {
+    //     this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
+    //   } else {
+    //     this.reset();
+    //   }
+    // }
 
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);

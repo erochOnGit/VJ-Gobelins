@@ -33,10 +33,10 @@ class Cell extends Module {
   destroy() {
     let tl = new TimelineMax();
     if (Math.random() >= 0.5) {
-      tl.to(this.mesh.scale, 30/122, { x: 0.0001, ease: Power4.easeOut }, 0);
+      tl.to(this.mesh.scale, 30 / 122, { x: 0.0001, ease: Power4.easeOut }, 0);
       tl.to(
         this.mesh.position,
-        30/122,
+        30 / 122,
         {
           x:
             this.mesh.position.x +
@@ -46,10 +46,10 @@ class Cell extends Module {
         0
       );
     } else {
-      tl.to(this.mesh.scale, 30/122, { y: 0.0001, ease: Power4.easeOut}, 0);
+      tl.to(this.mesh.scale, 30 / 122, { y: 0.0001, ease: Power4.easeOut }, 0);
       tl.to(
         this.mesh.position,
-        30/122,
+        30 / 122,
         {
           y:
             this.mesh.position.y +
@@ -64,15 +64,51 @@ class Cell extends Module {
     });
   }
 
-  reveal(){
+  resize({ axe, direction, size }) {
     let tl = new TimelineMax();
-    tl.delay(30/122);
+    //console.log("je la baise", axe, direction, size);
+
+    if (axe == "horizontal") {
+      let scale = size / this.getCurrentSize().x;
+      tl.to(this.mesh.scale, 30 / 122, { x: scale, ease: Power4.easeOut }, 0);
+      tl.to(
+        this.mesh.position,
+        30 / 122,
+        {
+          x: this.mesh.position.x + ((this.size.x - size) / 2) * direction,
+          ease: Power4.easeOut
+        },
+        0
+      );
+    } else {
+      let scale = size / this.getCurrentSize().y;
+      tl.to(this.mesh.scale, 30 / 122, { y: scale, ease: Power4.easeOut }, 0);
+      tl.to(
+        this.mesh.position,
+        30 / 122,
+        {
+          y: this.mesh.position.y + ((this.size.y - size) / 2) * direction,
+          ease: Power4.easeOut
+        },
+        0
+      );
+    }
+    return tl;
+  }
+  reveal() {
+    let tl = new TimelineMax();
+    tl.delay(30 / 122);
     tl.addLabel("START");
     if (Math.random() >= 0.5) {
-      tl.from(this.mesh.scale, 30/122, { x: 0.0001, ease: Power4.easeOut }, "START");
+      tl.from(
+        this.mesh.scale,
+        30 / 122,
+        { x: 0.0001, ease: Power4.easeOut },
+        "START"
+      );
       tl.from(
         this.mesh.position,
-        30/122,
+        30 / 122,
         {
           x:
             this.mesh.position.x +
@@ -82,10 +118,15 @@ class Cell extends Module {
         "START"
       );
     } else {
-      tl.from(this.mesh.scale, 30/122, { y: 0.0001, ease: Power4.easeOut}, "START");
+      tl.from(
+        this.mesh.scale,
+        30 / 122,
+        { y: 0.0001, ease: Power4.easeOut },
+        "START"
+      );
       tl.from(
         this.mesh.position,
-        30/122,
+        30 / 122,
         {
           y:
             this.mesh.position.y +
@@ -96,8 +137,6 @@ class Cell extends Module {
       );
     }
   }
-
-
 }
 
 export default Cell;
