@@ -6,17 +6,19 @@ uniform sampler2D uSampler;
 uniform float uTime;
 uniform float uVolume;
 uniform float uIntensity;
+uniform float uDifference;
 uniform vec2 ratio;
+uniform vec3 uColor;
 
-
-const float pi = 3.1415926;
+const float pi = 3.1415926;    
 
 void main() {
     vec2 uv = vUv;
-    vec2 dir = vec2(0.5) - uv;
-    uv = uv + dir * length(dir) * uVolume * 1.8;
-    uv += vec2(sin(uTime * 5.0 + uv.y * pi * 10.0),0) * 0.05 * uIntensity;
     uv = (uv - 0.5) * ratio + 0.5;
     vec4 color = texture2D(uSampler,uv);
-    gl_FragColor = color;
+
+    float gray = (color.r,color.g, color.b)/3.0;
+    gray = smoothstep(0.0,0.3,gray);
+    gl_FragColor = mix(vec4(vec3(0.0),1.0), vec4(uColor,1.0), gray);
+
 }

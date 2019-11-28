@@ -16,8 +16,12 @@ class Cell extends Module {
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.mesh.position.set(0, 0, 11);
+    this.lifetime = 0;
   }
-  update(data) {}
+  
+  update(data) {
+    this.lifetime += data.time.delta;
+  }
 
   getCurrentSize() {
     return {

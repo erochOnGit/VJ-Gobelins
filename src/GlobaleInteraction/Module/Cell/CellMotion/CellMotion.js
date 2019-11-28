@@ -1,9 +1,9 @@
 import Cell from "../Cell";
-import { fragment, vertex }  from "src/assets/dev/boomboom";
+import shader from "src/assets/dev/motion";
 
 
-class CellVideo extends Cell {
-  constructor({url, shader, size}) {
+class CellMotion extends Cell {
+  constructor({url, size}) {
 
     var video = document.createElement("video");
     video.style.display = "none";
@@ -19,11 +19,6 @@ class CellVideo extends Cell {
     var material = new THREE.RawShaderMaterial( {
       uniforms:{
         uSampler: { type: "t", value: texture },
-        uTime: { type: "1f", value: 0 },
-        uVolume: { type: "1f", value: 0 },
-        uIntensity: { type: "1f", value: 0 },
-        uDifference: { type: "1f", value: 0 },
-        uLifetime: { type: "1f", value: 0 },
         uColor: { type: "c", value: new THREE.Color("white") },
         ratio: {type: "2f", value: [1,1] },
       },
@@ -43,12 +38,6 @@ class CellVideo extends Cell {
 
   update(data) {
     super.update(data);
-
-    this.material.uniforms.uTime.value = data.time.time;
-    this.material.uniforms.uVolume.value = data.volume;
-    this.material.uniforms.uIntensity.value = data.intensity;
-    this.material.uniforms.uLifetime.value = this.lifetime;
-    this.material.uniforms.uDifference.value = data.difference;
     this.material.uniforms.uColor.value = new THREE.Color(data.color);
   }
 
@@ -76,4 +65,4 @@ class CellVideo extends Cell {
 
 }
 
-export default CellVideo;
+export default CellMotion;
