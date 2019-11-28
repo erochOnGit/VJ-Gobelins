@@ -32,7 +32,7 @@ class Canvas3D {
     this.mouse = new THREE.Vector2();
     this.intersects = [];
     var gridHelper = new THREE.GridHelper(10, 5);
-    this.scene.add(gridHelper);
+   // this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);

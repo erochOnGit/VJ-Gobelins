@@ -18,6 +18,7 @@ class Cell extends Module {
     this.mesh.position.set(0, 0, 11);
     this.lifetime = 0;
   }
+  
   update(data) {
     this.lifetime += data.time.delta;
   }

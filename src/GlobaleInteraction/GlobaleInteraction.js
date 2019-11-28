@@ -1,14 +1,15 @@
 import Interaction from "../utils/Canvas3D/Interaction";
 import Grid from "./Grid";
+import OffGrid from "./OffGrid";
 
 class GlobaleInteraction extends Interaction {
   constructor({ analyser, scenePush, getSize, renderer }) {
     super();
     this.analyser = analyser;
-    this.grid1 = new Grid({ renderer, getSize });
-    //this.grid2 = new Grid({ renderer, getSize });
+    this.grid = new Grid({ renderer, getSize });
 
-    scenePush(this.grid1.mesh);
+
+    scenePush(this.grid.mesh);
 
   //  scenePush(this.grid2.mesh);
 
@@ -20,7 +21,7 @@ class GlobaleInteraction extends Interaction {
 
   update() {
     let data = this.analyser.getData();
-    this.grid1.update(data);
+    this.grid.update(data);
    /// this.grid2.update(data);
   }
 }
