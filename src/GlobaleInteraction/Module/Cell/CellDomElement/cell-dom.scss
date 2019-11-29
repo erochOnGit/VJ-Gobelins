@@ -1,0 +1,17 @@
+.cell-dom{
+    position: absolute;
+    z-index: 1000000;
+    height: 250px;
+    width: 250px;
+    top: 0;
+    bottom: 0;
+    background-color: blue;
+    color: white;
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "WASA";
+}

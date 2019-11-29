@@ -1,4 +1,5 @@
 import Canvas3D from "src/utils/Canvas3D";
+import dat from "dat.gui";
 
 export default class AudioAnalyser {
   constructor({ audio, fftSize }) {
@@ -13,6 +14,8 @@ export default class AudioAnalyser {
     this.bufferLength = this.analyser.frequencyBinCount;
     this.dataArray = new Uint8Array(this.bufferLength);
     this.beats = [];
+
+
 
     this.bpmTimer =0;
 
@@ -62,6 +65,13 @@ export default class AudioAnalyser {
     window.addEventListener("keydown", e => {
       if (e.keyCode == 80) {
         this.debugger.on = !this.debugger.on;
+      }else if (e.keyCode == 77) {
+        this.guiData = {
+          color: "#fff"
+        }
+        var gui = new dat.GUI();
+        gui.addColor(this.guiData, 'color')
+        .name('color');
       }
     });
   }
@@ -85,7 +95,7 @@ export default class AudioAnalyser {
         this.bpmTimer = 0;
         this.data.bpmNumber += 1;
       }
-      this.data.color = this.audio.getCurrentTrack().color;
+      this.data.color = this.guiData ? this.guiData.color : this.audio.getCurrentTrack().color;
     }
 
     this.data.rawvolume = this.getAverage({ min: 0, max: 100 });

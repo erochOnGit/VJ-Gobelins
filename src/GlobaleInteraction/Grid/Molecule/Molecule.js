@@ -1,7 +1,7 @@
 import CellFactory from "src/GlobaleInteraction/Module/CellFactory";
 
 class Molecule {
-  constructor({ posX, posY, width, height, renderer, cell }) {
+  constructor({ posX, posY, width, height, renderer, camera, cell }) {
     /**
      * width in cell
      */
@@ -10,16 +10,18 @@ class Molecule {
     this.posX = posX || 0;
     this.posY = posY || 0;
     this.margin = 0.1;
-    this.cell = CellFactory({
+    this.cell = cell || CellFactory({
       size: new THREE.Vector2(
         this.width - this.margin * 2,
         this.height - this.margin * 2
       ),
-      renderer
+      renderer,
+      camera
     });
     this.cell.mesh.position.set(this.posX, this.posY, 0);
     this.cell.reveal();
     this.renderer = renderer;
+    this.camera = camera;
   }
 
   getFirstChildSize(cuttingPoint) {
@@ -55,7 +57,8 @@ class Molecule {
         posY: this.posY,
         width: this.getFirstChildSize(cuttingPoint).width,
         height: this.height,
-        renderer: this.renderer
+        renderer: this.renderer,
+        camera: this.camera
       }),
       new Molecule({
         posX:
@@ -64,7 +67,8 @@ class Molecule {
         posY: this.posY,
         width: this.width - this.getFirstChildSize(cuttingPoint).width,
         height: this.height,
-        renderer: this.renderer
+        renderer: this.renderer,
+        camera: this.camera
       })
     ];
   }
@@ -79,7 +83,8 @@ class Molecule {
         posY: this.getFirstChildCenter(cuttingPoint).vertical,
         width: this.width,
         height: this.getFirstChildSize(cuttingPoint).height,
-        renderer: this.renderer
+        renderer: this.renderer,
+        camera: this.camera
       }),
       new Molecule({
         posX: this.posX,
@@ -88,7 +93,8 @@ class Molecule {
           (this.height - this.getFirstChildSize(cuttingPoint).height) / 2,
         width: this.width,
         height: this.height - this.getFirstChildSize(cuttingPoint).height,
-        renderer: this.renderer
+        renderer: this.renderer,
+        camera: this.camera
       })
     ];
   }

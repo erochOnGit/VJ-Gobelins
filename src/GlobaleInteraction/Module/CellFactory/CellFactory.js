@@ -5,6 +5,7 @@ import CellEmpty from "src/GlobaleInteraction/Module/Cell/CellEmpty";
 import CellColor from "src/GlobaleInteraction/Module/Cell/CellColor";
 import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
 import CellText from "src/GlobaleInteraction/Module/Cell/CellText";
+import CellDomElement from "src/GlobaleInteraction/Module/Cell/CellDomElement";
 //import CellSplitscan from "src/GlobaleInteraction/Module/Cell/CellSplitscan";
 
 import shader1 from "src/assets/dev/template";
@@ -14,7 +15,7 @@ import shader4 from "src/assets/dev/negatif";
 import shader5 from "src/assets/dev/sawtooth";
 import shader6 from "src/assets/dev/color";
 import shader7 from "src/assets/dev/kaleidoscope";
-let shaders = [shader1, shader2, shader3, shader4, shader5, shader6, shader6, shader7];
+let shaders = [shader1, shader2, shader3, shader4, shader5, shader6, shader7];
 
 function importAll(r) {
   return r.keys().map(r);
@@ -35,12 +36,13 @@ function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function CellFactory({ size, renderer }) {
+function CellFactory({ size, renderer, camera }) {
   let percent = Math.random() * 100;
   let current = 0;
 
+ 
 
-  //return new CellText({size});
+//  return new CellText({size});
 
   function CheckPercent(chance) {
     let test = percent <= chance + current;
@@ -50,11 +52,11 @@ function CellFactory({ size, renderer }) {
 
   if (CheckPercent(30)) {
     return CellVideoFactory({ size });
-  } else if (CheckPercent(10)) {
+  } else if (CheckPercent(5)) {
     return new CellColor({ size });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
-  }else if(CheckPercent(13)){
+  }else if(CheckPercent(5)){
     return CellMotionFactory({size});
   } else if (CheckPercent(7)) {
     let reactDiffDataArray = [

@@ -18,7 +18,7 @@ void main() {
     vec4 color = texture2D(uSampler,uv);
 
     float gray = (color.r,color.g, color.b)/3.0;
-    gray = smoothstep(0.0,0.3,gray);
+    gray = smoothstep(0.0,uVolume * 0.6 + 0.1,gray);
     gl_FragColor = mix(vec4(vec3(0.0),1.0), vec4(uColor,1.0), gray);
 
 }

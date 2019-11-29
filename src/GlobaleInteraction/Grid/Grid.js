@@ -4,7 +4,7 @@ import  gridMouseDown from "./gridMouseDown/gridMouseDown"
 import  gridMouseUp from "./gridMouseUp/gridMouseUp"
 
 class Grid {
-  constructor({ renderer, getSize }) {
+  constructor({ camera, renderer, getSize }) {
     this.mesh = new THREE.Group();
     this.width = getSize().width > 2000 ? 2000 : getSize().width;
     this.height =
@@ -33,34 +33,45 @@ class Grid {
       if (e.keyCode == 84) {
         this.sliceVertical({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "top" });
       }
+
+      if (e.keyCode == 78) {
+        this.clear();
+        this.createMolecule({topLeftPos: new THREE.Vector2(-10,-5), bottomRightPos: new THREE.Vector2(1,1)});
+      }
     });
 
-    this.originSlice = {x:null,y:null};
-    this.pointer = null;
-    console.dir(this.renderer.domElement)
-    this.renderer.domElement.addEventListener("mousedown", gridMouseDown.bind(this)())
-    this.renderer.domElement.addEventListener("mouseup", gridMouseUp.bind(this)())
-
+    // this.originSlice = {x:null,y:null};
+    // this.pointer = null;
+    // console.dir(this.renderer.domElement)
+    // this.renderer.domElement.addEventListener("mousedown", gridMouseDown.bind(this)())
+    // this.renderer.domElement.addEventListener("mouseup", gridMouseUp.bind(this)())
+    this.camera = camera;
+    
     this.reset();
   }
 
-  reset() {
+  clear(){
     let array = [...this.molecules];
     for (let i = 0; i < array.length; i++) {
       this.remove(array[i]);
     }
+  }
+
+  reset() {
+    this.clear();
     this.molecules.push(
       new Molecule({
         width: 20,
         height: 10,
-        renderer: this.renderer
+        renderer: this.renderer,
+        camera: this.camera
       })
     );
 
     this.molecules.forEach(mol => {
       this.mesh.add(mol.cell.mesh);
     });
-    this.dispatch({ count: 20 });
+    //this.dispatch({ count: 20 });
   }
 
   remove(molecule) {
@@ -162,6 +173,7 @@ class Grid {
       }
     }
   }
+
   sliceVertical({ cuttingPoint, direction }) {
     let array = this.molecules.filter(molecule => {
       return direction == "top"
@@ -179,6 +191,7 @@ class Grid {
       }
     });
   }
+
   sliceHorizontal({ cuttingPoint, direction }) {
     let array = this.molecules.filter(molecule => {
       return direction == "right"
@@ -199,8 +212,26 @@ class Grid {
       }
     });
   }
+
+  createMolecule({topLeftPos, bottomRightPos, cell}){
+    let newMolecule =  new Molecule({
+      posX: (topLeftPos.x + bottomRightPos.x)/2,
+      posY: (topLeftPos.y + bottomRightPos.y)/2,
+      width: Math.abs(topLeftPos.x - bottomRightPos.x),
+      height: Math.abs(topLeftPos.y - bottomRightPos.y),
+      renderer: this.renderer,
+      camera: this.camera
+    });
+
+    this.molecules.push(
+      newMolecule
+    );
+
+    this.mesh.add(newMolecule.cell.mesh);
+  }
+
   update(data) {
-    // if (data.bpm(8)) {
+    // if (data.bpm(4)) {
     //   if (this.molecules.length < 15) {
     //     this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
     //   } else {

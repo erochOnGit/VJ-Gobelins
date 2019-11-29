@@ -3,5 +3,24 @@
 body {
   overflow: hidden;
   margin: unset;
-  font-family: "Pacifico";
+  font-family: "SharpGrotesk";
+}
+
+audio{
+  position: absolute;
+  top: 0;
+  z-index: 10000;
+ // display: none;
+}
+
+.color{
+  border: 1px solid white;
+  &.color--inverted{
+    color: black;
+    background-color: white;
+    path{
+      fill: black;
+      stroke: black;
+    }
+  }
 }
