@@ -1,25 +1,22 @@
 import Molecule from "./Molecule";
 import gridMouseDown from "./gridMouseDown/gridMouseDown";
 import gridMouseUp from "./gridMouseUp/gridMouseUp";
-import gridDrag from "./gridDrag"
+import gridDrag from "./gridDrag";
 
 class Grid {
-  constructor({ renderer, getSize, camera, mouse, raycaster, scene }) {
+  constructor({ renderer, camera, mouse, raycaster, scene }) {
     this.mesh = new THREE.Group();
     this.scene = scene;
     this.camera = camera;
     this.mouse = mouse;
     this.raycaster = raycaster;
-    this.width = getSize().width > 2000 ? 2000 : getSize().width;
-    this.height =
-      getSize().height > 1000
-        ? 1000
-        : (getSize().width * getSize().width) / 2000;
+    this.width = 20;
+    this.height = 10;
 
-    var geometry = new THREE.PlaneBufferGeometry(25, 15, 32);
+    var geometry = new THREE.PlaneBufferGeometry(100, 20, 32);
     var material = new THREE.MeshBasicMaterial({
-      color: 0xffff00,
-      side: THREE.DoubleSide  
+      color: 0x000000,
+      side: THREE.DoubleSide
     });
     this.interactionPlane = new THREE.Mesh(geometry, material);
     this.interactionPlane.updateMatrix();
@@ -55,15 +52,9 @@ class Grid {
 
     this.originSlice = { x: null, y: null };
     this.pointer = null;
-    this.dragEvent = gridDrag.bind(this)() ;
-    this.renderer.domElement.addEventListener(
-      "mousedown",
-      gridMouseDown.bind(this)()
-    );
-    this.renderer.domElement.addEventListener(
-      "mouseup",
-      gridMouseUp.bind(this)()
-    );
+    this.dragEvent = gridDrag.bind(this)();
+    window.addEventListener("mousedown", gridMouseDown.bind(this)());
+    window.addEventListener("mouseup", gridMouseUp.bind(this)());
     this.reset();
   }
 
@@ -74,8 +65,8 @@ class Grid {
     }
     this.molecules.push(
       new Molecule({
-        width: 20,
-        height: 10,
+        width: this.width,
+        height: this.height,
         renderer: this.renderer
       })
     );

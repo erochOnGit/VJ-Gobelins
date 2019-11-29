@@ -8,8 +8,20 @@ export default function() {
 
     // calculate objects intersecting the picking ray
     this.point = this.raycaster.intersectObject(this.interactionPlane)[0].point;
-    this.renderer.domElement.addEventListener("mousemove", this.dragEvent);
-    this.originSlice = { x: e.clientX, y: e.clientY };
-    this.pointer = new MouseDownPointer(this.originSlice);
+    if (
+      Math.abs(this.point.x) > this.width / 2 ||
+      Math.abs(this.point.y) > this.height / 2
+    ) {
+      if (Math.abs(this.point.x * 0.5) > Math.abs(this.point.y)) {
+        this.sliceType = "vertical";
+      } else {
+        this.sliceType = "horizontal";
+      }
+
+      window.addEventListener("mousemove", this.dragEvent);
+
+      this.originSlice = { x: e.clientX, y: e.clientY };
+      this.pointer = new MouseDownPointer(this.originSlice);
+    }
   };
 }

@@ -4,6 +4,7 @@ import CellMotion from "src/GlobaleInteraction/Module/Cell/CellMotion";
 import CellEmpty from "src/GlobaleInteraction/Module/Cell/CellEmpty";
 import CellColor from "src/GlobaleInteraction/Module/Cell/CellColor";
 import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
+import CellVectorField from "src/GlobaleInteraction/Module/Cell/CellVectorField";
 import CellText from "src/GlobaleInteraction/Module/Cell/CellText";
 //import CellSplitscan from "src/GlobaleInteraction/Module/Cell/CellSplitscan";
 
@@ -14,7 +15,16 @@ import shader4 from "src/assets/dev/negatif";
 import shader5 from "src/assets/dev/sawtooth";
 import shader6 from "src/assets/dev/color";
 import shader7 from "src/assets/dev/kaleidoscope";
-let shaders = [shader1, shader2, shader3, shader4, shader5, shader6, shader6, shader7];
+let shaders = [
+  shader1,
+  shader2,
+  shader3,
+  shader4,
+  shader5,
+  shader6,
+  shader6,
+  shader7
+];
 
 function importAll(r) {
   return r.keys().map(r);
@@ -36,9 +46,9 @@ function getRandomElement(array) {
 }
 
 function CellFactory({ size, renderer }) {
+
   let percent = Math.random() * 100;
   let current = 0;
-
 
   //return new CellText({size});
 
@@ -54,8 +64,8 @@ function CellFactory({ size, renderer }) {
     return new CellColor({ size });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
-  }else if(CheckPercent(13)){
-    return CellMotionFactory({size});
+  } else if (CheckPercent(13)) {
+    return CellMotionFactory({ size });
   } else if (CheckPercent(7)) {
     let reactDiffDataArray = [
       { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
@@ -66,7 +76,10 @@ function CellFactory({ size, renderer }) {
     return new CellReactionDiffusion({
       size,
       renderer,
-      reacDiffData: reactDiffDataArray[Math.random() * reactDiffDataArray.length + reactDiffDataArray.length]
+      reacDiffData:
+        reactDiffDataArray[
+          Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
+        ]
     });
   } else {
     return CellImageFactory({ size });
@@ -91,7 +104,6 @@ function CellVideoFactory({ size }) {
   return cell;
 }
 
-
 function CellMotionFactory({ size }) {
   let cell = new CellMotion({
     url: getRandomElement(motions),
@@ -99,7 +111,6 @@ function CellMotionFactory({ size }) {
   });
   return cell;
 }
-
 
 /*function CellSplitscanFactory({ size }) {
   let cell = new CellSplitscan({

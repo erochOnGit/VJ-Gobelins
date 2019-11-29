@@ -1,4 +1,5 @@
-import gridDrag from "../gridDrag"
+import gridDrag from "../gridDrag";
+import { TweenMax } from "gsap";
 export default function() {
   return e => {
     this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -7,10 +8,11 @@ export default function() {
     this.point2 = this.raycaster.intersectObject(
       this.interactionPlane
     )[0].point;
-    this.pointer.direction = {
-      x: this.point.x + this.point2.x,
-      y: this.point.y + this.point2.y
-    };
-    console.log(this.pointer.direction);
+    if(this.sliceType == "horizontal"){
+      TweenMax.set(this.pointer.direction,{x:e.clientX > this.originSlice.x?this.originSlice.x:this.originSlice.x-100,y:e.clientY})
+    }
+    if(this.sliceType == "vertical"){
+      TweenMax.set(this.pointer.direction,{x:e.clientX ,y:e.clientY> this.originSlice.y?this.originSlice.y:this.originSlice.y-100})
+    }
   };
 }

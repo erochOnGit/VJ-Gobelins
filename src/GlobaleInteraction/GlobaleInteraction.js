@@ -6,7 +6,6 @@ class GlobaleInteraction extends Interaction {
   constructor({
     analyser,
     scenePush,
-    getSize,
     renderer,
     camera,
     mouse,
@@ -17,7 +16,6 @@ class GlobaleInteraction extends Interaction {
     this.analyser = analyser;
     this.grid = new Grid({
       renderer,
-      getSize,
       camera,
       mouse,
       raycaster,

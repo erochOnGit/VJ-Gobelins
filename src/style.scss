@@ -5,3 +5,8 @@ body {
   margin: unset;
   font-family: "Pacifico";
 }
+
+audio{
+  position: absolute;
+  z-index: 1;
+}

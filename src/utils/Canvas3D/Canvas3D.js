@@ -48,7 +48,6 @@ class Canvas3D {
       renderer: this.renderer,
       analyser: this.analyser,
       scenePush: this.addObjectToScene.bind(this),
-      getSize: this.sight.getScreenSize.bind(this.sight),
       camera: this.sight.cameraOrtho,
       mouse: this.mouse,
       raycaster: this.raycaster,

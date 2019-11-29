@@ -1,6 +1,16 @@
-.mouseDownPointer {
-  width: 100px;
-  height: 100px;
-  background: red;
-  position: absolute;
+.mouse-down {
+  &_pointer {
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: absolute;
+  }
+  &_direction{
+    width: 100px;
+    height: 100px;
+    background: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
