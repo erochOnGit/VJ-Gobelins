@@ -10,6 +10,7 @@ import Pulverturm from "src/assets/musics/009_Pulverturm_DJTomcraftRemix_NielsVa
 import WithoutU from "src/assets/musics/010_WithoutU_RickyRazu.mp3"
 import LadyScience from "src/assets/musics/011_LadyScienceNYCSunrise_SoulCapsule.mp3"
 import Wormhole from "src/assets/musics/012_Wormhole_Bastinov.mp3"
+import techno from "src/assets/musics/techno.mp3"
 
 let trackList = {
   0: {
@@ -128,6 +129,15 @@ let trackList = {
     genre: "partyhard_02h-06h",
     bpm: "130",
     color: "#78FFA1"
+  },
+  12: {
+    name: "Techno toujours pareil",
+    artist: "Salut c'est cool",
+    url: techno,
+    tags: "tags",
+    genre: "partyhard_02h-06h",
+    bpm: "130",
+    color: "#FF69B4"
   },
  
  

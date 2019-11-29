@@ -239,13 +239,13 @@ class Grid {
   }
 
   update(data) {
-    // if (data.bpm(4)) {
-    //   if (this.molecules.length < 15) {
-    //     this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
-    //   } else {
-    //     this.reset();
-    //   }
-    // }
+    if (data.bpm(4)) {
+      if (this.molecules.length < 15) {
+        this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
+      } else {
+        this.reset();
+      }
+    }
 
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);
