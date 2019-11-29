@@ -1,5 +1,6 @@
 import trackList from "./trackList.js";
 
+
 export default class Audio {
   constructor() {
     this.audioNode = document.querySelector("#audio");
@@ -36,14 +37,28 @@ export default class Audio {
   getCurrentTrack() {
     return this.tracks[this.currentTrackIndex];
   }
+
   nextTrack() {
     this.setTrack(this.currentTrackIndex + 1);
   }
+
   previousTrack() {
     this.setTrack(this.currentTrackIndex - 1);
   }
 
+  getProgress(){
+    return this.audioNode.currentTime/this.audioNode.duration;
+  }
+
   isPlaying() {
-    return !this.audioNode.paused && this.audioNode.currentTime > 0 && !this.audioNode.ended
+    return !this.audioNode.paused && this.audioNode.currentTime > 0;
+  }
+
+  togglePlay(){
+    if(this.isPlaying()){
+      this.audioNode.pause();
+    }else{
+      this.audioNode.play();
+    }
   }
 }

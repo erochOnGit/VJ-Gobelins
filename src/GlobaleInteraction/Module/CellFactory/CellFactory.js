@@ -6,6 +6,7 @@ import CellColor from "src/GlobaleInteraction/Module/Cell/CellColor";
 import CellReactionDiffusion from "src/GlobaleInteraction/Module/Cell/CellReactionDiffusion";
 import CellVectorField from "src/GlobaleInteraction/Module/Cell/CellVectorField";
 import CellText from "src/GlobaleInteraction/Module/Cell/CellText";
+import CellDomElement from "src/GlobaleInteraction/Module/Cell/CellDomElement";
 //import CellSplitscan from "src/GlobaleInteraction/Module/Cell/CellSplitscan";
 
 import shader1 from "src/assets/dev/template";
@@ -60,12 +61,12 @@ function CellFactory({ size, renderer }) {
 
   if (CheckPercent(30)) {
     return CellVideoFactory({ size });
-  } else if (CheckPercent(10)) {
+  } else if (CheckPercent(5)) {
     return new CellColor({ size });
   } else if (CheckPercent(13)) {
     return new CellEmpty({ size });
-  } else if (CheckPercent(13)) {
-    return CellMotionFactory({ size });
+  }else if(CheckPercent(5)){
+    return CellMotionFactory({size});
   } else if (CheckPercent(7)) {
     let reactDiffDataArray = [
       { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },

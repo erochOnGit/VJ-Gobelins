@@ -49,7 +49,6 @@ class Grid {
         });
       }
     });
-
     this.originSlice = { x: null, y: null };
     this.pointer = null;
     this.dragEvent = gridDrag.bind(this)();
@@ -58,23 +57,28 @@ class Grid {
     this.reset();
   }
 
-  reset() {
+  clear() {
     let array = [...this.molecules];
     for (let i = 0; i < array.length; i++) {
       this.remove(array[i]);
     }
+  }
+
+  reset() {
+    this.clear();
     this.molecules.push(
       new Molecule({
-        width: this.width,
-        height: this.height,
-        renderer: this.renderer
+        width: 20,
+        height: 10,
+        renderer: this.renderer,
+        camera: this.camera
       })
     );
 
     this.molecules.forEach(mol => {
       this.mesh.add(mol.cell.mesh);
     });
-    this.dispatch({ count: 20 });
+    //this.dispatch({ count: 20 });
   }
 
   remove(molecule) {
@@ -176,6 +180,7 @@ class Grid {
       }
     }
   }
+
   sliceVertical({ cuttingPoint, direction }) {
     let array = this.molecules.filter(molecule => {
       return direction == "top"
@@ -196,6 +201,7 @@ class Grid {
       }
     });
   }
+
   sliceHorizontal({ cuttingPoint, direction }) {
     let array = this.molecules.filter(molecule => {
       return direction == "right"
@@ -216,8 +222,24 @@ class Grid {
       }
     });
   }
+
+  createMolecule({ topLeftPos, bottomRightPos, cell }) {
+    let newMolecule = new Molecule({
+      posX: (topLeftPos.x + bottomRightPos.x) / 2,
+      posY: (topLeftPos.y + bottomRightPos.y) / 2,
+      width: Math.abs(topLeftPos.x - bottomRightPos.x),
+      height: Math.abs(topLeftPos.y - bottomRightPos.y),
+      renderer: this.renderer,
+      camera: this.camera
+    });
+
+    this.molecules.push(newMolecule);
+
+    this.mesh.add(newMolecule.cell.mesh);
+  }
+
   update(data) {
-    // if (data.bpm(8)) {
+    // if (data.bpm(4)) {
     //   if (this.molecules.length < 15) {
     //     this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
     //   } else {

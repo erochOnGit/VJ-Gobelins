@@ -8,6 +8,10 @@ export default function() {
 
     // calculate objects intersecting the picking ray
     this.point = this.raycaster.intersectObject(this.interactionPlane)[0].point;
+    this.point2 = this.raycaster.intersectObject(
+      this.interactionPlane
+    )[0].point;
+    this.isEventCreated = false;
     if (
       Math.abs(this.point.x) > this.width / 2 ||
       Math.abs(this.point.y) > this.height / 2
@@ -19,7 +23,7 @@ export default function() {
       }
 
       window.addEventListener("mousemove", this.dragEvent);
-
+      this.isEventCreated = true;
       this.originSlice = { x: e.clientX, y: e.clientY };
       this.pointer = new MouseDownPointer(this.originSlice);
     }
