@@ -5,30 +5,50 @@ import OffGrid from "./OffGrid";
 import { TweenMax } from "gsap";
 
 class GlobaleInteraction extends Interaction {
-  constructor({ analyser, scenePush, getSize, renderer, camera }) {
+  constructor({
+    analyser,
+    scenePush,
+    renderer,
+    camera,
+    mouse,
+    raycaster,
+    scene
+  }) {
     super();
     this.analyser = analyser;
-    this.grid = new Grid({ camera, renderer, getSize });
-    this.controls = new Controls({audio: analyser.audio});
+    this.grid = new Grid({
+      renderer,
+      camera,
+      mouse,
+      raycaster,
+      scene
+    });
 
     scenePush(this.grid.mesh);
+    this.controls = new Controls({ audio: analyser.audio });
+    //  scenePush(this.grid2.mesh);
 
-  //  scenePush(this.grid2.mesh);
-
-  //   //this.cell = new CellImage({image: image});
-  //   this.cell = new CellVideo({url: url, shader: shader1});
-  //  // this.grid.add(this.cell);
-  //   scenePush(this.cell.mesh);
+    //   //this.cell = new CellImage({image: image});
+    //   this.cell = new CellVideo({url: url, shader: shader1});
+    //  // this.grid.add(this.cell);
+    //   scenePush(this.cell.mesh);
   }
 
   update() {
     let data = this.analyser.getData();
     this.grid.update(data);
     this.controls.update(data);
-    
-    TweenMax.set(".color",{color: data.color, borderColor: data.color, stroke: data.color});
-    TweenMax.set(".color--inverted",{ backgroundColor: data.color, color: "black" });
-   /// this.grid2.update(data);
+
+    TweenMax.set(".color", {
+      color: data.color,
+      borderColor: data.color,
+      stroke: data.color
+    });
+    TweenMax.set(".color--inverted", {
+      backgroundColor: data.color,
+      color: "black"
+    });
+    /// this.grid2.update(data);
   }
 }
 

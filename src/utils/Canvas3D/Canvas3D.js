@@ -32,7 +32,7 @@ class Canvas3D {
     this.mouse = new THREE.Vector2();
     this.intersects = [];
     var gridHelper = new THREE.GridHelper(10, 5);
-   // this.scene.add(gridHelper);
+    // this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -48,8 +48,10 @@ class Canvas3D {
       renderer: this.renderer,
       analyser: this.analyser,
       scenePush: this.addObjectToScene.bind(this),
-      getSize: this.sight.getScreenSize.bind(this.sight),
-      camera: this.sight.cameraOrtho
+      camera: this.sight.cameraOrtho,
+      mouse: this.mouse,
+      raycaster: this.raycaster,
+      scene: this.scene
     });
 
     this.controls = new OrbitControls(this.sight.camera);

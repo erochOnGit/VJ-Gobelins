@@ -1,20 +1,29 @@
 import Molecule from "./Molecule";
-import { cpus } from "os";
-import  gridMouseDown from "./gridMouseDown/gridMouseDown"
-import  gridMouseUp from "./gridMouseUp/gridMouseUp"
+import gridMouseDown from "./gridMouseDown/gridMouseDown";
+import gridMouseUp from "./gridMouseUp/gridMouseUp";
+import gridDrag from "./gridDrag";
 
 class Grid {
-  constructor({ camera, renderer, getSize }) {
+  constructor({ renderer, camera, mouse, raycaster, scene }) {
     this.mesh = new THREE.Group();
-    this.width = getSize().width > 2000 ? 2000 : getSize().width;
-    this.height =
-      getSize().height > 1000
-        ? 1000
-        : (getSize().width * getSize().width) / 2000;
+    this.scene = scene;
+    this.camera = camera;
+    this.mouse = mouse;
+    this.raycaster = raycaster;
+    this.width = 20;
+    this.height = 10;
 
-    this.marginH = (getSize().width - this.width) / 2;
-    this.marginV = (getSize().height - this.height) / 2;
-    this.gravityRegion = 20;
+    var geometry = new THREE.PlaneBufferGeometry(100, 20, 32);
+    var material = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      side: THREE.DoubleSide
+    });
+    this.interactionPlane = new THREE.Mesh(geometry, material);
+    this.interactionPlane.updateMatrix();
+    this.interactionPlane.position.set(0, 0, -5);
+    this.interactionPlane.rotation.x = Math.PI;
+    this.interactionPlane.geometry.normalsNeedUpdate = true;
+    this.scene.add(this.interactionPlane);
 
     this.molecules = [];
 
@@ -28,29 +37,27 @@ class Grid {
         this.dispatch({ count: 1 + Math.floor(Math.random() * 3) });
       }
       if (e.keyCode == 82) {
-        this.sliceHorizontal({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "right" });
+        this.sliceHorizontal({
+          cuttingPoint: Math.round(Math.random() * 10) - 5,
+          direction: "right"
+        });
       }
       if (e.keyCode == 84) {
-        this.sliceVertical({ cuttingPoint: Math.round(Math.random() * 10) - 5, direction: "top" });
-      }
-
-      if (e.keyCode == 78) {
-        this.clear();
-        this.createMolecule({topLeftPos: new THREE.Vector2(-10,-5), bottomRightPos: new THREE.Vector2(1,1)});
+        this.sliceVertical({
+          cuttingPoint: Math.round(Math.random() * 10) - 5,
+          direction: "top"
+        });
       }
     });
-
-    // this.originSlice = {x:null,y:null};
-    // this.pointer = null;
-    // console.dir(this.renderer.domElement)
-    // this.renderer.domElement.addEventListener("mousedown", gridMouseDown.bind(this)())
-    // this.renderer.domElement.addEventListener("mouseup", gridMouseUp.bind(this)())
-    this.camera = camera;
-    
+    this.originSlice = { x: null, y: null };
+    this.pointer = null;
+    this.dragEvent = gridDrag.bind(this)();
+    window.addEventListener("mousedown", gridMouseDown.bind(this)());
+    window.addEventListener("mouseup", gridMouseUp.bind(this)());
     this.reset();
   }
 
-  clear(){
+  clear() {
     let array = [...this.molecules];
     for (let i = 0; i < array.length; i++) {
       this.remove(array[i]);
@@ -185,8 +192,11 @@ class Grid {
     }
     this.molecules.forEach(molecule => {
       if (direction == "top" && molecule.getEdgesPos().top > cuttingPoint) {
-          molecule.resizeVertical({ direction: -1, cuttingPoint });
-      } else if (direction == "bottom" && molecule.getEdgesPos().bottom < cuttingPoint) {
+        molecule.resizeVertical({ direction: -1, cuttingPoint });
+      } else if (
+        direction == "bottom" &&
+        molecule.getEdgesPos().bottom < cuttingPoint
+      ) {
         molecule.resizeVertical({ direction: 1, cuttingPoint });
       }
     });
@@ -202,30 +212,28 @@ class Grid {
       this.remove(array[i]);
     }
     this.molecules.forEach(molecule => {
-      if (
-        direction == "right" &&
-        molecule.getEdgesPos().right > cuttingPoint
-      ) {
+      if (direction == "right" && molecule.getEdgesPos().right > cuttingPoint) {
         molecule.resizeHorizontal({ direction: -1, cuttingPoint });
-      } else if (direction == "left" && molecule.getEdgesPos().left < cuttingPoint) {
+      } else if (
+        direction == "left" &&
+        molecule.getEdgesPos().left < cuttingPoint
+      ) {
         molecule.resizeHorizontal({ direction: 1, cuttingPoint });
       }
     });
   }
 
-  createMolecule({topLeftPos, bottomRightPos, cell}){
-    let newMolecule =  new Molecule({
-      posX: (topLeftPos.x + bottomRightPos.x)/2,
-      posY: (topLeftPos.y + bottomRightPos.y)/2,
+  createMolecule({ topLeftPos, bottomRightPos, cell }) {
+    let newMolecule = new Molecule({
+      posX: (topLeftPos.x + bottomRightPos.x) / 2,
+      posY: (topLeftPos.y + bottomRightPos.y) / 2,
       width: Math.abs(topLeftPos.x - bottomRightPos.x),
       height: Math.abs(topLeftPos.y - bottomRightPos.y),
       renderer: this.renderer,
       camera: this.camera
     });
 
-    this.molecules.push(
-      newMolecule
-    );
+    this.molecules.push(newMolecule);
 
     this.mesh.add(newMolecule.cell.mesh);
   }
