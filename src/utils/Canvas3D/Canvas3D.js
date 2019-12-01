@@ -54,7 +54,7 @@ class Canvas3D {
       scene: this.scene
     });
 
-    this.controls = new OrbitControls(this.sight.camera);
+   // this.controls = new OrbitControls(this.sight.camera);
     //this.controls = new OrbitControls(this.sight.activeCamera);
 
     window.addEventListener("resize", this.onWindowResize.bind(this), false);

@@ -5,7 +5,6 @@ export default class Audio {
   constructor() {
     this.audioNode = document.querySelector("#audio");
     this.source = this.audioNode.querySelector("source");
-    this.tracks = Object.values(trackList);
     this.started = false;
     this.audioNode.onended = () => {
       console.log("Song has ended")
@@ -13,6 +12,11 @@ export default class Audio {
     };
     this.tracksetEvent = new Event("trackset");
   }
+
+  get tracks() {
+    return Object.values(trackList);
+  }
+
   start() {
     if (!this.started) {
       this.setTrack(0);
@@ -21,7 +25,7 @@ export default class Audio {
     }
   }
   setTrack(id) {
-    if (id < 0) { 
+    if (id < 0) {
       id = this.tracks.length - 1;
     } else if (id > this.tracks.length - 1) {
       id = 0;
@@ -46,18 +50,18 @@ export default class Audio {
     this.setTrack(this.currentTrackIndex - 1);
   }
 
-  getProgress(){
-    return this.audioNode.currentTime/this.audioNode.duration;
+  getProgress() {
+    return this.audioNode.currentTime / this.audioNode.duration;
   }
 
   isPlaying() {
     return !this.audioNode.paused && this.audioNode.currentTime > 0;
   }
 
-  togglePlay(){
-    if(this.isPlaying()){
+  togglePlay() {
+    if (this.isPlaying()) {
       this.audioNode.pause();
-    }else{
+    } else {
       this.audioNode.play();
     }
   }

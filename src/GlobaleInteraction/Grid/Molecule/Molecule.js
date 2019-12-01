@@ -1,7 +1,7 @@
 import CellFactory from "src/GlobaleInteraction/Module/CellFactory";
 
 class Molecule {
-  constructor({ posX, posY, width, height, renderer, camera, cell }) {
+  constructor({ posX, posY, width, height, renderer, camera, cellData }) {
     /**
      * width in cell
      */
@@ -10,7 +10,8 @@ class Molecule {
     this.posX = posX || 0;
     this.posY = posY || 0;
     this.margin = 0.1;
-    this.cell = cell || CellFactory({
+    this.cell = CellFactory({
+      cellData,
       size: new THREE.Vector2(
         this.width - this.margin * 2,
         this.height - this.margin * 2

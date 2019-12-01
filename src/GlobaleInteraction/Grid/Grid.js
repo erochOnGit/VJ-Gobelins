@@ -34,7 +34,7 @@ class Grid {
         this.reset();
       }
       if (e.keyCode == 90) {
-        this.dispatch({ count: 1 + Math.floor(Math.random() * 3) });
+        this.dispatch({ count: 1 });
       }
       if (e.keyCode == 82) {
         this.sliceHorizontal({
@@ -49,12 +49,13 @@ class Grid {
         });
       }
     });
+    this.autocut = false;
     this.originSlice = { x: null, y: null };
     this.pointer = null;
     this.dragEvent = gridDrag.bind(this)();
-    window.addEventListener("mousedown", gridMouseDown.bind(this)());
-    window.addEventListener("mouseup", gridMouseUp.bind(this)());
-    this.reset();
+  //  window.addEventListener("mousedown", gridMouseDown.bind(this)());
+    //window.addEventListener("mouseup", gridMouseUp.bind(this)());
+   //this.reset();
   }
 
   clear() {
@@ -223,14 +224,15 @@ class Grid {
     });
   }
 
-  createMolecule({ topLeftPos, bottomRightPos, cell }) {
+  createMolecule({ topLeftPos, size, cellData }) {
     let newMolecule = new Molecule({
-      posX: (topLeftPos.x + bottomRightPos.x) / 2,
-      posY: (topLeftPos.y + bottomRightPos.y) / 2,
-      width: Math.abs(topLeftPos.x - bottomRightPos.x),
-      height: Math.abs(topLeftPos.y - bottomRightPos.y),
+      posX: topLeftPos.x + size.x/2,
+      posY: topLeftPos.y - size.y/2,
+      width: size.x,
+      height: size.y,
       renderer: this.renderer,
-      camera: this.camera
+      camera: this.camera,
+      cellData
     });
 
     this.molecules.push(newMolecule);
@@ -239,7 +241,7 @@ class Grid {
   }
 
   update(data) {
-    if (data.bpm(4)) {
+    if (data.bpm(1) && this.autocut) {
       if (this.molecules.length < 15) {
         this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
       } else {

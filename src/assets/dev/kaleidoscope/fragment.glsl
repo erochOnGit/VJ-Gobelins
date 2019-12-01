@@ -13,6 +13,7 @@ const float pi = 3.1415926;
 
 void main() {
     vec2 uv = vUv;
+      uv = (uv - 0.5) * ratio + 0.5;
     vec2 dir = vec2(0.5) - uv;
     uv = uv + dir * length(dir) * uDifference * 2.0;
     vec2 kuv = fract(uv * sign(uv - 0.5) - (uTime * 0.1));

@@ -2,12 +2,13 @@ import "./controls.scss";
 import { TweenMax } from "gsap";
 
 class Controls {
-  constructor({ audio }) {
+  constructor({ audio, ui }) {
 
-    const displayTime = 3;
+    const displayTime = 7;
 
     this.audio = audio;
     this.displayTimer = displayTime;
+    this.ui = ui;
 
     this.audio.audioNode.addEventListener("trackset", () => {
       document.querySelector(".controls-bar__status p").textContent =
@@ -28,6 +29,12 @@ class Controls {
       };
       document.querySelector(".controls-bar__btn-fullscreen").onclick = () => {
         toggleFullScreen();
+      };
+      document.querySelector(".controls-bar h1").onclick = () => {
+        this.ui.homeLayout();
+      };
+      document.querySelector(".controls-bar__btn-info").onclick = () => {
+        this.ui.programationLayout();
       };
     });
 

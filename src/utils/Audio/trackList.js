@@ -11,6 +11,8 @@ import WithoutU from "src/assets/musics/010_WithoutU_RickyRazu.mp3"
 import LadyScience from "src/assets/musics/011_LadyScienceNYCSunrise_SoulCapsule.mp3"
 import Wormhole from "src/assets/musics/012_Wormhole_Bastinov.mp3"
 import techno from "src/assets/musics/techno.mp3"
+import amandoon from "src/assets/musics/amandoon.mp3"
+import dat from "dat.gui";
 
 let trackList = {
   0: {
@@ -30,7 +32,7 @@ let trackList = {
     tags: "tags",
     genre: "dance_14h-18h",
     bpm: "114",
-    color: "red"
+    color: "#ff0000"
   },
 
   2: {
@@ -139,8 +141,33 @@ let trackList = {
     bpm: "130",
     color: "#FF69B4"
   },
- 
- 
+  12: {
+    name: "Le temps est bon",
+    artist: "Degiheugi",
+    url: amandoon,
+    tags: "tags",
+    genre: "partyhard_02h-06h",
+    bpm: "120",
+    color: "#FF69B4"
+  },
+  
 };
+
+window.addEventListener("load",function(){
+  var gui = new dat.GUI({closeOnTop: true,closed:true});
+  for (let [key, track] of Object.entries(trackList)) {
+   gui.remember(track);
+   let foldername = track.artist +" - "+ track.name;
+   foldername = foldername.length > 40 ? foldername.substring(0,37)+"..." : foldername;
+    var folder = gui.addFolder(foldername);
+    folder.add(track, 'name');
+    folder.add(track, 'artist');
+    folder.add(track, 'tags');
+    folder.add(track, 'genre', { chill:"chill_10h-14h",dance:"dance_14h-18h",afterwork:"afterwork_18h-23h",warmup:"warmup_23h-02h",partyhard:"partyhard_02h-06h",after:"after_06h-10h" } );
+    folder.add(track, 'bpm');
+    folder.addColor(track, 'color');
+  }
+});
+
 
 export default trackList

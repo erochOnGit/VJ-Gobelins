@@ -61,19 +61,6 @@ export default class AudioAnalyser {
       canvas: debugCanvas,
       ctx: debugCanvas.getContext("2d"),
     };
-
-    window.addEventListener("keydown", e => {
-      if (e.keyCode == 80) {
-        this.debugger.on = !this.debugger.on;
-      }else if (e.keyCode == 77) {
-        this.guiData = {
-          color: "#fff"
-        }
-        var gui = new dat.GUI();
-        gui.addColor(this.guiData, 'color')
-        .name('color');
-      }
-    });
   }
 
   refreshData(time) {
@@ -95,7 +82,7 @@ export default class AudioAnalyser {
         this.bpmTimer = 0;
         this.data.bpmNumber += 1;
       }
-      this.data.color = this.guiData ? this.guiData.color : this.audio.getCurrentTrack().color;
+      this.data.color = this.audio.getCurrentTrack().color;
     }
 
     this.data.rawvolume = this.getAverage({ min: 0, max: 100 });

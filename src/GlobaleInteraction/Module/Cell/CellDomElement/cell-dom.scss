@@ -1,11 +1,11 @@
 .cell-dom{
     position: absolute;
-    z-index: 1000000;
+    z-index: 1;
     height: 250px;
     width: 250px;
     top: 0;
     bottom: 0;
-    background-color: blue;
+    //background-color: blue;
     color: white;
     transform: translate(-50%,-50%);
     overflow: hidden;
@@ -13,5 +13,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "WASA";
+
+    >*{
+        height: 100%;
+        width: 100%;
+    }
+
+    >h1,>h2,>h3,>h4, >button{
+        font-size: 22px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "SoyuzGrotesk";
+    }
+
+    button{
+        cursor: pointer;
+    }
+
+
+    p{
+        max-width: 700px;
+        font-size: 20px;
+    }
 }
+

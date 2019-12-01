@@ -1,8 +1,8 @@
 import Interaction from "../utils/Canvas3D/Interaction";
 import Grid from "./Grid";
-import Controls from "./UI/Controls";
+import UI from "./UI";
 import OffGrid from "./OffGrid";
-import { TweenMax } from "gsap";
+import Stats from "stats.js";
 
 class GlobaleInteraction extends Interaction {
   constructor({
@@ -23,9 +23,12 @@ class GlobaleInteraction extends Interaction {
       raycaster,
       scene
     });
-
+    this.UI = new UI({grid:this.grid, audio: this.analyser.audio, camera});
+    this.stats = new Stats();
+    this.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( this.stats.dom );
     scenePush(this.grid.mesh);
-    this.controls = new Controls({ audio: analyser.audio });
+
     //  scenePush(this.grid2.mesh);
 
     //   //this.cell = new CellImage({image: image});
@@ -35,19 +38,11 @@ class GlobaleInteraction extends Interaction {
   }
 
   update() {
+    this.stats.begin();
     let data = this.analyser.getData();
     this.grid.update(data);
-    this.controls.update(data);
-
-    TweenMax.set(".color", {
-      color: data.color,
-      borderColor: data.color,
-      stroke: data.color
-    });
-    TweenMax.set(".color--inverted", {
-      backgroundColor: data.color,
-      color: "black"
-    });
+    this.UI.update(data);
+    this.stats.end()
     /// this.grid2.update(data);
   }
 }

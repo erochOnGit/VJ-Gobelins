@@ -3,16 +3,17 @@ import "./cell-dom.scss";
 import { TweenMax } from "gsap";
 
 class CellDomElement extends Cell {
-  constructor({size, camera}) {
+  constructor({size, camera, html}) {
 
     var domElement = document.createElement("dom");
     domElement.classList.add("cell-dom");
-    domElement.innerHTML = `<p>ERROR</p>`;
+    domElement.innerHTML = html || `<p>ERROR</p>`;
 
     document.body.append(domElement);
     
     var material = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("grey")
+      opacity:0,
+      alphaTest: 1,
     });
 
     super({material, size});
