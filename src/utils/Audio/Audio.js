@@ -15,7 +15,7 @@ export default class Audio {
   }
 
   get tracks() {
-    return Object.values(trackList2);
+    return Object.values(trackList);
   }
 
   start() {
