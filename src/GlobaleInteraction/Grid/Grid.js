@@ -2,6 +2,7 @@ import Molecule from "./Molecule";
 import gridMouseDown from "./gridMouseDown/gridMouseDown";
 import gridMouseUp from "./gridMouseUp/gridMouseUp";
 import gridDrag from "./gridDrag";
+import GridBackground from "./GridBackground";
 
 class Grid {
   constructor({ renderer, camera, mouse, raycaster, scene }) {
@@ -12,7 +13,9 @@ class Grid {
     this.raycaster = raycaster;
     this.width = 20;
     this.height = 10;
-
+    /**
+     * interesect pannel
+     */
     var geometry = new THREE.PlaneBufferGeometry(100, 20, 32);
     var material = new THREE.MeshBasicMaterial({
       color: 0x000000,
@@ -24,6 +27,12 @@ class Grid {
     this.interactionPlane.rotation.x = Math.PI;
     this.interactionPlane.geometry.normalsNeedUpdate = true;
     this.scene.add(this.interactionPlane);
+
+    /**
+     *
+     */
+    this.gridBackground = new GridBackground({});
+    this.scene.add(this.gridBackground.mesh);
 
     this.molecules = [];
 
@@ -53,9 +62,9 @@ class Grid {
     this.originSlice = { x: null, y: null };
     this.pointer = null;
     this.dragEvent = gridDrag.bind(this)();
-  //  window.addEventListener("mousedown", gridMouseDown.bind(this)());
+    //  window.addEventListener("mousedown", gridMouseDown.bind(this)());
     //window.addEventListener("mouseup", gridMouseUp.bind(this)());
-   //this.reset();
+    //this.reset();
   }
 
   clear() {
@@ -226,8 +235,8 @@ class Grid {
 
   createMolecule({ topLeftPos, size, cellData }) {
     let newMolecule = new Molecule({
-      posX: topLeftPos.x + size.x/2,
-      posY: topLeftPos.y - size.y/2,
+      posX: topLeftPos.x + size.x / 2,
+      posY: topLeftPos.y - size.y / 2,
       width: size.x,
       height: size.y,
       renderer: this.renderer,
@@ -241,13 +250,15 @@ class Grid {
   }
 
   update(data) {
-    if (data.bpm(1) && this.autocut) {
+    if (data.bpm(0) && this.autocut) {
       if (this.molecules.length < 15) {
         this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
       } else {
         this.reset();
       }
     }
+
+    this.gridBackground.update(data);
 
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);

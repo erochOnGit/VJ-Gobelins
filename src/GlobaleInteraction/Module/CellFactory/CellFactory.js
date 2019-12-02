@@ -106,7 +106,7 @@ let cell_rules = {
     }
   },
   empty:{
-    strength: 13,
+    strength: 50,
     minX: 0,
     maxX: 20,
     minY: 0,
@@ -152,6 +152,7 @@ let cell_rules = {
 
 function CellFactory({ size, renderer, camera, cellData }) {
   let _cellData = cellData || {type: GetRandomCellType({size})};
+  console.log(_cellData.type)
   return cell_rules[_cellData.type].factory({size, renderer, camera, cellData: _cellData});
 }
 
