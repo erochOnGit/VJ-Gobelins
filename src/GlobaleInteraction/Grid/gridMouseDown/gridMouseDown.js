@@ -30,7 +30,9 @@ export default function() {
       this.pointer = new MouseDownPointer(this.originSlice);
     } else {
       this.clickPoint = this.raycaster.intersectObjects(this.mesh.children);
-      this.clickPoint[0].object.userData.cell.molecule.reload();
+      if (this.clickPoint.length &&this.clickPoint[0].object.userData.cell.molecule) {
+        this.clickPoint[0].object.userData.cell.molecule.reload();
+      }
     }
   };
 }

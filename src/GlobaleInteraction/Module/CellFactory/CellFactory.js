@@ -65,7 +65,7 @@ let cell_rules = {
       return cell;
     }
   },
-  video:{
+  video: {
     strength: 20,
     minX: 0,
     maxX: 20,
@@ -81,7 +81,7 @@ let cell_rules = {
       return cell;
     }
   },
-  motion:{
+  motion: {
     strength: 10,
     minX: 0,
     maxX: 20,
@@ -96,7 +96,7 @@ let cell_rules = {
       return cell;
     }
   },
-  color:{
+  color: {
     strength: 10,
     minX: 0,
     maxX: 19,
@@ -106,7 +106,7 @@ let cell_rules = {
       return new CellColor({ size, molecule });
     }
   },
-  empty:{
+  empty: {
     strength: 16,
     minX: 0,
     maxX: 19,
@@ -116,13 +116,13 @@ let cell_rules = {
       return new CellEmpty({ size, molecule });
     }
   },
-  reactionDiffusion:{
+  reactionDiffusion: {
     strength: 8,
     minX: 2,
     maxX: 12,
     minY: 2,
     maxY: 7,
-    factory: function ({size, renderer}){
+    factory: function({ size, molecule , renderer}) {
       let reactDiffDataArray = [
         { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
         { Da: 1, Db: 0.27, feed: 0.005, k: 0.05 },
@@ -191,14 +191,14 @@ window.addEventListener("load", function() {
   var gui = new dat.GUI({ closeOnTop: true, closed: true });
   for (let [name, data] of Object.entries(cell_rules)) {
     gui.remember(data);
-    data.name  = name;
+    data.name = name;
     var folder = gui.addFolder(name);
-    folder.add(data, 'name');
-    folder.add(data, 'strength');
-    folder.add(data, 'minX',0,20);
-    folder.add(data, 'maxX',0,20);
-    folder.add(data, 'minY',0,10);
-    folder.add(data, 'maxY',0,10);
+    folder.add(data, "name");
+    folder.add(data, "strength");
+    folder.add(data, "minX", 0, 20);
+    folder.add(data, "maxX", 0, 20);
+    folder.add(data, "minY", 0, 10);
+    folder.add(data, "maxY", 0, 10);
   }
 });
 
