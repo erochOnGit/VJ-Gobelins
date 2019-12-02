@@ -106,9 +106,9 @@ let cell_rules = {
     }
   },
   empty:{
-    strength: 50,
+    strength: 10,
     minX: 0,
-    maxX: 20,
+    maxX: 19,
     minY: 0,
     maxY: 10,
     factory: function ({size}){

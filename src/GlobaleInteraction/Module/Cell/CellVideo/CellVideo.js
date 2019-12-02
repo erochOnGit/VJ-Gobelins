@@ -24,6 +24,7 @@ class CellVideo extends Cell {
         uIntensity: { type: "1f", value: 0 },
         uDifference: { type: "1f", value: 0 },
         uLifetime: { type: "1f", value: 0 },
+        uSaturation: { type: "1f", value: 0 },
         uColor: { type: "c", value: new THREE.Color("white") },
         ratio: {type: "2f", value: [1,1] },
       },
@@ -49,6 +50,7 @@ class CellVideo extends Cell {
     this.material.uniforms.uIntensity.value = data.intensity;
     this.material.uniforms.uLifetime.value = this.lifetime;
     this.material.uniforms.uDifference.value = data.difference;
+    this.material.uniforms.uSaturation.value = data.saturation;
     this.material.uniforms.uColor.value = new THREE.Color(data.color);
   }
 

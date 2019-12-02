@@ -259,7 +259,6 @@ class Grid {
     }
 
     this.gridBackground.update(data);
-
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);
     }
