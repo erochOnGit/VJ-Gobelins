@@ -1,10 +1,8 @@
 import Cell from "../Cell";
-import { fragment, vertex }  from "src/assets/dev/boomboom";
-
+import { fragment, vertex } from "src/assets/dev/boomboom";
 
 class CellVideo extends Cell {
-  constructor({url, shader, size}) {
-
+  constructor({ url, shader, size, molecule }) {
     var video = document.createElement("video");
     video.style.display = "none";
     video.src = url;
@@ -14,10 +12,10 @@ class CellVideo extends Cell {
 
     document.body.append(video);
 
-    var texture = new THREE.VideoTexture( video );
-    
-    var material = new THREE.RawShaderMaterial( {
-      uniforms:{
+    var texture = new THREE.VideoTexture(video);
+
+    var material = new THREE.RawShaderMaterial({
+      uniforms: {
         uSampler: { type: "t", value: texture },
         uTime: { type: "1f", value: 0 },
         uVolume: { type: "1f", value: 0 },
@@ -25,7 +23,7 @@ class CellVideo extends Cell {
         uDifference: { type: "1f", value: 0 },
         uLifetime: { type: "1f", value: 0 },
         uColor: { type: "c", value: new THREE.Color("white") },
-        ratio: {type: "2f", value: [1,1] },
+        ratio: { type: "2f", value: [1, 1] }
       },
       vertexShader: shader.vertex,
       fragmentShader: shader.fragment,
@@ -34,11 +32,10 @@ class CellVideo extends Cell {
       side: THREE.DoubleSide
     });
 
-    super({material, size});
+    super({ material, size, molecule });
     this.texture = texture;
     this.video = video;
     this.video.onloadeddata = () => this.updateRatio();
-
   }
 
   update(data) {
@@ -52,12 +49,12 @@ class CellVideo extends Cell {
     this.material.uniforms.uColor.value = new THREE.Color(data.color);
   }
 
-  updateRatio(){
+  updateRatio() {
     let px = this.size.y / this.size.x;
     let py = this.size.x / this.size.y;
 
-    let tx = this.video.videoWidth/ this.video.videoHeight;
-    let ty = this.video.videoHeight/ this.video.videoWidth;
+    let tx = this.video.videoWidth / this.video.videoHeight;
+    let ty = this.video.videoHeight / this.video.videoWidth;
 
     let x = py * ty;
     let y = px * tx;
@@ -69,11 +66,10 @@ class CellVideo extends Cell {
     }
   }
 
-  destroy(){
+  destroy() {
     this.video.remove();
     super.destroy();
   }
-
 }
 
 export default CellVideo;

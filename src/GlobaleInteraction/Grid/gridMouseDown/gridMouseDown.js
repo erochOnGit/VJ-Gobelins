@@ -1,5 +1,7 @@
 import MouseDownPointer from "./MouseDownPointer";
+import cellClick from "../cellClick";
 import gridDrag from "../gridDrag";
+
 export default function() {
   return e => {
     this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -8,9 +10,7 @@ export default function() {
 
     // calculate objects intersecting the picking ray
     this.point = this.raycaster.intersectObject(this.interactionPlane)[0].point;
-    this.point2 = this.raycaster.intersectObject(
-      this.interactionPlane
-    )[0].point;
+    this.point2 = this.point;
     this.isEventCreated = false;
     if (
       Math.abs(this.point.x) > this.width / 2 ||
@@ -26,6 +26,9 @@ export default function() {
       this.isEventCreated = true;
       this.originSlice = { x: e.clientX, y: e.clientY };
       this.pointer = new MouseDownPointer(this.originSlice);
+    } else {
+      this.clickPoint = this.raycaster.intersectObjects(this.mesh.children);
+      this.clickPoint[0].object.userData.cell.molecule.reload();
     }
   };
 }

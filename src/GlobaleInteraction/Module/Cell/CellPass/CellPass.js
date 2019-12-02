@@ -3,7 +3,7 @@ import { fragment, vertex } from "src/assets/dev/pass";
 import GPUSim from "src/utils/Canvas3D/GPUSim";
 
 class CellPass extends Cell {
-  constructor({ renderer, image }) {
+  constructor({ renderer, image, molecule }) {
     // let textureLoader = new THREE.TextureLoader();
 
     // var texture = textureLoader.load(image,(texture)=>{
@@ -25,7 +25,7 @@ class CellPass extends Cell {
       side: THREE.DoubleSide
     });
 
-    super({ material, size });
+    super({ material, size, molecule });
 
     this.pass = new GPUSim(renderer, 1024, 1024, this.material);
 

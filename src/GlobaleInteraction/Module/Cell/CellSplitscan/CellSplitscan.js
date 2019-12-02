@@ -70,7 +70,6 @@ class CellSplitscan extends Cell {
     this.texture = texture1;
     //this.texture2 = texture2;
 
-    console.log(this.material.uniforms.uSampler);
   }
 
   update(data) {

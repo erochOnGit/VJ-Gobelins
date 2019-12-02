@@ -2,8 +2,9 @@ import Module from "../Module";
 import { TweenMax, TimelineMax } from "gsap";
 
 class Cell extends Module {
-  constructor({ geometry, material, size, noBackground = false }) {
+  constructor({ geometry, material, size, noBackground = false, molecule }) {
     super();
+    this.molecule = molecule;
     this.size = size || new THREE.Vector2(5, 5);
     this.geometry =
       geometry || new THREE.PlaneBufferGeometry(this.size.x, this.size.y, 32);
@@ -15,6 +16,8 @@ class Cell extends Module {
       });
 
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.userData.cell = this;
+    this.mesh.userData.toto = "yolois";
     if (!noBackground) {
       var material2 = new THREE.MeshBasicMaterial({
         color: 0x000000,
@@ -27,6 +30,7 @@ class Cell extends Module {
       );
 
       let meshBack = new THREE.Mesh(geometry2, material2);
+      meshBack.cell = this;
       this.mesh.add(meshBack);
       meshBack.renderOrder = 2;
       meshBack.position.z -= 1;
@@ -83,7 +87,6 @@ class Cell extends Module {
 
   resize({ axe, direction, size }) {
     let tl = new TimelineMax();
-    //console.log("je la baise", axe, direction, size);
 
     if (axe == "horizontal") {
       let scale = size / this.getCurrentSize().x;

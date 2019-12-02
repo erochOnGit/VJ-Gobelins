@@ -33,7 +33,6 @@ class CellText extends Cell {
     this.ctx.fillRect(0, 0, 1024, 1024);
     this.ctx.fillStyle = "black";
     let text = ((Math.sin(this.lifetime) + 1.0)/2.0) * 800 + ' 48px WASA';
-    console.log(text);
     this.ctx.font = text;
     this.ctx.fillText('Hello world', 50, 100);
     this.texture.needsUpdate = true

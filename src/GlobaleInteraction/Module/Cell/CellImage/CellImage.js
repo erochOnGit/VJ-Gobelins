@@ -1,7 +1,7 @@
 import Cell from "../Cell";
 
 class CellImage extends Cell {
-  constructor({ image, shader, size }) {
+  constructor({ image, shader, size, molecule }) {
     let textureLoader = new THREE.TextureLoader();
 
     var texture = textureLoader.load(image, texture => {
@@ -27,7 +27,7 @@ class CellImage extends Cell {
       side: THREE.DoubleSide
     });
 
-    super({ material, size });
+    super({ material, size, molecule });
     this.texture = texture;
   }
 
@@ -52,20 +52,15 @@ class CellImage extends Cell {
       let x = py * ty;
       let y = px * tx;
 
-
       if (y < 1) {
         this.material.uniforms.ratio.value = [1, y];
       } else {
         this.material.uniforms.ratio.value = [x, 1];
       }
-
-      
     }
   }
 
-  tweenUpdate(){
-
-  }
+  tweenUpdate() {}
 }
 
 export default CellImage;

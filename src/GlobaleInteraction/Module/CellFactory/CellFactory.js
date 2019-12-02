@@ -18,7 +18,6 @@ import shader7 from "src/assets/dev/kaleidoscope";
 
 import dat from "dat.gui";
 
-
 let shaders = [
   shader1,
   shader2,
@@ -45,83 +44,85 @@ let motions = importAll(
   require.context("src/assets/motion", false, /\.(webm|mp4)$/)
 );
 
-
 function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
 let cell_rules = {
-  image:{
+  image: {
     strength: 20,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function({ size }) {
+    factory: function({ size, molecule }) {
       let cell = new CellImage({
         image: getRandomElement(images),
         shader: getRandomElement(shaders),
-        size: size
+        size: size,
+        molecule
       });
       return cell;
     }
   },
-  video:{
+  video: {
     strength: 30,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function({ size, cellData }) {
+    factory: function({ size, molecule, cellData }) {
       let cell = new CellVideo({
         url: cellData.url || getRandomElement(videos),
         shader: getRandomElement(shaders),
-        size: size
+        size: size,
+        molecule
       });
       return cell;
     }
   },
-  motion:{
+  motion: {
     strength: 5,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function({ size, cellData }) {
+    factory: function({ size, molecule, cellData }) {
       let cell = new CellMotion({
         url: cellData.url || getRandomElement(motions),
-        size: size
+        size: size,
+        molecule
       });
       return cell;
     }
   },
-  color:{
+  color: {
     strength: 5,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function ({size}){
-      return new CellColor({ size });
+    factory: function({ size, molecule }) {
+      return new CellColor({ size, molecule });
     }
   },
-  empty:{
-    strength: 50,
+  empty: {
+    strength: 5,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function ({size}){
-      return new CellEmpty({ size });
+    factory: function({ size, molecule }) {
+      return new CellEmpty({ size, molecule });
     }
   },
-  reactionDiffusion:{
+  reactionDiffusion: {
     strength: 7,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function ({size, renderer}){
+    factory: function({ size, molecule, renderer }) {
       let reactDiffDataArray = [
         { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
         { Da: 1, Db: 0.27, feed: 0.005, k: 0.05 },
@@ -133,34 +134,51 @@ let cell_rules = {
         renderer,
         reacDiffData:
           reactDiffDataArray[
-            Math.random() * reactDiffDataArray.length + reactDiffDataArray.length
-          ]
+            Math.random() * reactDiffDataArray.length +
+              reactDiffDataArray.length
+          ],
+        molecule
       });
     }
   },
-  dom:{
+  dom: {
     strength: 0,
     minX: 0,
     maxX: 20,
     minY: 0,
     maxY: 10,
-    factory: function({size,camera, cellData}){
-      return new CellDomElement({size, camera, html: cellData.html});
+    factory: function({ size, molecule, camera, cellData }) {
+      return new CellDomElement({
+        size,
+        camera,
+        html: cellData.html,
+        molecule
+      });
     }
   }
+};
+
+function CellFactory({ size, renderer, camera, cellData, molecule }) {
+  let _cellData = cellData || { type: GetRandomCellType({ size }) };
+  return cell_rules[_cellData.type].factory({
+    size,
+    renderer,
+    camera,
+    molecule,
+    cellData: _cellData
+  });
 }
 
-function CellFactory({ size, renderer, camera, cellData }) {
-  let _cellData = cellData || {type: GetRandomCellType({size})};
-  console.log(_cellData.type)
-  return cell_rules[_cellData.type].factory({size, renderer, camera, cellData: _cellData});
-}
-
-function GetRandomCellType({size}){
+function GetRandomCellType({ size }) {
   let cells = new Array();
   for (let [name, data] of Object.entries(cell_rules)) {
-    if(data.minX <= size.x && data.maxX >= size.x && data.minY <= size.y && data.maxY >= size.y){
-      for(let i = 0; i<data.strength; i++){
+    if (
+      data.minX <= size.x &&
+      data.maxX >= size.x &&
+      data.minY <= size.y &&
+      data.maxY >= size.y
+    ) {
+      for (let i = 0; i < data.strength; i++) {
         cells.push(name);
       }
     }
@@ -169,16 +187,16 @@ function GetRandomCellType({size}){
   return getRandomElement(cells);
 }
 
-window.addEventListener("load",function(){
-  var gui = new dat.GUI({closeOnTop: true,closed:true});
+window.addEventListener("load", function() {
+  var gui = new dat.GUI({ closeOnTop: true, closed: true });
   for (let [name, data] of Object.entries(cell_rules)) {
     gui.remember(data);
     var folder = gui.addFolder(name);
-    folder.add(data, 'strength');
-    folder.add(data, 'minX',0,20);
-    folder.add(data, 'maxX',0,20);
-    folder.add(data, 'minY',0,10);
-    folder.add(data, 'maxY',0,10);
+    folder.add(data, "strength");
+    folder.add(data, "minX", 0, 20);
+    folder.add(data, "maxX", 0, 20);
+    folder.add(data, "minY", 0, 10);
+    folder.add(data, "maxY", 0, 10);
   }
 });
 

@@ -29,7 +29,7 @@ class Grid {
     this.scene.add(this.interactionPlane);
 
     /**
-     *
+     * grid background
      */
     this.gridBackground = new GridBackground({});
     this.scene.add(this.gridBackground.mesh);
@@ -62,8 +62,8 @@ class Grid {
     this.originSlice = { x: null, y: null };
     this.pointer = null;
     this.dragEvent = gridDrag.bind(this)();
-    //  window.addEventListener("mousedown", gridMouseDown.bind(this)());
-    //window.addEventListener("mouseup", gridMouseUp.bind(this)());
+    window.addEventListener("mousedown", gridMouseDown.bind(this)());
+    window.addEventListener("mouseup", gridMouseUp.bind(this)());
     //this.reset();
   }
 
@@ -76,18 +76,18 @@ class Grid {
 
   reset() {
     this.clear();
+    console.log("reset",this.mesh);
     this.molecules.push(
       new Molecule({
         width: 20,
         height: 10,
         renderer: this.renderer,
-        camera: this.camera
+        camera: this.camera,
+        gridMesh: this.mesh
       })
     );
 
-    this.molecules.forEach(mol => {
-      this.mesh.add(mol.cell.mesh);
-    });
+    this.molecules.forEach(mol => {});
     //this.dispatch({ count: 20 });
   }
 
@@ -156,9 +156,6 @@ class Grid {
               molSplitting[1]
             )[0]
             .destroy();
-
-          this.mesh.add(molSplitting[0].cell.mesh);
-          this.mesh.add(molSplitting[1].cell.mesh);
         }
         this.axe = "vertical";
       } else {
@@ -182,9 +179,6 @@ class Grid {
               molSplitting[1]
             )[0]
             .destroy();
-
-          this.mesh.add(molSplitting[0].cell.mesh);
-          this.mesh.add(molSplitting[1].cell.mesh);
         }
         this.axe = "horizontal";
       }
@@ -241,12 +235,11 @@ class Grid {
       height: size.y,
       renderer: this.renderer,
       camera: this.camera,
-      cellData
+      cellData,
+      gridMesh: this.mesh
     });
 
     this.molecules.push(newMolecule);
-
-    this.mesh.add(newMolecule.cell.mesh);
   }
 
   update(data) {

@@ -1,4 +1,5 @@
 import trackList from "./trackList.js";
+import trackList2 from "./trackList2.js";
 
 
 export default class Audio {
@@ -14,7 +15,7 @@ export default class Audio {
   }
 
   get tracks() {
-    return Object.values(trackList);
+    return Object.values(trackList2);
   }
 
   start() {

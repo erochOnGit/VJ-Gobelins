@@ -1,5 +1,5 @@
 import Cell from "../Cell";
-import dat from "dat.gui"
+import dat from "dat.gui";
 import {
   fragment,
   vertex,
@@ -9,9 +9,9 @@ import {
 import GPUSim from "src/utils/Canvas3D/GPUSim";
 
 class CellReactionDiffusion extends Cell {
-  constructor({ size, renderer, image, reacDiffData }) {
-    var textureWidth = size.x*100;
-    var textureHeight = size.y*100;
+  constructor({ size, renderer, image, reacDiffData, molecule }) {
+    var textureWidth = size.x * 100;
+    var textureHeight = size.y * 100;
 
     let material = new THREE.RawShaderMaterial({
       uniforms: {
@@ -28,7 +28,7 @@ class CellReactionDiffusion extends Cell {
       side: THREE.DoubleSide
     });
 
-    super({ size, material });
+    super({ size, material, molecule });
 
     this.reacDiffData = reacDiffData || {};
 
@@ -45,7 +45,7 @@ class CellReactionDiffusion extends Cell {
         uIntensity: { type: "1f", value: 0 },
         uDifference: { type: "1f", value: 0 },
         uBpmBoolean: { type: "bool", value: false },
-        uResolution:{value: new THREE.Vector2(textureWidth,textureHeight)},
+        uResolution: { value: new THREE.Vector2(textureWidth, textureHeight) },
         ratio: { type: "2f", value: [1, 1] }
       },
       vertexShader: chemical_vertex,
@@ -59,9 +59,9 @@ class CellReactionDiffusion extends Cell {
     let y = this.size.x / this.size.y;
 
     if (y < 1) {
-      this.material2.uniforms.ratio.value = [1, 1/y];
+      this.material2.uniforms.ratio.value = [1, 1 / y];
     } else {
-      this.material2.uniforms.ratio.value = [1/x, 1];
+      this.material2.uniforms.ratio.value = [1 / x, 1];
     }
 
     // var FizzyText = function() {
@@ -81,10 +81,15 @@ class CellReactionDiffusion extends Cell {
     // .name('uFeed');
     //   gui.add(this.material2.uniforms.uK, 'value', 0.001, 0.1)
     // .name('uK');
-     
+
     // }.bind(this);
 
-    this.pass = new GPUSim(renderer, textureWidth, textureHeight, this.material2);
+    this.pass = new GPUSim(
+      renderer,
+      textureWidth,
+      textureHeight,
+      this.material2
+    );
     for (let i = 0; i < 10; i++) {
       this.pass.render();
     }
