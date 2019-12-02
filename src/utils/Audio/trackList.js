@@ -22,8 +22,8 @@ let trackList = {
     tags: "tags",
     genre: "after_06h-10h",
     bpm: "122",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#12A481",
+    saturation : 0.5
   },
 
   1: {
@@ -33,8 +33,8 @@ let trackList = {
     tags: "tags",
     genre: "dance_14h-18h",
     bpm: "114",
-    color: "#ff0000",
-    saturation: 0.5
+    color: "#FEBC00",
+    saturation : 0.5
   },
 
   2: {
@@ -44,9 +44,8 @@ let trackList = {
     tags: "tags",
     genre: "afterwork_18h-23h",
     bpm: "100",
-    color: "#78FFA1",
-    saturation: 0.5
-    
+    color: "#51CCFF",
+    saturation : 0.5
   },
 
   3: {
@@ -57,7 +56,7 @@ let trackList = {
     genre: "warmup_23h-02h",
     bpm: "128",
     color: "#78FFA1",
-    saturation: 0.5
+    saturation : 0.5
   },
 
   4: {
@@ -67,8 +66,8 @@ let trackList = {
     tags: "tags",
     genre: "partyhard_02h-06h",
     bpm: "145",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#7C54FF",
+    saturation : 0.5
   },
 
   5: {
@@ -78,8 +77,8 @@ let trackList = {
     tags: "tags",
     genre: "chill_10h-14h",
     bpm: "124",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#FFA1D0",
+    saturation : 0.5
   },
 
   6: {
@@ -89,8 +88,8 @@ let trackList = {
     tags: "tags",
     genre: "chill_10h-14h",
     bpm: "122",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#FFA1D0",
+    saturation : 0.5
   },
 
   7: {
@@ -100,8 +99,8 @@ let trackList = {
     tags: "tags",
     genre: "afterwork_18h-23h",
     bpm: "121",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#51CCFF",
+    saturation : 0.5
   },
 
   8: {
@@ -112,7 +111,7 @@ let trackList = {
     genre: "warmup_23h-02h",
     bpm: "136",
     color: "#78FFA1",
-    saturation: 0.5
+    saturation : 0.5
   },
   9: {
     name: "Without U",
@@ -121,8 +120,8 @@ let trackList = {
     tags: "tags",
     genre: "dance_14h-18h",
     bpm: "127",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#FEBC00",
+    saturation : 0.5
   },
 
   10: {
@@ -132,8 +131,8 @@ let trackList = {
     tags: "tags",
     genre: "after_06h-10h",
     bpm: "128",
-    color: "#78FFA1",
-    saturation: 0.5
+    color: "#12A481",
+    saturation : 0.5
   },
   11: {
     name: "Wormhole",
@@ -142,31 +141,10 @@ let trackList = {
     tags: "tags",
     genre: "partyhard_02h-06h",
     bpm: "130",
-    color: "#78FFA1",
-    saturation: 0.5
-  },
-  12: {
-    name: "Techno toujours pareil",
-    artist: "Salut c'est cool",
-    url: techno,
-    tags: "tags",
-    genre: "partyhard_02h-06h",
-    bpm: "130",
-    color: "#FF69B4",
-    saturation: 0.5
-  },
-  12: {
-    name: "Le temps est bon",
-    artist: "Degiheugi",
-    url: amandoon,
-    tags: "tags",
-    genre: "partyhard_02h-06h",
-    bpm: "120",
-    color: "#FF69B4",
-    saturation: 0.5
-  },
-  
-};
+    color: "#7C54FF",
+    saturation : 0.5
+  }
+}
 
 window.addEventListener("load",function(){
   var gui = new dat.GUI({closeOnTop: true,closed:true});
@@ -186,4 +164,4 @@ window.addEventListener("load",function(){
 });
 
 
-export default trackList
+export default trackList;

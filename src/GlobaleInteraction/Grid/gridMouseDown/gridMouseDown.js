@@ -18,8 +18,10 @@ export default function() {
     ) {
       if (Math.abs(this.point.x * 0.5) > Math.abs(this.point.y)) {
         this.sliceType = "vertical";
+        this.point.y = Math.round(this.point.y);
       } else {
         this.sliceType = "horizontal";
+        this.point.x = Math.round(this.point.x);
       }
 
       window.addEventListener("mousemove", this.dragEvent);

@@ -53,7 +53,7 @@ function getRandomElement(array) {
 let cell_rules = {
   image:{
     strength: 20,
-    minX: 0,
+    minX: 1,
     maxX: 20,
     minY: 0,
     maxY: 10,
@@ -67,10 +67,10 @@ let cell_rules = {
     }
   },
   video:{
-    strength: 30,
+    strength: 20,
     minX: 0,
     maxX: 20,
-    minY: 0,
+    minY: 1,
     maxY: 10,
     factory: function({ size, cellData }) {
       let cell = new CellVideo({
@@ -82,7 +82,7 @@ let cell_rules = {
     }
   },
   motion:{
-    strength: 5,
+    strength: 10,
     minX: 0,
     maxX: 20,
     minY: 0,
@@ -96,9 +96,9 @@ let cell_rules = {
     }
   },
   color:{
-    strength: 5,
+    strength: 10,
     minX: 0,
-    maxX: 20,
+    maxX: 19,
     minY: 0,
     maxY: 10,
     factory: function ({size}){
@@ -106,7 +106,7 @@ let cell_rules = {
     }
   },
   empty:{
-    strength: 10,
+    strength: 16,
     minX: 0,
     maxX: 19,
     minY: 0,
@@ -116,11 +116,11 @@ let cell_rules = {
     }
   },
   reactionDiffusion:{
-    strength: 7,
-    minX: 0,
-    maxX: 20,
-    minY: 0,
-    maxY: 10,
+    strength: 8,
+    minX: 2,
+    maxX: 12,
+    minY: 2,
+    maxY: 7,
     factory: function ({size, renderer}){
       let reactDiffDataArray = [
         { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
@@ -152,7 +152,7 @@ let cell_rules = {
 
 function CellFactory({ size, renderer, camera, cellData }) {
   let _cellData = cellData || {type: GetRandomCellType({size})};
-  console.log(_cellData.type)
+  console.log(_cellData)
   return cell_rules[_cellData.type].factory({size, renderer, camera, cellData: _cellData});
 }
 
@@ -173,7 +173,9 @@ window.addEventListener("load",function(){
   var gui = new dat.GUI({closeOnTop: true,closed:true});
   for (let [name, data] of Object.entries(cell_rules)) {
     gui.remember(data);
+    data.name  = name;
     var folder = gui.addFolder(name);
+    folder.add(data, 'name');
     folder.add(data, 'strength');
     folder.add(data, 'minX',0,20);
     folder.add(data, 'maxX',0,20);
