@@ -13,7 +13,7 @@ const float pi = 3.1415926;
 
 void main() {
     vec2 uv = vUv;
-    uv = (uv - 0.5) * vec2(abs(1. - uDifference),1.) + 0.5;
+    uv = (uv - 0.5) * vec2(abs(1. - uDifference * 0.4),1.) + 0.5;
     uv = (uv - 0.5) * ratio + 0.5;
     vec4 color = texture2D(uSampler,uv);
     gl_FragColor = color;

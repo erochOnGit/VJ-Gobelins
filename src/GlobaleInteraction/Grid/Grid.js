@@ -241,7 +241,7 @@ class Grid {
   }
 
   update(data) {
-    if (data.bpm(1) && this.autocut) {
+    if (data.bpm(0) && this.autocut) {
       if (this.molecules.length < 15) {
         this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
       } else {
