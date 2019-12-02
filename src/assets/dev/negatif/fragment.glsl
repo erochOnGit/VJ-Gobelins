@@ -15,8 +15,9 @@ void main() {
     vec2 uv = vUv;
     uv = (uv - 0.5) * ratio + 0.5;
     vec4 color = texture2D(uSampler,uv);
-    vec3 grey = vec3((1.0 + uDifference * 0.4) - (color.r + color.g + color.b)/3.0);
+    float lum = (color.r + color.g + color.b)/3.0;
+    vec3 negatif = vec3((1.0 + uDifference * 0.4) - lum);
 
 
-    gl_FragColor = vec4(grey,1.0);
+    gl_FragColor = vec4(negatif,1.0);
 }

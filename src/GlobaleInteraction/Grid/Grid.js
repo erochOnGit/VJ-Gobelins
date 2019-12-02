@@ -76,7 +76,7 @@ class Grid {
 
   reset() {
     this.clear();
-    console.log("reset",this.mesh);
+    console.log("reset", this.mesh);
     this.molecules.push(
       new Molecule({
         width: 20,
@@ -204,6 +204,16 @@ class Grid {
         molecule.resizeVertical({ direction: 1, cuttingPoint });
       }
     });
+
+    this.createMolecule({
+      topLeftPos: new THREE.Vector2(-10, direction == "top" ? 5 : cuttingPoint),
+      size: new THREE.Vector2(
+        20,
+        direction == "top"
+          ? Math.abs(cuttingPoint - 5)
+          : 10 - Math.abs(cuttingPoint - 5)
+      )
+    });
   }
 
   sliceHorizontal({ cuttingPoint, direction }) {
@@ -224,6 +234,19 @@ class Grid {
       ) {
         molecule.resizeHorizontal({ direction: 1, cuttingPoint });
       }
+    });
+
+    this.createMolecule({
+      topLeftPos: new THREE.Vector2(
+        direction == "left" ? -10 : cuttingPoint,
+        5
+      ),
+      size: new THREE.Vector2(
+        direction == "left"
+          ? 20 - Math.abs(cuttingPoint - 10)
+          : Math.abs(cuttingPoint - 10),
+        10
+      )
     });
   }
 
@@ -252,7 +275,6 @@ class Grid {
     }
 
     this.gridBackground.update(data);
-
     for (let i = 0; i < this.molecules.length; i++) {
       this.molecules[i].update(data);
     }

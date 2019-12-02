@@ -17,6 +17,7 @@ class CellImage extends Cell {
         uIntensity: { type: "1f", value: 0 },
         uDifference: { type: "1f", value: 0 },
         uLifetime: { type: "1f", value: 0 },
+        uSaturation: { type: "1f", value: 0 },
         uColor: { type: "c", value: new THREE.Color("white") },
         ratio: { type: "2f", value: [1, 1] }
       },

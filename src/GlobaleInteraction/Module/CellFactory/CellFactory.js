@@ -51,7 +51,7 @@ function getRandomElement(array) {
 let cell_rules = {
   image: {
     strength: 20,
-    minX: 0,
+    minX: 1,
     maxX: 20,
     minY: 0,
     maxY: 10,
@@ -65,11 +65,11 @@ let cell_rules = {
       return cell;
     }
   },
-  video: {
-    strength: 30,
+  video:{
+    strength: 20,
     minX: 0,
     maxX: 20,
-    minY: 0,
+    minY: 1,
     maxY: 10,
     factory: function({ size, molecule, cellData }) {
       let cell = new CellVideo({
@@ -81,8 +81,8 @@ let cell_rules = {
       return cell;
     }
   },
-  motion: {
-    strength: 5,
+  motion:{
+    strength: 10,
     minX: 0,
     maxX: 20,
     minY: 0,
@@ -96,33 +96,33 @@ let cell_rules = {
       return cell;
     }
   },
-  color: {
-    strength: 5,
+  color:{
+    strength: 10,
     minX: 0,
-    maxX: 20,
+    maxX: 19,
     minY: 0,
     maxY: 10,
     factory: function({ size, molecule }) {
       return new CellColor({ size, molecule });
     }
   },
-  empty: {
-    strength: 5,
+  empty:{
+    strength: 16,
     minX: 0,
-    maxX: 20,
+    maxX: 19,
     minY: 0,
     maxY: 10,
     factory: function({ size, molecule }) {
       return new CellEmpty({ size, molecule });
     }
   },
-  reactionDiffusion: {
-    strength: 7,
-    minX: 0,
-    maxX: 20,
-    minY: 0,
-    maxY: 10,
-    factory: function({ size, molecule, renderer }) {
+  reactionDiffusion:{
+    strength: 8,
+    minX: 2,
+    maxX: 12,
+    minY: 2,
+    maxY: 7,
+    factory: function ({size, renderer}){
       let reactDiffDataArray = [
         { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
         { Da: 1, Db: 0.27, feed: 0.005, k: 0.05 },
@@ -191,12 +191,14 @@ window.addEventListener("load", function() {
   var gui = new dat.GUI({ closeOnTop: true, closed: true });
   for (let [name, data] of Object.entries(cell_rules)) {
     gui.remember(data);
+    data.name  = name;
     var folder = gui.addFolder(name);
-    folder.add(data, "strength");
-    folder.add(data, "minX", 0, 20);
-    folder.add(data, "maxX", 0, 20);
-    folder.add(data, "minY", 0, 10);
-    folder.add(data, "maxY", 0, 10);
+    folder.add(data, 'name');
+    folder.add(data, 'strength');
+    folder.add(data, 'minX',0,20);
+    folder.add(data, 'maxX',0,20);
+    folder.add(data, 'minY',0,10);
+    folder.add(data, 'maxY',0,10);
   }
 });
 
