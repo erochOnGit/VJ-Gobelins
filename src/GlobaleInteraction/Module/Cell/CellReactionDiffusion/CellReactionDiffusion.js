@@ -55,14 +55,7 @@ class CellReactionDiffusion extends Cell {
       side: THREE.DoubleSide
     });
 
-    let x = this.size.y / this.size.x;
-    let y = this.size.x / this.size.y;
-
-    if (y < 1) {
-      this.material2.uniforms.ratio.value = [1, 1 / y];
-    } else {
-      this.material2.uniforms.ratio.value = [1 / x, 1];
-    }
+    this.updateRatio();
 
     // var FizzyText = function() {
     //   this.message = 'lets goo';
@@ -119,6 +112,21 @@ class CellReactionDiffusion extends Cell {
     this.material.uniforms.uChemicals.value = this.pass.fbos[
       this.pass.current
     ].texture;
+  }
+
+  updateRatio() {
+    let x = this.getCurrentSize().y / this.getCurrentSize().x;
+    let y = this.getCurrentSize().x / this.getCurrentSize().y;
+
+    if (y < 1) {
+      this.material2.uniforms.ratio.value = [1, 1 / y];
+    } else {
+      this.material2.uniforms.ratio.value = [1 / x, 1];
+    }
+  }
+
+  tweenMaxUpdate(){
+    this.updateRatio();
   }
 }
 

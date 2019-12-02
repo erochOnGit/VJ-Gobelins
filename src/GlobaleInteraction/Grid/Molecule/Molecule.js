@@ -123,8 +123,12 @@ class Molecule {
       direction > 0
         ? this.width - this.getFirstChildSize(cuttingPoint).width
         : this.getFirstChildSize(cuttingPoint).width;
+
     this.posX = this.posX - ((this.width - size) / 2) * -direction;
+
+    
     this.width = size;
+    
     this.cell.resize({
       axe: "horizontal",
       direction,

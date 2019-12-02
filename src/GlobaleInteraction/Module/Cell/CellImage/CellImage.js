@@ -44,8 +44,8 @@ class CellImage extends Cell {
 
   updateRatio() {
     if (this.texture.image != undefined) {
-      let px = this.size.y / this.size.x;
-      let py = this.size.x / this.size.y;
+      let px = this.getCurrentSize().y / this.getCurrentSize().x;
+      let py = this.getCurrentSize().x / this.getCurrentSize().y;
 
       let tx = this.texture.image.width / this.texture.image.height;
       let ty = this.texture.image.height / this.texture.image.width;
@@ -61,7 +61,9 @@ class CellImage extends Cell {
     }
   }
 
-  tweenUpdate() {}
+  tweenMaxUpdate(){
+    this.updateRatio();
+  }
 }
 
 export default CellImage;

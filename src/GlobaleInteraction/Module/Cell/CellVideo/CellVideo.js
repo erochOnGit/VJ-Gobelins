@@ -51,9 +51,14 @@ class CellVideo extends Cell {
     this.material.uniforms.uColor.value = new THREE.Color(data.color);
   }
 
+  tweenMaxUpdate(){
+
+    this.updateRatio();
+  }
+
   updateRatio() {
-    let px = this.size.y / this.size.x;
-    let py = this.size.x / this.size.y;
+    let px = this.getCurrentSize().y / this.getCurrentSize().x;
+    let py = this.getCurrentSize().x / this.getCurrentSize().y;
 
     let tx = this.video.videoWidth / this.video.videoHeight;
     let ty = this.video.videoHeight / this.video.videoWidth;

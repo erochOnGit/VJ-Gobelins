@@ -3,7 +3,7 @@ import "./cell-dom.scss";
 import { TweenMax } from "gsap";
 
 class CellDomElement extends Cell {
-  constructor({size, camera, html}) {
+  constructor({size, camera, html,molecule}) {
 
     var domElement = document.createElement("dom");
     domElement.classList.add("cell-dom");
@@ -16,7 +16,7 @@ class CellDomElement extends Cell {
       alphaTest: 1,
     });
 
-    super({material, size});
+    super({material, size,molecule});
     this.domElement = domElement;
     this.camera = camera;
   }

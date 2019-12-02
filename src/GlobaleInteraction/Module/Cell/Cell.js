@@ -52,36 +52,9 @@ class Cell extends Module {
   }
 
   destroy() {
-    let tl = new TimelineMax();
-    if (Math.random() >= 0.5) {
-      tl.to(this.mesh.scale, 30 / 122, { x: 0.0001, ease: Power4.easeOut }, 0);
-      tl.to(
-        this.mesh.position,
-        30 / 122,
-        {
-          x:
-            this.mesh.position.x +
-            (this.size.x / 2) * Math.sign(Math.random() - 0.5),
-          ease: Power4.easeOut
-        },
-        0
-      );
-    } else {
-      tl.to(this.mesh.scale, 30 / 122, { y: 0.0001, ease: Power4.easeOut }, 0);
-      tl.to(
-        this.mesh.position,
-        30 / 122,
-        {
-          y:
-            this.mesh.position.y +
-            (this.size.y / 2) * Math.sign(Math.random() - 0.5),
-          ease: Power4.easeOut
-        },
-        0
-      );
-    }
+    let tl = this.resize({axe: Math.random() >= 0.5 ? "horizontal" : "vertical", direction: Math.sign(Math.random() - 0.5), size:0.00001});
     tl.addCallback(() => {
-      this.mesh.parent.remove(this.mesh);
+       this.mesh.parent.remove(this.mesh);
     });
   }
 
@@ -89,32 +62,37 @@ class Cell extends Module {
     let tl = new TimelineMax();
 
     if (axe == "horizontal") {
-      let scale = size / this.getCurrentSize().x;
+      let scale = size / this.size.x;
       tl.to(this.mesh.scale, 30 / 122, { x: scale, ease: Power4.easeOut }, 0);
       tl.to(
         this.mesh.position,
         30 / 122,
         {
-          x: this.mesh.position.x + ((this.size.x - size) / 2) * direction,
+          x: this.mesh.position.x + ((this.getCurrentSize().x - size) / 2) * direction,
           ease: Power4.easeOut
         },
         0
       );
+
     } else {
-      let scale = size / this.getCurrentSize().y;
+      let scale = size / this.size.y;
       tl.to(this.mesh.scale, 30 / 122, { y: scale, ease: Power4.easeOut }, 0);
       tl.to(
         this.mesh.position,
         30 / 122,
         {
-          y: this.mesh.position.y + ((this.size.y - size) / 2) * direction,
+          y: this.mesh.position.y + ((this.getCurrentSize().y - size) / 2) * direction,
           ease: Power4.easeOut
         },
         0
       );
     }
+    tl.eventCallback("onUpdate", ()=> this.tweenMaxUpdate());
     return tl;
   }
+
+  tweenMaxUpdate(){}
+
   reveal() {
     let tl = new TimelineMax();
     tl.delay(30 / 122);
@@ -156,6 +134,7 @@ class Cell extends Module {
         "START"
       );
     }
+    tl.eventCallback("onUpdate", ()=> this.tweenMaxUpdate());
   }
 }
 
