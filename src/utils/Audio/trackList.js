@@ -11,11 +11,21 @@ import WithoutU from "src/assets/musics/010_WithoutU_RickyRazu.mp3"
 import LadyScience from "src/assets/musics/011_LadyScienceNYCSunrise_SoulCapsule.mp3"
 import Wormhole from "src/assets/musics/012_Wormhole_Bastinov.mp3"
 import techno from "src/assets/musics/techno.mp3"
-import amandoon from "src/assets/musics/amandoon.mp3"
+import bois from "src/assets/musics/bois.mp3"
 import dat from "dat.gui";
 
 let trackList = {
   0: {
+    name: "Bois !",
+    artist: "Max Boubil",
+    url: bois,
+    tags: "tags",
+    genre: "after_06h-10h",
+    bpm: "120",
+    color: "#FF00D8",
+    saturation : 2
+  },
+ /* 0: {
     name: "Solee",
     artist: "Feiern",
     url: Feiern,
@@ -24,7 +34,7 @@ let trackList = {
     bpm: "122",
     color: "#12A481",
     saturation : 0.5
-  },
+  },*/
 
   1: {
     name: "Dockyard",

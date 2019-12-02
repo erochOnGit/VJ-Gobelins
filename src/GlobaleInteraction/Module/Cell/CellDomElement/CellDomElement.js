@@ -16,7 +16,7 @@ class CellDomElement extends Cell {
       alphaTest: 1,
     });
 
-    super({material, size,molecule});
+    super({material, size});
     this.domElement = domElement;
     this.camera = camera;
   }
