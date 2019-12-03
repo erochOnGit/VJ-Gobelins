@@ -3,6 +3,7 @@ import gridMouseDown from "./gridMouseDown/gridMouseDown";
 import gridMouseUp from "./gridMouseUp/gridMouseUp";
 import gridDrag from "./gridDrag";
 import GridBackground from "./GridBackground";
+import worldToScreenpoint from "src/utils/worldToScreenpoint.js"
 
 class Grid {
   constructor({ renderer, camera, mouse, raycaster, scene }) {

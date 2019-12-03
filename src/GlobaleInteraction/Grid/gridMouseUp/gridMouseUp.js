@@ -16,7 +16,7 @@ export default function() {
         if (Math.abs(this.point.x - this.point2.x) > this.width) {
           this.sliceVertical({
             cuttingPoint: this.point.y,
-            direction: e.clientY > this.originSlice.y ? "top" : "bottom"
+            direction: e.clientY < this.originSlice.y ? "top" : "bottom"
           });
         }
       }

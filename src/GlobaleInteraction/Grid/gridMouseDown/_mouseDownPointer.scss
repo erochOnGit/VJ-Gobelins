@@ -1,16 +1,154 @@
+$pointerWidth: 3rem;
 .mouse-down {
   &_pointer {
-    width: 100px;
-    height: 100px;
-    background: red;
-    position: absolute;
+    &_horizontal {
+      width: 3rem;
+      height: 3rem;
+      margin-left: -1.5rem;
+      margin-top: -3rem;
+      position: absolute;
+      animation: infinite-spinning 8s infinite linear;
+    }
+    &_vertical {
+      width: 3rem;
+      height: 3rem;
+      margin-top: -1.5rem;
+      margin-left: -3rem;
+      position: absolute;
+      animation: infinite-spinning 8s infinite linear;
+    }
   }
-  &_direction{
-    width: 100px;
-    height: 100px;
-    background: red;
+  &_direction {
+    width: 16px;
+    height: 16px;
+    padding: 32px;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 2;
+  }
+  &_dash {
+    &_horizontal {
+      z-index: 2;
+      position: absolute;
+      border-left: 1px white dashed;
+    }
+    &_vertical {
+      z-index: 2;
+      position: absolute;
+      border-top: 1px white dashed;
+    }
+  }
+  &_reverseOrigin {
+    &_horizontal {
+      width: 3rem;
+      height: 3rem;
+      margin-left: -1.5rem;
+      position: absolute;
+    }
+    &_vertical {
+      width: 3rem;
+      height: 3rem;
+      margin-top: -1.5rem;
+      position: absolute;
+    }
+  }
+  &_cursor {
+    &_horizontal {
+      width: 2rem;
+      height: 2rem;
+      position: absolute;
+      top: 1.55em;
+      left: -1em;
+      z-index: 2;
+    }
+    &_vertical {
+      width: 2rem;
+      height: 2rem;
+      position: absolute;
+      left: 1.3em;
+      top: -1em;
+      z-index: 2;
+    }
+  }
+
+  @media (min-height: 1000px) {
+    &_pointer {
+      &_horizontal {
+        width: 4rem;
+        height: 4rem;
+        margin-top: -4rem;
+        margin-left: -2rem;
+        position: absolute;
+        animation: infinite-spinning 8s infinite linear;
+      }
+      &_vertical {
+        width: 4rem;
+        height: 4rem;
+        margin-top: -2rem;
+        margin-left: -4rem;
+        position: absolute;
+        animation: infinite-spinning 8s infinite linear;
+      }
+    }
+    &_reverseOrigin {
+      &_horizontal {
+        width: 4rem;
+        height: 4rem;
+        margin-left: -2rem;
+        position: absolute;
+      }
+      &_vertical {
+        width: 4rem;
+        height: 4rem;
+        margin-top: -2rem;
+        position: absolute;
+      }
+    }
+  }
+  @media (min-height: 1400px) {
+    &_pointer {
+      &_horizontal {
+        width: 5rem;
+        height: 5rem;
+        margin-top: -5rem;
+        margin-left: -2.5rem;
+        position: absolute;
+        animation: infinite-spinning 8s infinite linear;
+      }
+      &_vertical {
+        width: 5rem;
+        height: 5rem;
+        margin-top: -2.5rem;
+        margin-left: -5rem;
+        position: absolute;
+        animation: infinite-spinning 8s infinite linear;
+      }
+    }
+    &_reverseOrigin {
+      &_horizontal {
+        width: 5rem;
+        height: 5rem;
+        margin-top: -0rem;
+        margin-left: -2.5rem;
+        position: absolute;
+      }
+      &_vertical {
+        width: 5rem;
+        height: 5rem;
+        margin-top: -2.5rem;
+        margin-left: 0rem;
+        position: absolute;
+      }
+    }
+  }
+}
+
+@keyframes infinite-spinning {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
