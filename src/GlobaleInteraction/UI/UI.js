@@ -9,13 +9,8 @@ class UI {
     this.controls = new Controls({ audio: audio, ui: this });
     this.audio = audio;
     this.camera = camera;
-    window.addEventListener("keyup", e => {
-      if (e.keyCode == 86) {
-        this.homeLayout();
-      }
-    });
 
-    this.homeLayout();
+    this.landingLayout();
   }
 
   programationLayout() {
@@ -33,6 +28,7 @@ class UI {
 
       hours += `<span class="ui-color-text">${arrayKey[1]
         .replace("-", " / ")
+        .replace("h", ":00")
         .replace("h", ":00")}</span>`;
     }
 
@@ -149,13 +145,14 @@ class UI {
       size: new THREE.Vector2(18, 2),
       cellData: {
         type: "dom",
-        html: `<p class="ui-color-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>`
+        html: `<p class="ui-color-text text-intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>`
       }
     });
 
+    //click
     this.createCell({
       topLeftPos: new THREE.Vector2(-9, 2),
-      size: new THREE.Vector2(8, 1),
+      size: new THREE.Vector2(5, 1),
       cellData: {
         type: "dom",
         html: `<h3 class="ui-color-fill">Click to change effects</h3>`
@@ -163,29 +160,114 @@ class UI {
     });
     this.createCell({
       topLeftPos: new THREE.Vector2(-9, 1),
-      size: new THREE.Vector2(8, 4),
+      size: new THREE.Vector2(5, 4),
       cellData: {
         type: "motion",
         url: tuto1
       }
     });
 
+    //slice
     this.createCell({
-      topLeftPos: new THREE.Vector2(1, 2),
-      size: new THREE.Vector2(8, 1),
+      topLeftPos: new THREE.Vector2(-3, 2),
+      size: new THREE.Vector2(5, 1),
       cellData: {
         type: "dom",
         html: `<h3 class="ui-color-fill">Slice the grid</h3>`
       }
     });
     this.createCell({
-      topLeftPos: new THREE.Vector2(1, 1),
-      size: new THREE.Vector2(8, 4),
+      topLeftPos: new THREE.Vector2(-3, 1),
+      size: new THREE.Vector2(5, 4),
       cellData: {
         type: "motion",
         url: tuto2
       }
     });
+
+
+    //controls
+    this.createCell({
+      topLeftPos: new THREE.Vector2(3, 2),
+      size: new THREE.Vector2(6, 1),
+      cellData: {
+        type: "dom",
+        html: `<h3 class="ui-color-fill">controls</h3>`
+      }
+    });
+
+     //controls : scroll
+    this.createCell({
+      topLeftPos: new THREE.Vector2(3, 1),
+      size: new THREE.Vector2(2, 1),
+      cellData: {
+        type: "dom",
+        html: `<button class="ui-color-fill">scroll</button>`
+      }
+    });
+    this.createCell({
+      topLeftPos: new THREE.Vector2(5, 1),
+      size: new THREE.Vector2(4, 1),
+      cellData: {
+        type: "dom",
+        html: `<p class="ui-color-text">change the rythm</p>`
+      }
+    });
+
+    //controls : space
+    this.createCell({
+      topLeftPos: new THREE.Vector2(3, 0),
+      size: new THREE.Vector2(2, 1),
+      cellData: {
+        type: "dom",
+        html: `<button class="ui-color-fill">space</button>`
+      }
+    });
+    this.createCell({
+      topLeftPos: new THREE.Vector2(5, 0),
+      size: new THREE.Vector2(4, 1),
+      cellData: {
+        type: "dom",
+        html: `<p class="ui-color-text">lock the grid</p>`
+      }
+    });
+
+    //controls : shift
+    this.createCell({
+      topLeftPos: new THREE.Vector2(3, -1),
+      size: new THREE.Vector2(2, 1),
+      cellData: {
+        type: "dom",
+        html: `<button class="ui-color-fill">shift</button>`
+      }
+    });
+    this.createCell({
+      topLeftPos: new THREE.Vector2(5, -1),
+      size: new THREE.Vector2(4, 1),
+      cellData: {
+        type: "dom",
+        html: `<p class="ui-color-text">reset the grid</p>`
+      }
+    });
+
+    //controls : fun
+    this.createCell({
+      topLeftPos: new THREE.Vector2(3, -2),
+      size: new THREE.Vector2(1, 1),
+      cellData: {
+        type: "dom",
+        html: `<button id="random-key" class="ui-color-fill">a</button>`
+      }
+    });
+    this.createCell({
+      topLeftPos: new THREE.Vector2(4, -2),
+      size: new THREE.Vector2(5, 1),
+      cellData: {
+        type: "dom",
+        html: `<p class="ui-color-text">have fun !</p>`
+      }
+    });
+
 
     this.createCell({
       topLeftPos: new THREE.Vector2(-9, -4),
@@ -202,6 +284,37 @@ class UI {
       this.grid.autocut = true;
     };
   }
+
+  landingLayout() {
+    this.grid.clear();
+    this.grid.autocut = false;
+
+    this.createCell({
+      topLeftPos: new THREE.Vector2(-2, 1),
+      size: new THREE.Vector2(4, 1),
+      cellData: {
+        type: "dom",
+        locked: true,
+        html: `<h1 id="btn-starttitle" class="ui-color-fill">wormhole radio</h1>`
+      }
+    });
+
+    this.createCell({
+      topLeftPos: new THREE.Vector2(-2, 0),
+      size: new THREE.Vector2(4, 1),
+      cellData: {
+        type: "dom",
+        locked: true,
+        html: `<button id="btn-start" class="ui-color-color">Enter the void</button>`
+      }
+    });
+
+    document.getElementById("btn-start").onclick = () => {
+      this.homeLayout();
+      this.audio.start();
+    };
+  }
+
 
   createCell({ topLeftPos, size, cellData }) {
     this.grid.createMolecule({ topLeftPos: topLeftPos, size: size, cellData });
@@ -222,6 +335,15 @@ class UI {
       color: "black"
     });
     this.controls.update(data);
+
+    if(data.bpm(1) && document.getElementById("random-key")){
+      let keys = "abcdefghijklmnopqrstuvwxyz";
+      document.getElementById("random-key").innerHTML = keys.charAt(Math.floor(Math.random() * keys.length)); 
+    }
+
+    if(!document.getElementById("btn-start")){
+      this.audio.start();
+    }
   }
 }
 

@@ -11,140 +11,142 @@ import WithoutU from "src/assets/musics/010_WithoutU_RickyRazu.mp3"
 import LadyScience from "src/assets/musics/011_LadyScienceNYCSunrise_SoulCapsule.mp3"
 import Wormhole from "src/assets/musics/012_Wormhole_Bastinov.mp3"
 import techno from "src/assets/musics/techno.mp3"
-import bois from "src/assets/musics/Melancolia.mp3"
+import amandoon from "src/assets/musics/amandoon.mp3"
 import dat from "dat.gui";
 
 let trackList = {
-
   0: {
-    name: "Solee",
-    artist: "Feiern",
-    url: Feiern,
-    tags: "tags",
-    genre: "after_06h-10h",
-    bpm: "122",
-    color: "#12A481",
-    saturation : 0.5
-  },
-
-  1: {
-    name: "Dockyard",
-    artist: "Paul Kalkbrenner",
-    url: Dockyard,
-    tags: "tags",
-    genre: "dance_14h-18h",
-    bpm: "114",
-    color: "#FEBC00",
-    saturation : 0.5
-  },
-
-  2: {
-    name: "Soul",
-    artist: "Rival Consoles",
-    url: Soul,
-    tags: "tags",
-    genre: "afterwork_18h-23h",
-    bpm: "100",
-    color: "#51CCFF",
-    saturation : 0.5
-  },
-
-  3: {
-    name: "Shemales Body",
-    artist: "Birdy Nam Nam",
-    url: ShemalesBody,
-    tags: "tags",
-    genre: "warmup_23h-02h",
-    bpm: "128",
-    color: "#78FFA1",
-    saturation : 0.5
-  },
-
-  4: {
-    name: "Acidland",
-    artist: "Contrefacon",
-    url: Acidland,
-    tags: "tags",
-    genre: "partyhard_02h-06h",
-    bpm: "145",
-    color: "#7C54FF",
-    saturation : 0.5
-  },
-
-  5: {
     name: "Eye Nyam Nam'A'Mensuro",
     artist: "Ebo Taylor",
     url: EyeNyamNam,
-    tags: "tags",
+    tags: "soulful,upbeat,hopeful,sunny,enthusiastic,good morning",
     genre: "chill_10h-14h",
     bpm: "124",
     color: "#FFA1D0",
     saturation : 0.5
   },
 
-  6: {
+  1: {
     name: "So W3ll",
     artist: "Nakatomi Plaza",
     url: SoW3ll,
-    tags: "tags",
+    tags: "bouncy,chirpy,groovy,8-bit,wake up, good vibes,cruising,",
     genre: "chill_10h-14h",
     bpm: "122",
     color: "#FFA1D0",
     saturation : 0.5
   },
 
-  7: {
-    name: "Sex - Bonus Track",
-    artist: "Black Loops",
-    url: Sex,
-    tags: "tags",
-    genre: "afterwork_18h-23h",
-    bpm: "121",
-    color: "#51CCFF",
+  2: {
+    name: "Dockyard",
+    artist: "Paul Kalkbrenner",
+    url: Dockyard,
+    tags: "pure bliss,right here right now,melancholy,melody,living by the seaside,",
+    genre: "dance_14h-18h",
+    bpm: "114",
+    color: "#FEBC00",
     saturation : 0.5
   },
 
-  8: {
-    name: "Pulverturm (DJ Tomcraft Remix)",
-    artist: "Niels Van Gogh",
-    url: Pulverturm,
-    tags: "tags",
-    genre: "warmup_23h-02h",
-    bpm: "136",
-    color: "#78FFA1",
-    saturation : 0.5
-  },
-  9: {
+  3: {
     name: "Without U",
     artist: "Ricky Razu",
     url: WithoutU,
-    tags: "tags",
+    tags: "mellow vibes,house music,sunrise,fresh early cold air,summer sunshine,smooth,relaxing,cozy beat",
     genre: "dance_14h-18h",
     bpm: "127",
     color: "#FEBC00",
     saturation : 0.5
   },
 
+  4: {
+    name: "Sex - Bonus Track",
+    artist: "Black Loops",
+    url: Sex,
+    tags: "emotional,food for soul,lo-fi house,are these feelings even real ?,or are they just programming,bassy",
+    genre: "afterwork_18h-23h",
+    bpm: "121",
+    color: "#51CCFF",
+    saturation : 0.5
+  },
+
+  5: {
+    name: "Soul",
+    artist: "Rival Consoles",
+    url: Soul,
+    tags: "arpeggios,jerky beat,orchestral,symphonic,twitching",
+    genre: "afterwork_18h-23h",
+    bpm: "100",
+    color: "#51CCFF",
+    saturation : 0.5
+  },
+
+  6: {
+    name: "Shemales Body",
+    artist: "Birdy Nam Nam",
+    url: ShemalesBody,
+    tags: "dance or die,pulsating rhythm,get ready,electronic,very bad trip",
+    genre: "warmup_23h-02h",
+    bpm: "128",
+    color: "#78FFA1",
+    saturation : 0.5
+  },
+
+  7: {
+    name: "Pulverturm (DJ Tomcraft Remix)",
+    artist: "Niels Van Gogh",
+    url: Pulverturm,
+    tags: "can i get a hand,i'm kinda falling,in my life,trippy ",
+    genre: "warmup_23h-02h",
+    bpm: "136",
+    color: "#78FFA1",
+    saturation : 0.5
+  },
+
+  8: {
+    name: "Acidland",
+    artist: "Contrefacon",
+    url: Acidland,
+    tags: "LSD,ecstasy,MDMA,aciiiiiiiiid,troubled vision,under influence,turn up,heavy bass",
+    genre: "partyhard_02h-06h",
+    bpm: "145",
+    color: "#7C54FF",
+    saturation : 0.5
+  },
+
+  9: {
+    name: "Wormhole",
+    artist: "Bastinov",
+    url: Wormhole,
+    tags: "909 groove,psychedelic techno,dark,ruthless banger,stomper",
+    genre: "partyhard_02h-06h",
+    bpm: "130",
+    color: "#7C54FF",
+    saturation : 0.5
+  },
+
   10: {
+    name: "Solee",
+    artist: "Feiern",
+    url: Feiern,
+    tags: "deep techno,hammer kick,synth paradise,oppression",
+    genre: "after_06h-10h",
+    bpm: "122",
+    color: "#12A481",
+    saturation : 0.5
+  },
+
+ 11: {
     name: "Lady Science - NYC Sunrise",
     artist: "Soul Capsule",
     url: LadyScience,
-    tags: "tags",
+    tags: "nostalgic feeling,deep house,forever timeless,head in space,emotional journey,goosebumps",
     genre: "after_06h-10h",
     bpm: "128",
     color: "#12A481",
     saturation : 0.5
   },
-  11: {
-    name: "Wormhole",
-    artist: "Bastinov",
-    url: Wormhole,
-    tags: "tags",
-    genre: "partyhard_02h-06h",
-    bpm: "130",
-    color: "#7C54FF",
-    saturation : 0.5
-  }
+ 
 }
 
 window.addEventListener("load",function(){

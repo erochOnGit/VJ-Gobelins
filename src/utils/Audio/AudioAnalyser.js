@@ -80,7 +80,6 @@ export default class AudioAnalyser {
       this.bpmTimer += this.data.time.delta;
       this.data.onBpm = this.bpmTimer > 60/this.audio.getCurrentTrack().bpm;
       if(this.data.onBpm){
-        console.log("BPM");
         this.bpmTimer = 0;
         this.data.bpmNumber += 1;
       }

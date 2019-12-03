@@ -34,10 +34,9 @@
         font-size: 72px;
     }
 
-    >p{
-        display: flex;
+    >.text-intro{
         justify-content: center;
-        align-items: center;
+        max-width: 700px;
     }
 
     button{
@@ -46,8 +45,11 @@
 
 
     p{
-        max-width: 700px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
         font-size: 20px;
+        margin: 0 20px;
     }
 
     .rotated{
