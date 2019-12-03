@@ -12,6 +12,8 @@ export default class Audio {
       this.nextTrack();
     };
     this.tracksetEvent = new Event("trackset");
+
+    console.log(this.getFilteredTracklist());
   }
 
   get tracks() {
@@ -65,5 +67,17 @@ export default class Audio {
     } else {
       this.audioNode.play();
     }
+  }
+
+  getFilteredTracklist(){
+    let tracklist = {};
+    this.tracks.forEach((track)=>{
+      if(tracklist[track.genre]){
+        tracklist[track.genre].push(track);
+      }else{
+        tracklist[track.genre] = [track];
+      }
+    });
+    return tracklist;
   }
 }

@@ -16,7 +16,6 @@ export default class AudioAnalyser {
     this.beats = [];
 
 
-
     this.bpmTimer =0;
 
     for(let i = 0; i<10; i++){
@@ -35,7 +34,9 @@ export default class AudioAnalyser {
       bpmNumber: 0,
       bpm: function(i){
         return this.onBpm && this.bpmNumber > 0 && this.bpmNumber % i === 0;
-      }
+      },
+      trackname: "",
+      artist: ""
     };
 
     this.audio.audioNode.addEventListener("trackset", () => {
@@ -85,13 +86,14 @@ export default class AudioAnalyser {
       }
       this.data.color = this.audio.getCurrentTrack().color;
       this.data.saturation = this.audio.getCurrentTrack().saturation;
+      this.data.trackname = this.audio.getCurrentTrack().name;
+      this.data.artist = this.audio.getCurrentTrack().artist;
     }
 
     this.data.rawvolume = this.getAverage({ min: 0, max: 100 });
     this.data.volume += (this.data.rawvolume - this.data.volume) * 0.8;
     this.data.intensity += (this.data.rawvolume - this.data.intensity) * 0.01;
     this.data.difference += ((this.data.rawvolume - this.data.intensity) * 10.0 - this.data.difference) * 0.7;
-
   }
 
   debug() {
