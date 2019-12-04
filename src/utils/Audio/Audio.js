@@ -1,5 +1,5 @@
 import trackList from "./trackList.js";
-import trackList2 from "./trackList2.js";
+import jul from "./jul.js";
 
 
 export default class Audio {
@@ -17,7 +17,11 @@ export default class Audio {
   }
 
   get tracks() {
-    return Object.values(trackList);
+    return window.JUL ? Object.values(jul) : Object.values(trackList);
+  }
+
+  reload(){
+    this.setTrack(0);
   }
 
   start() {

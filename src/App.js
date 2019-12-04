@@ -14,17 +14,7 @@ class App {
 
     this.audio = new Audio();
     let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 1024 });
-   /* window.addEventListener("click", () => {
-      this.audio.start();
-    });
-    window.addEventListener("keydown", e => {
-      if (e.keyCode == 37) {
-        this.audio.previousTrack();
-      } else if (e.keyCode == 39) {
-        this.audio.nextTrack();
-      }
-    });*/
-    
+
     /**
      *
      * 3D Handling

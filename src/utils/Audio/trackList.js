@@ -64,7 +64,7 @@ let trackList = {
     artist: "Black Loops",
     url: Sex,
     tags: "emotional,food for soul,lo-fi house,are these feelings even real ?,or are they just programming,bassy",
-    genre: "afterwork_18h-23h",
+    genre: "afterwork_18h-22h",
     bpm: "121",
     color: "#51CCFF",
     saturation : 0.5
@@ -75,7 +75,7 @@ let trackList = {
     artist: "Rival Consoles",
     url: Soul,
     tags: "arpeggios,jerky beat,orchestral,symphonic,twitching",
-    genre: "afterwork_18h-23h",
+    genre: "afterwork_18h-22h",
     bpm: "100",
     color: "#51CCFF",
     saturation : 0.5
@@ -86,7 +86,7 @@ let trackList = {
     artist: "Birdy Nam Nam",
     url: ShemalesBody,
     tags: "dance or die,pulsating rhythm,get ready,electronic,very bad trip",
-    genre: "warmup_23h-02h",
+    genre: "warmup_22h-02h",
     bpm: "128",
     color: "#78FFA1",
     saturation : 0.5
@@ -97,7 +97,7 @@ let trackList = {
     artist: "Niels Van Gogh",
     url: Pulverturm,
     tags: "can i get a hand,i'm kinda falling,in my life,trippy ",
-    genre: "warmup_23h-02h",
+    genre: "warmup_22h-02h",
     bpm: "136",
     color: "#78FFA1",
     saturation : 0.5
@@ -159,7 +159,7 @@ window.addEventListener("load",function(){
     folder.add(track, 'name');
     folder.add(track, 'artist');
     folder.add(track, 'tags');
-    folder.add(track, 'genre', { chill:"chill_10h-14h",dance:"dance_14h-18h",afterwork:"afterwork_18h-23h",warmup:"warmup_23h-02h",partyhard:"partyhard_02h-06h",after:"after_06h-10h" } );
+    folder.add(track, 'genre', { chill:"chill_10h-14h",dance:"dance_14h-18h",afterwork:"afterwork_18h-22h",warmup:"warmup_22h-02h",partyhard:"partyhard_02h-06h",after:"after_06h-10h" } );
     folder.add(track, 'bpm');
     folder.addColor(track, 'color');
     folder.add(track, 'saturation',0,2);

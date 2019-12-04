@@ -71,15 +71,15 @@ class CellDomElement extends Cell {
     let html = "";
     html += `
       <div class="infinite-text-wrapper">
+        <span class="infinite-text ui-color-fill"></span>
+        <span class="infinite-text infinite-text--left ui-color-fill"></span>
+        <span class="infinite-text ui-color-fill"></span>
+        <span class="infinite-text infinite-text--left ui-color-fill"></span>
+        <span class="infinite-text ui-color-fill"></span>
+        <span class="infinite-text infinite-text--left ui-color-fill"></span>
         <span class="infinite-text ui-color-fill">test</span>
-        <span class="infinite-text infinite-text--left ui-color-fill">test</span>
-        <span class="infinite-text ui-color-fill">test</span>
-        <span class="infinite-text infinite-text--left ui-color-fill">test</span>
-        <span class="infinite-text ui-color-fill">test</span>
-        <span class="infinite-text infinite-text--left ui-color-fill">test</span>
-        <span class="infinite-text ui-color-fill">test</span>
-        <span class="infinite-text infinite-text--left ui-color-fill">test</span>
-        <span class="infinite-text ui-color-fill">test</span>
+        <span class="infinite-text infinite-text--left ui-color-fill"></span>
+        <span class="infinite-text ui-color-fill"></span>
       </div>
     `;
     return html;
@@ -91,7 +91,7 @@ class CellDomElement extends Cell {
     this.domElement
       .querySelectorAll(".infinite-text:not(.custom)")
       .forEach(element => {
-        var str = data.artist + " " + data.trackname + " - ";
+        var str = element.innerHTML == "" ? data.artist + " " + data.trackname + " - " : element.innerHTML;
         element.innerHTML = str;
         var width = element.offsetWidth;
         console.log(element.parentElement.offsetWidth);

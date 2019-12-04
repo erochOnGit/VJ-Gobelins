@@ -83,7 +83,7 @@ export default class AudioAnalyser {
         this.bpmTimer = 0;
         this.data.bpmNumber += 1;
       }
-      this.data.color = this.audio.getCurrentTrack().color;
+      this.data.color = window.JUL ? get_random_color() : this.audio.getCurrentTrack().color;
       this.data.saturation = this.audio.getCurrentTrack().saturation;
       this.data.trackname = this.audio.getCurrentTrack().name;
       this.data.artist = this.audio.getCurrentTrack().artist;
@@ -195,4 +195,11 @@ class Beat{
   on(){
     return this.beatedDelay > 0;
   }
+}
+
+function get_random_color() {
+  var h = Math.round(Math.random() * 360);
+  var s = 100;
+  var l = 50;
+  return 'hsl(' + h + ',' + s + '%,' + l + '%)';
 }

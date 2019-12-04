@@ -35,7 +35,7 @@ class Canvas3D {
     // this.scene.add(gridHelper);
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setPixelRatio(window.devicePixelRatio * 0.7);
     this.renderer.setSize(this.sight.SCREEN_WIDTH, this.sight.SCREEN_HEIGHT);
     this.container.appendChild(this.renderer.domElement);
 
