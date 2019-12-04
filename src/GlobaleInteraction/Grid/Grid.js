@@ -3,6 +3,7 @@ import gridMouseDown from "./gridMouseDown/gridMouseDown";
 import gridMouseUp from "./gridMouseUp/gridMouseUp";
 import gridDrag from "./gridDrag";
 import GridBackground from "./GridBackground";
+import worldToScreenpoint from "src/utils/worldToScreenpoint.js"
 
 class Grid {
   constructor({ renderer, camera, mouse, raycaster, scene, audio }) {
@@ -211,23 +212,26 @@ class Grid {
     }
     this.molecules.forEach(molecule => {
       if (direction == "top" && molecule.getEdgesPos().top > cuttingPoint) {
+        console.log("top");
         molecule.resizeVertical({ direction: -1, cuttingPoint });
       } else if (
         direction == "bottom" &&
         molecule.getEdgesPos().bottom < cuttingPoint
       ) {
+        console.log("bpttm");
         molecule.resizeVertical({ direction: 1, cuttingPoint });
       }
     });
 
     this.createMolecule({
-      topLeftPos: new THREE.Vector2(
-        -10,
-        direction == "top" ? 5: cuttingPoint
-      ),
-      size: new THREE.Vector2(20,direction == "top" ? Math.abs(cuttingPoint - 5) : 10 - Math.abs(cuttingPoint - 5) )
+      topLeftPos: new THREE.Vector2(-10, direction == "top" ? 5 : cuttingPoint),
+      size: new THREE.Vector2(
+        20,
+        direction == "top"
+          ? Math.abs(cuttingPoint - 5)
+          : 10 - Math.abs(cuttingPoint - 5)
+      )
     });
-
   }
 
   sliceHorizontal({ cuttingPoint, direction }) {
@@ -255,7 +259,12 @@ class Grid {
         direction == "left" ? -10 : cuttingPoint,
         5
       ),
-      size: new THREE.Vector2(direction == "left" ? 20 - Math.abs(cuttingPoint - 10) : Math.abs(cuttingPoint - 10), 10)
+      size: new THREE.Vector2(
+        direction == "left"
+          ? 20 - Math.abs(cuttingPoint - 10)
+          : Math.abs(cuttingPoint - 10),
+        10
+      )
     });
   }
 
@@ -272,7 +281,6 @@ class Grid {
     });
 
     this.molecules.push(newMolecule);
-    
   }
 
   update(data) {

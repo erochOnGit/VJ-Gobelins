@@ -1,6 +1,7 @@
 import Cell from "../Cell";
 import "./cell-dom.scss";
 import { TweenMax } from "gsap";
+import worldToScreenpoint from "src/utils/worldToScreenpoint.js"
 
 class CellDomElement extends Cell {
   constructor({ size, camera, html, molecule }) {
@@ -32,18 +33,7 @@ class CellDomElement extends Cell {
     super.update(data);
   }
 
-  updateDomElement() {
-    function worldToScreenpoint(worldPosition, camera) {
-      let width = window.innerWidth,
-        height = window.innerHeight;
-      let widthHalf = width / 2,
-        heightHalf = height / 2;
-      let pos = worldPosition.clone();
-      pos.project(camera);
-      pos.x = pos.x * widthHalf + widthHalf;
-      pos.y = -(pos.y * heightHalf) + heightHalf;
-      return pos;
-    }
+  updateDomElement(){
 
     let wpVector = new THREE.Vector3();
     let cellPos = this.mesh.getWorldPosition(wpVector).clone();
