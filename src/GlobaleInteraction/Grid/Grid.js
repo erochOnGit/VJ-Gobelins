@@ -5,7 +5,7 @@ import gridDrag from "./gridDrag";
 import GridBackground from "./GridBackground";
 
 class Grid {
-  constructor({ renderer, camera, mouse, raycaster, scene }) {
+  constructor({ renderer, camera, mouse, raycaster, scene, audio }) {
     this.mesh = new THREE.Group();
     this.scene = scene;
     this.camera = camera;
@@ -48,8 +48,14 @@ class Grid {
         this.randomize();
         last3keys += String.fromCharCode(e.keyCode);
         last3keys = last3keys.substr(last3keys.length - 3); 
-        if(last3keys){
+        if(last3keys == "JUL"){
           window.JUL = true;
+          this.reset();
+          audio.reload();
+          audio.audioNode.currentTime = 34;
+          this.autocut = true;
+          this.bpmSpeed = 2;
+          last3keys = "NULL";
         }
       }
     });

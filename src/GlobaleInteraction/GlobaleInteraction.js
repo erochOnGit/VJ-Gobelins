@@ -21,7 +21,8 @@ class GlobaleInteraction extends Interaction {
       camera,
       mouse,
       raycaster,
-      scene
+      scene,
+      audio: this.analyser.audio
     });
     this.UI = new UI({grid:this.grid, audio: this.analyser.audio, camera});
     this.stats = new Stats();
@@ -42,7 +43,7 @@ class GlobaleInteraction extends Interaction {
     let data = this.analyser.getData();
     this.grid.update(data);
     this.UI.update(data);
-    this.stats.end()
+    this.stats.end();
     /// this.grid2.update(data);
   }
 }

@@ -44,6 +44,8 @@ let motions = importAll(
   require.context("src/assets/motion", false, /\.(webm|mp4)$/)
 );
 
+let jul = importAll(require.context("src/assets/jul", false, /\.(webm|mp4)$/));
+
 function getRandomElement(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
@@ -122,7 +124,7 @@ let cell_rules = {
     maxX: 12,
     minY: 2,
     maxY: 7,
-    factory: function({ size, molecule , renderer}) {
+    factory: function({ size, molecule, renderer }) {
       let reactDiffDataArray = [
         { Da: 1.0, Db: 0.3, feed: 0.055, k: 0.062 },
         { Da: 1, Db: 0.27, feed: 0.005, k: 0.05 },
@@ -159,6 +161,14 @@ let cell_rules = {
 };
 
 function CellFactory({ size, renderer, camera, cellData, molecule }) {
+  if (!cellData && window.JUL) {
+    return new CellVideo({
+      url: getRandomElement(jul),
+      shader: getRandomElement(shaders),
+      size: size,
+      molecule
+    });
+  }
   let _cellData = cellData || { type: GetRandomCellType({ size }) };
   return cell_rules[_cellData.type].factory({
     size,

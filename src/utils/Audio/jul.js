@@ -1,18 +1,28 @@
-import EyeNyamNam from "src/assets/musics/006_EyeNyamNam_A_Mensuro_EboTaylor.mp3"
+import wesh from "src/assets/musics/WESH.mp3"
+import ovni from "src/assets/musics/OVNI.mp3"
 
 
-let trackList = {
+let jul = {
   0: {
-    name: "Eye Nyam Nam'A'Mensuro",
-    artist: "Ebo Taylor",
-    url: EyeNyamNam,
-    tags: "soulful,upbeat,hopeful,sunny,enthusiastic,good morning",
-    genre: "chill_10h-14h",
+    name: "Wesh alors",
+    artist: "JUL",
+    url: wesh,
+    tags: "jul",
+    genre: "JUL",
     bpm: "124",
     color: "#FFA1D0",
-    saturation : 0.5
+    saturation : 1
+  },
+  1: {
+    name: "Ovni",
+    artist: "JUL",
+    url: ovni,
+    tags: "jul",
+    genre: "JUL",
+    bpm: "124",
+    color: "#FFA1D0",
+    saturation : 1
   },
 }
 
-
-export default trackList;
+export default jul;
