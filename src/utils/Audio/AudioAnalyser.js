@@ -84,7 +84,6 @@ export default class AudioAnalyser {
         this.data.bpmNumber += 1;
       }
       this.data.color = window.JUL ? get_random_color() : this.audio.getCurrentTrack().color;
-      console.log(this.data.color);
       this.data.saturation = this.audio.getCurrentTrack().saturation;
       this.data.trackname = this.audio.getCurrentTrack().name;
       this.data.artist = this.audio.getCurrentTrack().artist;

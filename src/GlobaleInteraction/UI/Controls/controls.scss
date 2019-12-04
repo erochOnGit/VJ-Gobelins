@@ -35,6 +35,8 @@
 
         &:hover{
             cursor: pointer;
+            svg{
+            }
         }
 
         svg{
@@ -78,10 +80,13 @@
 
 .bpm-display{
     font-family: "SoyuzGrotesk";
+    background-color: transparent !important;
+    font-size: 20px;
     position: absolute;
     z-index: 2;
     color: white;
     right: 10px;
     bottom: 10px;
     text-align: right;
+    transform: translateX(-100%);
 }

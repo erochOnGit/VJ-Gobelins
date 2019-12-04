@@ -222,16 +222,17 @@ class Grid {
         molecule.resizeVertical({ direction: 1, cuttingPoint });
       }
     });
-
-    this.createMolecule({
-      topLeftPos: new THREE.Vector2(-10, direction == "top" ? 5 : cuttingPoint),
-      size: new THREE.Vector2(
-        20,
-        direction == "top"
-          ? Math.abs(cuttingPoint - 5)
-          : 10 - Math.abs(cuttingPoint - 5)
-      )
-    });
+    if(cuttingPoint > -5 && cuttingPoint < 5){
+      this.createMolecule({
+        topLeftPos: new THREE.Vector2(-10, direction == "top" ? 5 : cuttingPoint),
+        size: new THREE.Vector2(
+          20,
+          direction == "top"
+            ? Math.abs(cuttingPoint - 5)
+            : 10 - Math.abs(cuttingPoint - 5)
+        )
+      });
+    }
   }
 
   sliceHorizontal({ cuttingPoint, direction }) {
@@ -253,19 +254,20 @@ class Grid {
         molecule.resizeHorizontal({ direction: 1, cuttingPoint });
       }
     });
-
-    this.createMolecule({
-      topLeftPos: new THREE.Vector2(
-        direction == "left" ? -10 : cuttingPoint,
-        5
-      ),
-      size: new THREE.Vector2(
-        direction == "left"
-          ? 20 - Math.abs(cuttingPoint - 10)
-          : Math.abs(cuttingPoint - 10),
-        10
-      )
-    });
+    if(cuttingPoint > -10 && cuttingPoint < 10){
+      this.createMolecule({
+        topLeftPos: new THREE.Vector2(
+          direction == "left" ? -10 : cuttingPoint,
+          5
+        ),
+        size: new THREE.Vector2(
+          direction == "left"
+            ? 20 - Math.abs(cuttingPoint - 10)
+            : Math.abs(cuttingPoint - 10),
+          10
+        )
+      });
+    }
   }
 
   createMolecule({ topLeftPos, size, cellData }) {
@@ -306,7 +308,7 @@ class Grid {
       if(Math.random() < 0.6 || this.molecules.length == 1){
         if(Math.random() < 0.8){
           this.sliceHorizontal({
-            cuttingPoint: Math.round(Math.random() * 10) - 5,
+            cuttingPoint: Math.round(Math.random() * 20) - 10,
             direction: Math.random() > 0.5 ? "left" : "right"
           });
         }else{

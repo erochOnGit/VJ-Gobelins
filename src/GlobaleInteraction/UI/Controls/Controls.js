@@ -1,12 +1,14 @@
 import "./controls.scss";
+import worldToScreenpoint from "src/utils/worldToScreenpoint.js"
 import { TweenMax } from "gsap";
 
 class Controls {
-  constructor({ audio, ui }) {
+  constructor({ audio, ui, camera }) {
 
     this.audio = audio;
     this.displayTimer = 10;
     this.ui = ui;
+    this.camera = camera;
 
     this.audio.audioNode.addEventListener("trackset", () => {
       document.querySelector(".controls-bar__status p").textContent =
@@ -78,7 +80,10 @@ class Controls {
         TweenMax.to(".controls-bar, .bpm-display",1,{opacity: 0});
     }
 
-    this.bpmSpeedDisplay.innerHTML = this.ui.grid.autocut > 0 ? this.ui.grid.bpmSpeed +" / 8" : "stopped";
+    this.bpmSpeedDisplay.innerHTML = this.ui.grid.autocut > 0 ? this.ui.grid.bpmSpeed +" / 8" : "locked";
+
+    let domPos = worldToScreenpoint(new THREE.Vector3(10,-5), this.camera);
+    TweenMax.set(".bpm-display",{top: domPos.y + 20, left: domPos.x});
   }
 }
 

@@ -59,6 +59,8 @@ class Cell extends Module {
   }
 
   resize({ axe, direction, size }) {
+    TweenMax.killTweensOf(this.mesh.scale);
+    TweenMax.killTweensOf(this.mesh.position);
     let tl = new TimelineMax();
 
     if (axe == "horizontal") {

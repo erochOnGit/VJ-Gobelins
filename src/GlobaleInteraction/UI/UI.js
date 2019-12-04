@@ -6,7 +6,7 @@ import tuto2 from "src/assets/tuto/module_tuto_02.webm";
 class UI {
   constructor({ grid, audio, camera }) {
     this.grid = grid;
-    this.controls = new Controls({ audio: audio, ui: this });
+    this.controls = new Controls({ audio: audio, ui: this, camera });
     this.audio = audio;
     this.camera = camera;
 
@@ -43,7 +43,7 @@ class UI {
     }
 
     this.createCell({
-      topLeftPos: new THREE.Vector2(-10, 3),
+      topLeftPos: new THREE.Vector2(-10, 4),
       size: new THREE.Vector2(2, 7),
       cellData: {
         type: "dom",
@@ -56,7 +56,7 @@ class UI {
     });
 
     this.createCell({
-      topLeftPos: new THREE.Vector2(-6, 3),
+      topLeftPos: new THREE.Vector2(-6, 4),
       size: new THREE.Vector2(3, 1),
       cellData: {
         type: "dom",
@@ -64,7 +64,7 @@ class UI {
       }
     });
     this.createCell({
-      topLeftPos: new THREE.Vector2(-6, 2),
+      topLeftPos: new THREE.Vector2(-6, 3),
       size: new THREE.Vector2(3, 6),
       cellData: {
         type: "dom",
@@ -77,7 +77,7 @@ class UI {
     });
 
     this.createCell({
-      topLeftPos: new THREE.Vector2(-3, 3),
+      topLeftPos: new THREE.Vector2(-3, 4),
       size: new THREE.Vector2(3, 1),
       cellData: {
         type: "dom",
@@ -85,7 +85,7 @@ class UI {
       }
     });
     this.createCell({
-      topLeftPos: new THREE.Vector2(-3, 2),
+      topLeftPos: new THREE.Vector2(-3, 3),
       size: new THREE.Vector2(3, 6),
       cellData: {
         type: "dom",
@@ -98,7 +98,7 @@ class UI {
     });
 
     this.createCell({
-      topLeftPos: new THREE.Vector2(0, 3),
+      topLeftPos: new THREE.Vector2(0, 4),
       size: new THREE.Vector2(7, 1),
       cellData: {
         type: "dom",
@@ -106,7 +106,7 @@ class UI {
       }
     });
     this.createCell({
-      topLeftPos: new THREE.Vector2(0, 2),
+      topLeftPos: new THREE.Vector2(0, 3),
       size: new THREE.Vector2(7, 6),
       cellData: {
         type: "dom",
@@ -128,6 +128,28 @@ class UI {
       }
     });
 
+    this.createCell({
+      topLeftPos: new THREE.Vector2(-10, -4),
+      size: new THREE.Vector2(2, 1),
+      cellData: {
+        type: "dom",
+        locked: true,
+        html: `<h3 class="ui-color-fill">credits :</h3>`
+      }
+    });
+
+    this.createCell({
+      topLeftPos: new THREE.Vector2(-8, -4),
+      size: new THREE.Vector2(15, 1),
+      cellData: {
+        type: "dom",
+        locked: true,
+        html: `<div class="infinite-text-wrapper">
+                  <span class="infinite-text infinite-text--small ui-color-text">Bastiste Lefebvre - Eric Kwekem - Emile Roch - Louis Lagache - </span>
+              </div>`
+      }
+    });
+
     document.getElementById("btn-closeprogra").onclick = () => {
       this.grid.reset();
       this.grid.autocut = true;
@@ -145,7 +167,7 @@ class UI {
       size: new THREE.Vector2(18, 2),
       cellData: {
         type: "dom",
-        html: `<p class="ui-color-text text-intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>`
+        html: `<p class="ui-color-text text-intro">Wormhole is a visual and audio reactive web radio, inspired by the wide universe of electronic music.<br> Take a deep breath and dive into another dimension.</p>`
       }
     });
 
@@ -275,7 +297,7 @@ class UI {
       cellData: {
         type: "dom",
         locked: true,
-        html: `<button id="btn-tunein" class="ui-color-fill">Tune in</button>`
+        html: `<button id="btn-tunein" class="ui-color-fill">Tune in<span class="ui-color-text">Tune in</span></button>`
       }
     });
 
@@ -305,7 +327,7 @@ class UI {
       cellData: {
         type: "dom",
         locked: true,
-        html: `<button id="btn-start" class="ui-color-color">Enter the void</button>`
+        html: `<button id="btn-start">Enter the void<span class="ui-color-fill">Enter the void</span></button>`
       }
     });
 
@@ -323,7 +345,7 @@ class UI {
   update(data) {
     TweenMax.set(".ui-color-text", {
       color: data.color,
-      backgroundColor: "transparent"
+      backgroundColor: "black"
     });
     TweenMax.set(".ui-color-stroke", {
       color: data.color,

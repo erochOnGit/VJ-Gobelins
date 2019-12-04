@@ -9,17 +9,17 @@ let jul = {
     url: wesh,
     tags: "jul",
     genre: "JUL",
-    bpm: "124",
+    bpm: "127",
     color: "#FFA1D0",
     saturation : 1
   },
   1: {
-    name: "Ovni",
+    name: "On m'appelle l'ovni",
     artist: "JUL",
     url: ovni,
     tags: "jul",
     genre: "JUL",
-    bpm: "124",
+    bpm: "146",
     color: "#FFA1D0",
     saturation : 1
   },
