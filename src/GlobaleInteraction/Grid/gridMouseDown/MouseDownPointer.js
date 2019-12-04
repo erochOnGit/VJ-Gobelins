@@ -20,7 +20,7 @@ export default class MouseDownPointer {
     this.origin.classList.add(`mouse-down_pointer_${axe}`);
 
     this.direction = document.createElement("div");
-    this.direction.classList.add("mouse-down_direction");
+    this.direction.classList.add(`mouse-down_direction_${axe}`);
     this.direction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 10"><path d="M.5.908v8.196l6.557-4.046L.5.908z" stroke="#FFF" fill="none" fill-rule="evenodd"/></svg>`;
 
     this.dash = document.createElement("div");

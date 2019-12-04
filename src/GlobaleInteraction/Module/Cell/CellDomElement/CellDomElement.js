@@ -34,7 +34,6 @@ class CellDomElement extends Cell {
   }
 
   updateDomElement(){
-
     let wpVector = new THREE.Vector3();
     let cellPos = this.mesh.getWorldPosition(wpVector).clone();
     let cellSize = this.getCurrentSize();
