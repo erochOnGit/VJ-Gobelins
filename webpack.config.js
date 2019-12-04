@@ -81,7 +81,7 @@ module.exports = {
       },
       //load musics
       {
-        test: /\.mp3$/,
+        test: /\.(mp3|wav)$/,
         use: ["file-loader"]
       },
       //load fonts

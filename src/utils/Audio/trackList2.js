@@ -154,6 +154,7 @@ let trackList2 = {
 };
 
 window.addEventListener("load",function(){
+  return;
   var gui = new dat.GUI({closeOnTop: true,closed:true});
   for (let [key, track] of Object.entries(trackList2)) {
    gui.remember(track);

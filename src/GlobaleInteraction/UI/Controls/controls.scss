@@ -75,3 +75,13 @@
     }
    
 }
+
+.bpm-display{
+    font-family: "SoyuzGrotesk";
+    position: absolute;
+    z-index: 2;
+    color: white;
+    right: 10px;
+    bottom: 10px;
+    text-align: right;
+}

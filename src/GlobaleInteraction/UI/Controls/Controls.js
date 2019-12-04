@@ -4,10 +4,8 @@ import { TweenMax } from "gsap";
 class Controls {
   constructor({ audio, ui }) {
 
-    const displayTime = 7;
-
     this.audio = audio;
-    this.displayTimer = displayTime;
+    this.displayTimer = 10;
     this.ui = ui;
 
     this.audio.audioNode.addEventListener("trackset", () => {
@@ -39,9 +37,28 @@ class Controls {
     });
 
     window.addEventListener("mousemove", ()=>{
-        this.displayTimer = displayTime;
-        TweenMax.to(".controls-bar",1,{opacity: 1});
-    })
+        this.displayTimer = 7;
+        TweenMax.to(".controls-bar, .bpm-display",1,{opacity: 1});
+    });
+
+    window.addEventListener("wheel", ()=>{
+      this.displayTimer = 3;
+      TweenMax.to(".controls-bar, .bpm-display",1,{opacity: 1});
+    });
+
+    window.addEventListener("keyup", (e)=>{
+      if (e.keyCode == 32) {
+        this.displayTimer = 3;
+        TweenMax.to(".controls-bar, .bpm-display",1,{opacity: 1});
+      }
+    });
+
+
+    this.bpmSpeedDisplay = document.createElement("div");
+    this.bpmSpeedDisplay.classList.add("ui-color-text");
+    this.bpmSpeedDisplay.classList.add("bpm-display");
+    this.bpmSpeedDisplay.innerHTML = "test";
+    document.body.append(this.bpmSpeedDisplay);
   }
 
   update(data) {
@@ -58,8 +75,10 @@ class Controls {
     this.displayTimer -= data.time.delta;
     if(this.displayTimer <= 0 && this.displayTimer != null){
         this.displayTimer = null;
-        TweenMax.to(".controls-bar",1,{opacity: 0});
+        TweenMax.to(".controls-bar, .bpm-display",1,{opacity: 0});
     }
+
+    this.bpmSpeedDisplay.innerHTML = this.ui.grid.autocut > 0 ? this.ui.grid.bpmSpeed +" / 8" : "stopped";
   }
 }
 

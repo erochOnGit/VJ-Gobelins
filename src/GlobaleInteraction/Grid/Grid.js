@@ -39,26 +39,36 @@ class Grid {
 
     this.axe = "horizontal";
     this.renderer = renderer;
+    let last3keys = "NULL";
     window.addEventListener("keyup", e => {
-      if (e.keyCode == 65) {
+      if (e.keyCode == 32) {
+        this.autocut = !this.autocut;
+      }else if (e.keyCode == 16) {
         this.reset();
-      }
-      if (e.keyCode == 90) {
-        this.dispatch({ count: 1 });
-      }
-      if (e.keyCode == 82) {
-        this.sliceHorizontal({
-          cuttingPoint: Math.round(Math.random() * 10) - 5,
-          direction: "right"
-        });
-      }
-      if (e.keyCode == 84) {
-        this.sliceVertical({
-          cuttingPoint: Math.round(Math.random() * 10) - 5,
-          direction: "top"
-        });
+      }else{
+        this.randomize();
+        last3keys += String.fromCharCode(e.keyCode);
+        last3keys = last3keys.substr(last3keys.length - 3); 
+        if(last3keys){
+          window.JUL = true;
+        }
       }
     });
+
+    this.bpmSpeed = 4;
+    let currentWheel = 4;
+    window.addEventListener("wheel",(e)=>{
+      currentWheel += Math.sign(e.deltaY) * 0.2;
+      if(currentWheel < 1){
+        currentWheel = 1;
+      }else if(currentWheel > 8){
+        currentWheel = 8;
+      }
+      this.bpmSpeed = Math.round(currentWheel);
+      console.log(this.bpmSpeed);
+    });
+
+
     this.autocut = false;
     this.originSlice = { x: null, y: null };
     this.pointer = null;
@@ -268,12 +278,8 @@ class Grid {
   }
 
   update(data) {
-    if (data.bpm(0) && this.autocut) {
-      if (this.molecules.length < 15) {
-        this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
-      } else {
-        this.reset();
-      }
+    if (data.bpm(this.bpmSpeed) && this.autocut) {
+      this.randomize();
     }
 
     this.gridBackground.update(data);
@@ -281,6 +287,34 @@ class Grid {
       this.molecules[i].update(data);
     }
   }
+
+  randomize(){
+    if (this.molecules.length < 15 && this.molecules.length > 1) {
+      let rand = Math.random();
+      if(rand < 0.5){
+        this.dispatch({ count: 1 + Math.floor(Math.random() * 2) });
+      }else{
+        this.molecules[Math.floor(this.molecules.length * Math.random())].reload();
+      }
+    } else {
+      if(Math.random() < 0.6 || this.molecules.length == 1){
+        if(Math.random() < 0.8){
+          this.sliceHorizontal({
+            cuttingPoint: Math.round(Math.random() * 10) - 5,
+            direction: Math.random() > 0.5 ? "left" : "right"
+          });
+        }else{
+          this.sliceVertical({
+            cuttingPoint: Math.round(Math.random() * 10) - 5,
+            direction: Math.random() > 0.5 ? "bottom" : "top"
+          });
+        }
+      }else{
+        this.reset();
+      }
+    }
+  }
+
 }
 
 export default Grid;

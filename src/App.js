@@ -14,7 +14,7 @@ class App {
 
     this.audio = new Audio();
     let analyser = new AudioAnalyser({ audio: this.audio, fftSize: 1024 });
-    window.addEventListener("click", () => {
+   /* window.addEventListener("click", () => {
       this.audio.start();
     });
     window.addEventListener("keydown", e => {
@@ -23,7 +23,7 @@ class App {
       } else if (e.keyCode == 39) {
         this.audio.nextTrack();
       }
-    });
+    });*/
     
     /**
      *

@@ -142,9 +142,9 @@ let cell_rules = {
     }
   },
   dom: {
-    strength: 0,
+    strength: 5,
     minX: 0,
-    maxX: 20,
+    maxX: 10,
     minY: 0,
     maxY: 10,
     factory: function({ size, molecule, camera, cellData }) {
@@ -152,7 +152,7 @@ let cell_rules = {
         size,
         camera,
         html: cellData.html,
-        molecule
+        molecule: cellData.locked ? null : molecule
       });
     }
   }
