@@ -1,17 +1,18 @@
 import Cell from "../Cell";
 
 class CellColor extends Cell {
-  constructor({ size, color }) {
+  constructor({ size ,molecule}) {
 
     var material = new THREE.MeshBasicMaterial({
-      color: new THREE.Color(color)
+      color: new THREE.Color("red")
     });
     
-    super({ material, size });
+    super({ material, size,molecule });
   }
 
   update(data) {
-
+    this.material.color = new THREE.Color(data.color);
+    this.material.needUpdate = true;
   }
 
 }

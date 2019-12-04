@@ -1,4 +1,5 @@
 import Canvas3D from "src/utils/Canvas3D";
+import dat from "dat.gui";
 
 export default class AudioAnalyser {
   constructor({ audio, fftSize }) {
@@ -13,6 +14,10 @@ export default class AudioAnalyser {
     this.bufferLength = this.analyser.frequencyBinCount;
     this.dataArray = new Uint8Array(this.bufferLength);
     this.beats = [];
+
+
+    this.bpmTimer =0;
+
     for(let i = 0; i<10; i++){
       this.beats[i] = new Beat();
     }
@@ -22,12 +27,20 @@ export default class AudioAnalyser {
       volume: 0,
       rawvolume: 0,
       intensity: 0,
-      difference: 0
+      difference: 0,
+      color: "white",
+      saturation: 0,
+      onBpm: false,
+      bpmNumber: 0,
+      bpm: function(i){
+        return this.onBpm && this.bpmNumber > 0 && this.bpmNumber % i === 0;
+      },
+      trackname: "",
+      artist: ""
     };
 
     this.audio.audioNode.addEventListener("trackset", () => {
       this.context.resume();
-      console.log("resume");
     });
 
     /*
@@ -50,16 +63,11 @@ export default class AudioAnalyser {
       canvas: debugCanvas,
       ctx: debugCanvas.getContext("2d"),
     };
-
-    window.addEventListener("keydown", e => {
-      if (e.keyCode == 80) {
-        this.debugger.on = !this.debugger.on;
-      }
-    });
   }
 
   refreshData(time) {
     this.data.time = time;
+
     this.analyser.getByteFrequencyData(this.dataArray);
 
     for (let i = 0; i < this.beats.length; i++) {
@@ -68,13 +76,23 @@ export default class AudioAnalyser {
       let currentAverage = this.getAverage({ min: _min, max: _max });
       this.beats[i].update(currentAverage, time);
     }
+    if(this.audio.isPlaying()){
+      this.bpmTimer += this.data.time.delta;
+      this.data.onBpm = this.bpmTimer > 60/this.audio.getCurrentTrack().bpm;
+      if(this.data.onBpm){
+        this.bpmTimer = 0;
+        this.data.bpmNumber += 1;
+      }
+      this.data.color = window.JUL ? get_random_color() : this.audio.getCurrentTrack().color;
+      this.data.saturation = this.audio.getCurrentTrack().saturation;
+      this.data.trackname = this.audio.getCurrentTrack().name;
+      this.data.artist = this.audio.getCurrentTrack().artist;
+    }
 
     this.data.rawvolume = this.getAverage({ min: 0, max: 100 });
     this.data.volume += (this.data.rawvolume - this.data.volume) * 0.8;
     this.data.intensity += (this.data.rawvolume - this.data.intensity) * 0.01;
     this.data.difference += ((this.data.rawvolume - this.data.intensity) * 10.0 - this.data.difference) * 0.7;
-
-    // console.log(this.data.difference);
   }
 
   debug() {
@@ -82,7 +100,7 @@ export default class AudioAnalyser {
     this.debugger.canvas.height = window.innerHeight;
     this.debugger.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-    if(this.debugger.on ){
+    if(this.debugger.on){
       let widthData = window.innerWidth / this.dataArray.length;
       let widthBeat = widthData * (this.bufferLength / this.beats.length);
   
@@ -177,4 +195,11 @@ class Beat{
   on(){
     return this.beatedDelay > 0;
   }
+}
+
+function get_random_color() {
+  var h = Math.round(Math.random() * 360);
+  var s = 100;
+  var l = 50;
+  return 'hsl(' + h + ',' + s + '%,' + l + '%)';
 }

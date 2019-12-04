@@ -1,0 +1,92 @@
+.controls-bar{
+    position: absolute;
+    z-index: 1;
+    height: 40px;
+    display: flex;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &.controls-bar--upper{
+        top: 0;
+    }
+
+    &.controls-bar--lower{
+        bottom: 0;
+    }
+
+    h1{
+        font-family: "SoyuzGrotesk";
+        text-align: center;
+        margin: 0;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    button{
+        font-size: 16px;
+        font-family: "SharpGrotesk";
+        color: white;
+        width: 40px;
+
+        padding: 0;
+
+        &:hover{
+            cursor: pointer;
+            svg{
+            }
+        }
+
+        svg{
+            height: 15px;
+            width: 15px;
+        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+ 
+
+    .controls-bar__status{
+        width: 500px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        font-size: 16px;
+        >div{
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            bottom: 0;
+            left: -1px;
+            transform-origin: left;
+        }
+    }
+
+    >*{
+        padding: 10px;
+        margin-left: -1px;
+    }
+
+
+    .controls-bar__btn-play__pause{
+        display: none;
+    }
+   
+}
+
+.bpm-display{
+    font-family: "SoyuzGrotesk";
+    background-color: transparent !important;
+    font-size: 20px;
+    position: absolute;
+    z-index: 2;
+    color: white;
+    right: 10px;
+    bottom: 10px;
+    text-align: right;
+    transform: translateX(-100%);
+}

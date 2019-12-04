@@ -1,5 +1,85 @@
+@import "src/assets/font/font.scss";
+
 body {
   overflow: hidden;
   margin: unset;
-  font-family: Roboto;
+  font-family: "SharpGrotesk";
+}
+
+*{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
+}
+
+audio{
+  position: absolute;
+  top: 0;
+  z-index: 10000;
+  display: none;
+}
+
+.ui-color-stroke{
+  border: 1px solid white;
+  color: white;
+}
+
+.ui-color-fill{
+  color: black;
+  background-color: white;
+}
+
+.ui-color-text{
+  color: white;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  position: relative;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+  &:focus {outline:0;}
+
+  span{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity .2s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  }
+  &:hover{
+    span{
+      opacity: 1;
+    }
+  }
+}
+
+.dg.ac{
+  z-index: 1000 !important;
 }

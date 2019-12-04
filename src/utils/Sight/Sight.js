@@ -26,8 +26,8 @@ class Sight {
     this.cameraOrtho.lookAt(0, 0, 0);
     console.log(this.cameraOrtho);
 
-    this.cameraOrthoHelper = new THREE.CameraHelper(this.cameraOrtho);
-    scenePush(this.cameraOrthoHelper);
+    this.cameraOrthoHelper = new THREE.CameraHelper(this.camera);
+  //  scenePush(this.cameraOrthoHelper);
     this.activeCamera = this.cameraOrtho;
     //this.cameraOrtho.rotation.y = Math.PI;
   }

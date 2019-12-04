@@ -76,12 +76,12 @@ module.exports = {
       },
       //load video
       {
-        test: /\.webm$/,
+        test: /\.(webm|mp4)$/,
         use: ["file-loader"]
       },
       //load musics
       {
-        test: /\.mp3$/,
+        test: /\.(mp3|wav)$/,
         use: ["file-loader"]
       },
       //load fonts
