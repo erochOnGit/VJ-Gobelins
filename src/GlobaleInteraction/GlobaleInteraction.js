@@ -27,7 +27,7 @@ class GlobaleInteraction extends Interaction {
     this.UI = new UI({grid:this.grid, audio: this.analyser.audio, camera});
     this.stats = new Stats();
     this.stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild( this.stats.dom );
+    //document.body.appendChild( this.stats.dom );
     scenePush(this.grid.mesh);
 
     //  scenePush(this.grid2.mesh);

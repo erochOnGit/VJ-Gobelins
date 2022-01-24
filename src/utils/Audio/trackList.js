@@ -150,6 +150,10 @@ let trackList = {
 }
 
 window.addEventListener("load",function(){
+ //GUI();
+});
+
+function GUI(){
   var gui = new dat.GUI({closeOnTop: true,closed:true});
   for (let [key, track] of Object.entries(trackList)) {
    gui.remember(track);
@@ -164,7 +168,7 @@ window.addEventListener("load",function(){
     folder.addColor(track, 'color');
     folder.add(track, 'saturation',0,2);
   }
-});
+}
 
 
 export default trackList;

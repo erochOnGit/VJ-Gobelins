@@ -198,6 +198,11 @@ function GetRandomCellType({ size }) {
 }
 
 window.addEventListener("load", function() {
+  //GUI();
+});
+
+
+function GUI(){
   var gui = new dat.GUI({ closeOnTop: true, closed: true });
   for (let [name, data] of Object.entries(cell_rules)) {
     gui.remember(data);
@@ -210,6 +215,6 @@ window.addEventListener("load", function() {
     folder.add(data, "minY", 0, 10);
     folder.add(data, "maxY", 0, 10);
   }
-});
+}
 
 export default CellFactory;
